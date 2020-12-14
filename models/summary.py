@@ -2,7 +2,7 @@ class Summary:
     accepted_color = '\033[38;2;0;250;0m'
     title_color = '\033[38;2;0;0;250m'
     summary_format = "[{}{}\033[0m] {}{}\033[0m"
-    title_truncate = 50
+    title_truncate = 75
     
     def __init__(self, title, votes, accepted, link):
         self.title = title
@@ -18,3 +18,11 @@ class Summary:
             self.votes,
             Summary.title_color,
             (self.title[:Summary.title_truncate]+'...') if len(self.title)>Summary.title_truncate else self.title)
+    
+    def toMap(self):
+        return {
+            'title':self.title,
+            'votes':self.votes,
+            'accepted':self.accepted,
+            'link':self.link
+            }
