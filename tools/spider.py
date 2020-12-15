@@ -14,6 +14,7 @@ class FalseResponse:
         self.content = content
 
 def get(url, cache=True):
+    useragent = 'Answerable v0.1'
     # Check the cache
     p = pathlib.Path.cwd() / 'data' / 'spider' / pathlib.Path(url)
     if(cache and p.exists()):
@@ -30,13 +31,16 @@ def get(url, cache=True):
         rp[base] = RobotFileParser()
         rp[base].set_url(url_struct.scheme+'://'+base+'/robots.txt')
         rp[base].read()
-    if not rp[base].can_fetch("*",url):
+    if not rp[base].can_fetch(useragent,url):
         return FalseResponse(403,'robots.txt forbids it')
     # Or make the petition
     t = rnd()*5+2
     print('[\033[38;2;250;250;0m{:4.2f}\033[0m] {}'.format(t, url))
     sleep(t)
-    res = requests.get(url,timeout=10)
+    headers = {
+        'User-Agent':useragent
+    }
+    res = requests.get(url,timeout=10, headers)
     with open(p,'w') as fh:
         fh.write(str(res.content))
         print('\tCached')
