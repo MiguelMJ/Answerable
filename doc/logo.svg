@@ -56,90 +56,88 @@
   <g>
    <g id="id1" class="Slide" clip-path="url(#presentation_clip_path)">
     <g class="Page">
-     <g class="Group">
-      <g class="com.sun.star.drawing.CustomShape">
-       <g id="id3">
-        <rect class="BoundingBox" stroke="none" fill="none" x="733" y="2249" width="3535" height="2211"/>
-        <path fill="rgb(51,0,0)" stroke="none" d="M 2500,4458 L 734,4458 734,2250 4266,2250 4266,4458 2500,4458 Z"/>
-        <path fill="none" stroke="rgb(204,204,204)" d="M 2500,4458 L 734,4458 734,2250 4266,2250 4266,4458 2500,4458 Z"/>
-       </g>
+     <g class="com.sun.star.drawing.CustomShape">
+      <g id="id3">
+       <rect class="BoundingBox" stroke="none" fill="none" x="733" y="2249" width="3535" height="2211"/>
+       <path fill="rgb(51,0,0)" stroke="none" d="M 2500,4458 L 734,4458 734,2250 4266,2250 4266,4458 2500,4458 Z"/>
+       <path fill="none" stroke="rgb(204,204,204)" d="M 2500,4458 L 734,4458 734,2250 4266,2250 4266,4458 2500,4458 Z"/>
       </g>
-      <g class="com.sun.star.drawing.PolyPolygonShape">
-       <g id="id4">
-        <rect class="BoundingBox" stroke="none" fill="none" x="291" y="2249" width="4419" height="2653"/>
-        <path fill="rgb(102,25,0)" stroke="none" d="M 292,2250 L 292,4900 4708,4900 4708,2250 4267,2250 4267,4458 734,4458 734,2250 292,2250 Z"/>
-        <path fill="none" stroke="rgb(0,0,0)" d="M 292,2250 L 292,4900 4708,4900 4708,2250 4267,2250 4267,4458 734,4458 734,2250 292,2250 Z"/>
-       </g>
+     </g>
+     <g class="com.sun.star.drawing.PolyPolygonShape">
+      <g id="id4">
+       <rect class="BoundingBox" stroke="none" fill="none" x="291" y="2249" width="4419" height="2653"/>
+       <path fill="rgb(102,25,0)" stroke="none" d="M 292,2250 L 292,4900 4708,4900 4708,2250 4267,2250 4267,4458 734,4458 734,2250 292,2250 Z"/>
+       <path fill="none" stroke="rgb(0,0,0)" d="M 292,2250 L 292,4900 4708,4900 4708,2250 4267,2250 4267,4458 734,4458 734,2250 292,2250 Z"/>
       </g>
-      <g class="com.sun.star.drawing.CustomShape">
-       <g id="id5">
-        <rect class="BoundingBox" stroke="none" fill="none" x="953" y="3795" width="3095" height="445"/>
-        <path fill="rgb(114,159,207)" stroke="none" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
-        <path fill="none" stroke="rgb(52,101,164)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
-       </g>
+     </g>
+     <g class="com.sun.star.drawing.CustomShape">
+      <g id="id5">
+       <rect class="BoundingBox" stroke="none" fill="none" x="953" y="3795" width="3095" height="445"/>
+       <path fill="rgb(114,159,207)" stroke="none" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
+       <path fill="none" stroke="rgb(52,101,164)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
       </g>
-      <g class="com.sun.star.drawing.CustomShape">
-       <g id="id6">
-        <rect class="BoundingBox" stroke="none" fill="none" x="953" y="3795" width="3095" height="445"/>
-        <g>
-         <defs>
-          <linearGradient id="gradient1" x1="2500" y1="3796" x2="2500" y2="4238" gradientUnits="userSpaceOnUse">
-           <stop offset="0" style="stop-color:rgb(255,255,255)"/>
-           <stop offset="1" style="stop-color:rgb(178,178,178)"/>
-          </linearGradient>
-         </defs>
-         <path style="fill:url(#gradient1)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
-        </g>
-        <path fill="none" stroke="rgb(178,178,178)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
+     </g>
+     <g class="com.sun.star.drawing.CustomShape">
+      <g id="id6">
+       <rect class="BoundingBox" stroke="none" fill="none" x="953" y="3795" width="3095" height="445"/>
+       <g>
+        <defs>
+         <linearGradient id="gradient1" x1="2500" y1="3796" x2="2500" y2="4238" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:rgb(255,255,255)"/>
+          <stop offset="1" style="stop-color:rgb(178,178,178)"/>
+         </linearGradient>
+        </defs>
+        <path style="fill:url(#gradient1)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
        </g>
+       <path fill="none" stroke="rgb(178,178,178)" d="M 2500,4238 L 954,4238 954,3796 4046,3796 4046,4238 2500,4238 Z"/>
       </g>
-      <g class="com.sun.star.drawing.CustomShape">
-       <g id="id7">
-        <rect class="BoundingBox" stroke="none" fill="none" x="953" y="2801" width="3095" height="887"/>
-        <g>
-         <defs>
-          <linearGradient id="gradient2" x1="2500" y1="2802" x2="2500" y2="3686" gradientUnits="userSpaceOnUse">
-           <stop offset="0" style="stop-color:rgb(255,255,255)"/>
-           <stop offset="1" style="stop-color:rgb(178,178,178)"/>
-          </linearGradient>
-         </defs>
-         <path style="fill:url(#gradient2)" d="M 2500,3686 L 954,3686 954,2802 4046,2802 4046,3686 2500,3686 Z"/>
-        </g>
-        <path fill="none" stroke="rgb(178,178,178)" d="M 2500,3686 L 954,3686 954,2802 4046,2802 4046,3686 2500,3686 Z"/>
+     </g>
+     <g class="com.sun.star.drawing.CustomShape">
+      <g id="id7">
+       <rect class="BoundingBox" stroke="none" fill="none" x="953" y="2801" width="3095" height="887"/>
+       <g>
+        <defs>
+         <linearGradient id="gradient2" x1="2500" y1="2802" x2="2500" y2="3686" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:rgb(255,255,255)"/>
+          <stop offset="1" style="stop-color:rgb(178,178,178)"/>
+         </linearGradient>
+        </defs>
+        <path style="fill:url(#gradient2)" d="M 2500,3686 L 954,3686 954,2802 4046,2802 4046,3686 2500,3686 Z"/>
        </g>
+       <path fill="none" stroke="rgb(178,178,178)" d="M 2500,3686 L 954,3686 954,2802 4046,2802 4046,3686 2500,3686 Z"/>
       </g>
-      <g class="com.sun.star.drawing.CustomShape">
-       <g id="id8">
-        <rect class="BoundingBox" stroke="none" fill="none" x="953" y="151" width="3095" height="2542"/>
-        <g>
-         <defs>
-          <linearGradient id="gradient3" x1="2500" y1="152" x2="2500" y2="2691" gradientUnits="userSpaceOnUse">
-           <stop offset="0" style="stop-color:rgb(255,255,255)"/>
-           <stop offset="1" style="stop-color:rgb(178,178,178)"/>
-          </linearGradient>
-         </defs>
-         <path style="fill:url(#gradient3)" d="M 2500,2691 L 954,2691 954,152 4046,152 4046,2691 2500,2691 Z"/>
-        </g>
-        <path fill="none" stroke="rgb(178,178,178)" d="M 2500,2691 L 954,2691 954,152 4046,152 4046,2691 2500,2691 Z"/>
+     </g>
+     <g class="com.sun.star.drawing.CustomShape">
+      <g id="id8">
+       <rect class="BoundingBox" stroke="none" fill="none" x="953" y="151" width="3095" height="2542"/>
+       <g>
+        <defs>
+         <linearGradient id="gradient3" x1="2500" y1="152" x2="2500" y2="2691" gradientUnits="userSpaceOnUse">
+          <stop offset="0" style="stop-color:rgb(255,255,255)"/>
+          <stop offset="1" style="stop-color:rgb(178,178,178)"/>
+         </linearGradient>
+        </defs>
+        <path style="fill:url(#gradient3)" d="M 2500,2691 L 954,2691 954,152 4046,152 4046,2691 2500,2691 Z"/>
        </g>
+       <path fill="none" stroke="rgb(178,178,178)" d="M 2500,2691 L 954,2691 954,152 4046,152 4046,2691 2500,2691 Z"/>
       </g>
-      <g class="com.sun.star.drawing.PolyPolygonShape">
-       <g id="id9">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1492" y="1132" width="29" height="29"/>
-        <path fill="rgb(238,238,238)" stroke="none" d="M 1506,1146 L 1506,1146 Z"/>
-       </g>
+     </g>
+     <g class="com.sun.star.drawing.PolyPolygonShape">
+      <g id="id9">
+       <rect class="BoundingBox" stroke="none" fill="none" x="1492" y="1132" width="29" height="29"/>
+       <path fill="rgb(238,238,238)" stroke="none" d="M 1506,1146 L 1506,1146 Z"/>
       </g>
-      <g class="com.sun.star.drawing.PolyPolygonShape">
-       <g id="id10">
-        <rect class="BoundingBox" stroke="none" fill="none" x="3480" y="1905" width="29" height="29"/>
-        <path fill="rgb(238,238,238)" stroke="none" d="M 3494,1919 L 3494,1919 Z"/>
-       </g>
+     </g>
+     <g class="com.sun.star.drawing.PolyPolygonShape">
+      <g id="id10">
+       <rect class="BoundingBox" stroke="none" fill="none" x="3480" y="1905" width="29" height="29"/>
+       <path fill="rgb(238,238,238)" stroke="none" d="M 3494,1919 L 3494,1919 Z"/>
       </g>
-      <g class="com.sun.star.drawing.TextShape">
-       <g id="id11">
-        <rect class="BoundingBox" stroke="none" fill="none" x="1489" y="-300" width="2116" height="3410"/>
-        <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="2540px" font-weight="400"><tspan class="TextPosition" x="1739" y="2124"><tspan fill="rgb(0,0,0)" stroke="none">?</tspan></tspan></tspan></text>
-       </g>
+     </g>
+     <g class="com.sun.star.drawing.TextShape">
+      <g id="id11">
+       <rect class="BoundingBox" stroke="none" fill="none" x="1632" y="-146" width="2116" height="3410"/>
+       <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="2540px" font-weight="400"><tspan class="TextPosition" x="1882" y="2278"><tspan fill="rgb(0,0,0)" stroke="none">?</tspan></tspan></tspan></text>
       </g>
      </g>
     </g>
