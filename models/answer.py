@@ -20,7 +20,7 @@ class Answer:
             'summary':self.summary.toMap(),
             'qBody':self.qBody,
             'aBody':self.aBody,
-            'tags':json.dumps(self.tags)
+            'tags':self.tags
             })
     
     def fromMap(obj):
