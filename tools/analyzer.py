@@ -30,7 +30,7 @@ def tag_info(answers, normalize=True):
     if normalize:
         for k in tags:
             tags[k].reputation /= total_rep
-    return list(tags.values())
+    return tags
 
 def word_info(answers, normalize=True):
     words = dict()
@@ -46,17 +46,18 @@ def word_info(answers, normalize=True):
     if normalize:
         for k in words:
             words[k].frequency /= total_f
-    return list(words.values())
+    return words
 
-def expected_reputation(answer, word_info, tag_info):
-    word_dict = {x.word:x for x in word_info}
-    tag_dict = {x.name:x for x in tag_info}
+def word_expected_reputation(w, word_info, tag_info):
+    word = word_info.get(w,Word(w,1,set()))
+    w_freq = word.frequency
+    w_tag_factor = sum(tag_info[x].ratio() for x in word.tags)
+    w_factor = w_freq * w_tag_factor
+    return w_factor
+
+def answer_expected_reputation(answer, word_info, tag_info):
     wlist = word_list(answer.qBody)
-    ans_factor = sum(tag_dict[x].ratio() for x in answer.tags if x in tag_dict)
+    ans_factor = sum(tag_info[x].ratio() for x in answer.tags if x in tag_info)
     for w in wlist:
-        word = word_dict.get(w,Word(w,1,set()))
-        w_freq = word.frequency
-        w_tag_factor = sum(tag_dict[x].ratio() for x in word.tags)
-        w_factor = w_freq * w_tag_factor
-        ans_factor += w_factor
+        ans_factor += word_expected_reputation(w,word_info,tag_info)
     return ans_factor
