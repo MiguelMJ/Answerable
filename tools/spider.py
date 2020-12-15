@@ -29,8 +29,8 @@ def get(url, cache=True):
     if base not in rp:
         rp[base] = RobotFileParser()
         rp[base].set_url(url_struct.scheme+'://'+base+'/robots.txt')
-        rp.read()
-    if not rp[base].can_fetch(url):
+        rp[base].read()
+    if not rp[base].can_fetch("*",url):
         return FalseResponse(403,'robots.txt forbids it')
     # Or make the petition
     t = rnd()*5+2
