@@ -5,7 +5,7 @@ class Tag:
         self.count = count
         
     def ratio(self):
-        return self.reputation/self.count
+        return max(self.reputation/self.count,0.01)
     
     def __str__(self):
         return "{:15}{}/{}".format(
