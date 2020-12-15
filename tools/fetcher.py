@@ -11,7 +11,7 @@ from models.summary import Summary
 from models.answer import Answer
 
 def check_cache(filename):
-    cache_dir = 'cache'
+    cache_dir = 'data'
     threshold = td(days=1)
     cache_path = pathlib.Path.cwd() / cache_dir
     cache_path.mkdir(parents=True,exist_ok=True)
@@ -27,18 +27,18 @@ def check_cache(filename):
     
 def get_answers(user_id):
     cache_file = 'user_'+user_id+'json' 
-    cached, fp = check_cache(user_id)
+    cached, fp = check_cache(cache_file)
     if(cached):
         with open(fp, 'r') as cache:
             ans_list = json.load(cache)
         return [Answer.fromMap(obj) for obj in ans_list]
     else:
-        ans_list = [_get_answer(sumry) for sumry in _get_summaries(user_id)]
+        ans_list = [get_answer(sumry) for sumry in get_summaries(user_id)]
         with open(fp, 'w') as cache:
             cache.write('['+','.join(a.toJSON() for a in ans_list)+']')
         return ans_list
     
-def _get_summaries(user_id):
+def get_summaries(user_id):
     url_format = 'https://stackoverflow.com/users/{}?tab=answers&page={}'
     page=1
     results=[]
@@ -49,8 +49,7 @@ def _get_summaries(user_id):
         url = url_struct.geturl()
         result = spider.get(url, cache=False)
         while(result.status_code == 301): # Follow permanently moved links
-            url_struct['path'] = result.headers['location']
-            url = url_struct.geturl()
+            url = url_struct.scheme+'://'+url_struct.netloc+'/'+result.headers['location']
             result = spider.get(url)
             
         if(result.status_code != 200):
@@ -73,7 +72,7 @@ def _get_summaries(user_id):
         page += 1
     return results
 
-def _get_answer(summary):
+def get_answer(summary):
     url = 'https://stackoverflow.com'+summary.link
     answer_id = 'answer-{}'.format(summary.identifier)
     

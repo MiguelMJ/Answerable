@@ -15,7 +15,7 @@ class FalseResponse:
 
 def get(url, cache=True):
     # Check the cache
-    p = pathlib.Path.cwd() / 'cache' / 'spider' / pathlib.Path(url)
+    p = pathlib.Path.cwd() / 'data' / 'spider' / pathlib.Path(url)
     if(cache and p.exists()):
         with open(p,'r') as fh:
             res = fh.read().replace("\\r\\n",'')
@@ -27,9 +27,8 @@ def get(url, cache=True):
     url_struct = urlparse(url)
     base = url_struct.netloc
     if base not in rp:
-        url_struct.path = 'robots.txt'
         rp[base] = RobotFileParser()
-        rp[base].set_url(url_struct.geturl())
+        rp[base].set_url(url_struct.scheme+'://'+base+'/robots.txt')
         rp.read()
     if not rp[base].can_fetch(url):
         return FalseResponse(403,'robots.txt forbids it')
