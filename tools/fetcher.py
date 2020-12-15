@@ -26,7 +26,7 @@ def check_cache(filename):
         return delta < threshold, filepath
     
 def get_answers(user_id):
-    cache_file = 'user_'+user_id+'json' 
+    cache_file = 'user_'+user_id+'.json' 
     cached, fp = check_cache(cache_file)
     if(cached):
         with open(fp, 'r') as cache:
@@ -86,7 +86,6 @@ def get_answer(summary):
     qBody = question.find(attrs={'itemprop':'text'}).getText(' ',strip=True)
     aBody = soup.find(id=answer_id).find(attrs={'itemprop':'text'}).getText(' ',strip=True)
     tags = [x.getText('',strip=True) for x in question.find_all('a',class_='post-tag')]
-    
     
     return Answer(summary, qBody, aBody, tags)
     
