@@ -4,6 +4,6 @@
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to find questions that you could answer.
 
-It follows respectful crawling methods, like adding delays between calls and consulting the [`robots.txt`](https://stackoverflow.com/robots.txt) file of the site before any fetch.
+It follows [respectful scraping methods](https://www.empiricaldata.org/dataladyblog/a-guide-to-ethical-web-scraping).
 
 **This project is still under development.**
