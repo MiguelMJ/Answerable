@@ -113,3 +113,9 @@ def disp_answer_rated(answer, word_info, tag_info):
         print()
     print()
     
+def disp_questions(questions):
+    for q in questions:
+        s = q.summary
+        print(fg(s.title,darken(yellow,0.3)))
+        print('\t'+', '.join([fg(t,darken(cyan,0.3)) for t in q.tags]))
+        print('\t'+s.link)

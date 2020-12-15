@@ -1,10 +1,14 @@
 import requests
 from urllib.robotparser import RobotFileParser
 from urllib.parse import urlparse
+import feedparser
+
+import pathlib
+import json
 from random import random as rnd
 from time import sleep
 
-import pathlib
+from tools.displayer import fg, green, yellow
 
 rp = {}
 
@@ -16,11 +20,11 @@ class FalseResponse:
 def get(url, cache=True):
     useragent = 'Answerable v0.1'
     # Check the cache
-    p = pathlib.Path.cwd() / 'data' / 'spider' / pathlib.Path(url)
+    p = pathlib.Path.cwd() / 'data' / 'spider' / url.replace('/','-')
     if(cache and p.exists()):
         with open(p,'r') as fh:
             res = fh.read().replace("\\r\\n",'')
-        print('[\033[38;2;0;250;0mCACHE\033[0m]',url)
+        print(fg(CACHE,green),url)
         return FalseResponse(200,res)
     
     p.parent.mkdir(parents=True, exist_ok=True)
@@ -34,13 +38,14 @@ def get(url, cache=True):
     if not rp[base].can_fetch(useragent,url):
         return FalseResponse(403,'robots.txt forbids it')
     # Or make the petition
-    t = rnd()*5+2
-    print('[\033[38;2;250;250;0m{:4.2f}\033[0m] {}'.format(t, url))
+    # t = rnd()*5+2
+    t = 2
+    print('[{}] {}'.format(fg('{:4.2f}'.format(t),yellow), url))
     sleep(t)
     headers = {
         'User-Agent':useragent
     }
-    res = requests.get(url,timeout=10, headers)
+    res = requests.get(url,timeout=10, headers=headers)
     with open(p,'w') as fh:
         fh.write(str(res.content))
         print('\tCached')
@@ -49,4 +54,21 @@ def get(url, cache=True):
         exit()
     return res
 
-
+def get_feed(url, store=True):
+    useragent = 'Answerable RSS v0.1'
+    p = pathlib.Path.cwd() / 'data' / 'feed' / url.replace('/','-')
+    etag = None
+    modified = None
+    if((p).exists()):
+        with open(p,'r') as fh:
+            headers = json.load(fh)
+            etag = headers['etag']
+            modified = headers['modified']
+    feed = feedparser.parse(url, agent=useragent, etag=etag, modified=modified)
+    if(store):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        with open(p,'w') as fh:
+            json.dump({'etag':feed.etag if 'etag' in feed else None,
+                       'modified':feed.modified if 'modified' in feed else None}, 
+                    fh)
+    return feed

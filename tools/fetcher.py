@@ -88,5 +88,22 @@ def get_answer(summary):
     tags = [x.getText('',strip=True) for x in question.find_all('a',class_='post-tag')]
     
     return Answer(summary, qBody, aBody, tags)
-    
-    
+
+def get_all_question_feed():
+    return get_question_feed('https://stackoverflow.com/feeds')
+def get_tagged_question_feed(tag_info):
+    return sum([get_question_feed('https://stackoverflow.com/feeds/tag/'+tag) for tag in tag_info],[])
+def get_question_feed(url):
+    feed = spider.get_feed(url, False)
+    if(feed.status == 304): # Not Modified
+        return []
+    questions = []
+    for entry in feed.entries:
+        title = entry.title
+        soup = BeautifulSoup(entry.summary,'html.parser')
+        tags = [x['term'] for x in entry.tags]
+        link = entry.link
+        s = Summary(title,0,False,link)
+        a = Answer(s,soup.getText(' ',strip=True), '', tags)
+        questions.append(a)
+    return questions

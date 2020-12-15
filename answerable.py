@@ -9,7 +9,7 @@ if (len(sys.argv) < 2 or len(sys.argv) > 3):
     exit()
 
 user_id = sys.argv[1]
-option = sys.argv[2] if len(sys.argv) == 3 else 'summary'
+option = sys.argv[2] if len(sys.argv) == 3 else 'questions'
 ans = fetcher.get_answers(user_id)
 tag_info = analyzer.tag_info(ans)
 word_info = analyzer.word_info(ans)
@@ -21,10 +21,13 @@ elif option == 'tags':
 elif option == 'answers':
     for a in ans:
         displayer.disp_answer_rated(a, word_info, tag_info)
+elif option == 'questions':
+    questions = fetcher.get_tagged_question_feed(['c++','java','python'])
+    vq = [(analyzer.answer_expected_reputation(q, word_info, tag_info), q) for q in questions]
+    vq.sort(reverse=True)
+    displayer.disp_questions([q for (v,q) in vq[:10]])
 else:
     print('Unknown option',option)
-
-
     
 #Code to compare expected vs real reputation
 #
