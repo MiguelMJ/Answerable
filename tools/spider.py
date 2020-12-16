@@ -24,7 +24,7 @@ def get(url, cache=True):
     if(cache and p.exists()):
         with open(p,'r') as fh:
             res = fh.read().replace("\\r\\n",'')
-        print(fg(CACHE,green),url)
+        print(fg('CACHE',green),url)
         return FalseResponse(200,res)
     
     p.parent.mkdir(parents=True, exist_ok=True)
@@ -46,9 +46,10 @@ def get(url, cache=True):
         'User-Agent':useragent
     }
     res = requests.get(url,timeout=10, headers=headers)
-    with open(p,'w') as fh:
-        fh.write(str(res.content))
-        print('\tCached')
+    if cache:
+        with open(p,'w') as fh:
+            fh.write(res.content.decode(res.encoding))
+            print('\tCached')
     if(res.status_code == 429): # too many requests
         print('TOO MANY REQUESTS: ABORTING')
         exit()
