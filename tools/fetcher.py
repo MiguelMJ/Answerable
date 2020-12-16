@@ -107,3 +107,11 @@ def get_question_feed(url):
         a = Answer(s,soup.getText(' ',strip=True), '', tags)
         questions.append(a)
     return questions
+
+def get_user_tags(filename):
+    with open(filename,'r') as fh:
+        bs = BeautifulSoup(fh.read(),'html.parser')
+    return {
+    'followed': [x.getText(' ',strip=True) for x in bs.find(id='watching-1').find_all('a',class_='post-tag')],
+    'ignored' : [x.getText(' ',strip=True) for x in bs.find(id='ignored-1').find_all('a',class_='post-tag')]
+    }

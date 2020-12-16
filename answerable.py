@@ -5,7 +5,7 @@ from tools import fetcher, displayer, analyzer
 
 
 if (len(sys.argv) < 2 or len(sys.argv) > 3):
-    print('usage: python answerable.py <user_id> [summary|tags|answers]')
+    print('usage: python answerable.py <user_id> [summary|tags|answers|usertags]')
     exit()
 
 user_id = sys.argv[1]
@@ -26,8 +26,14 @@ elif option == 'questions':
     vq = [(analyzer.answer_expected_reputation(q, word_info, tag_info), q) for q in questions]
     vq.sort(reverse=True)
     displayer.disp_questions([q for (v,q) in vq[:10]])
+elif option == 'usertags':
+    t = fetcher.get_user_tags('source.html')
+    print('FOLLOWED')
+    print('\n'.join(t['followed']))
+    print('IGNORED')
+    print('\n'.join(t['ignored']))
 else:
-    print('Unknown option',option)
+    print('Unknown option',option)  
     
 #Code to compare expected vs real reputation
 #
