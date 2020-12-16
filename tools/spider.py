@@ -16,8 +16,17 @@ class FalseResponse:
     def __init__(self,code,content):
         self.status_code = code
         self.content = content
+        
+def ask_robots(url):
+    url_struct = urlparse(url)
+    base = url_struct.netloc
+    if base not in rp:
+        rp[base] = RobotFileParser()
+        rp[base].set_url(url_struct.scheme+'://'+base+'/robots.txt')
+        rp[base].read()
+    return rp[base].can_fetch(useragent,url):
 
-def get(url, cache=True):
+def get(url, cache=True, delay=2):
     useragent = 'Answerable v0.1'
     # Check the cache
     p = pathlib.Path.cwd() / 'data' / 'spider' / url.replace('/','-')
@@ -26,22 +35,13 @@ def get(url, cache=True):
             res = fh.read().replace("\\r\\n",'')
         print(fg('CACHE',green),url)
         return FalseResponse(200,res)
-    
     p.parent.mkdir(parents=True, exist_ok=True)
     # Check the robot.txt
-    url_struct = urlparse(url)
-    base = url_struct.netloc
-    if base not in rp:
-        rp[base] = RobotFileParser()
-        rp[base].set_url(url_struct.scheme+'://'+base+'/robots.txt')
-        rp[base].read()
-    if not rp[base].can_fetch(useragent,url):
+    if not ask_robots(url):
         return FalseResponse(403,'robots.txt forbids it')
     # Or make the petition
-    # t = rnd()*5+2
-    t = 2
     print('[{}] {}'.format(fg('{:4.2f}'.format(t),yellow), url))
-    sleep(t)
+    sleep(delay)
     headers = {
         'User-Agent':useragent
     }
