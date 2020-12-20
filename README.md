@@ -4,10 +4,15 @@
 <h1 align="center">Answerable</h1>
 <h3 align="center">Find questions on Stack Overflow suited for you</h3>
 <p align="center">
-	<a href="LICENSE"><img alt="license" src="https://img.shields.io/badge/license-MIT-informational"></a>
-	<img src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable">
-	<img src="https://img.shields.io/badge/python-3.8-informational">  
-	<img src="https://img.shields.io/badge/documentation-To_do-important">  
+	<a href="LICENSE">
+        <img alt="license" src="https://img.shields.io/badge/license-MIT-informational">
+    </a>
+	<img alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable">
+	<img alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational">  
+	<img alt="doc-to-do" src="https://img.shields.io/badge/documentation-To_do-important">
+	<a href="https://github.com/psf/black">
+        <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+    </a>
 </p>
 
 
