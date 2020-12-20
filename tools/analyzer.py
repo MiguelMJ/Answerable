@@ -51,10 +51,10 @@ def word_expected_reputation(w, word_info, tag_info):
     w_factor = w_freq * w_tag_factor
     return w_factor
 
-
-def answer_expected_reputation(answer, word_info, tag_info):
-    wlist = word_list(answer.qBody)
-    ans_factor = sum(tag_info[x].ratio() for x in answer.tags if x in tag_info)
+def question_expected_reputation(question, word_info, tag_info):
+    wlist = word_list(question["body"])
+    rep = sum(tag_info[x].ratio() for x in question["tag"] if x in tag_info)
     for w in wlist:
-        ans_factor += word_expected_reputation(w, word_info, tag_info)
-    return ans_factor
+        rep += word_expected_reputation(w, word_info, tag_info)
+    return rep
+    

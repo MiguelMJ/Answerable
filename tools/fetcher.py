@@ -83,6 +83,8 @@ def get_QA(user_id):
         for a in answers
         if q["question_id"] == a["question_id"]
     ]
+    for qa in user_qa:
+        user_qa[0]["tags"] = user_qa[1].pop("tags")
     update_cache(cache_file, user_qa)
     return user_qa
 
