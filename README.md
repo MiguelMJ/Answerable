@@ -14,9 +14,7 @@
         <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
     </a>
 </p>
-
-
-Answerable is a Python program that learns from your answers in Stack Overflow and use them to find questions that you could answer.
+Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
 
 **This project is still under development.**
 
@@ -24,12 +22,11 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 
 - Get insights on your stack overflow profile without leaving the console.
 
-  The first time you analyze your profile, it may take a while. This happens because each requests has a delay of two seconds the server, and it has to do at least one per answer you have answered. So if you have a long story. 
-
-- Get the latest questions 
-- It follows [respectful scraping methods](https://www.empiricaldata.org/dataladyblog/a-guide-to-ethical-web-scraping).
+- Get the latest questions and sort them by their similarity to questions you have already answered.
 
 ## Quick guide
+
+_For now this is a reference for implementation, not its actual behaviour._
 
 **Save your user**
 
@@ -59,3 +56,9 @@ python answerable.py [-u ID] [--no-ansi] COMMAND
 | `-k`        | Order the items displayed to a given key. It has no effect in `questions` . |
 | `-t`        | Truncate titles with a max length in `summary`               |
 | `-a`        | Search through all the new questions, without tag filter. If the user tags haven't been saved before with the `-s` option, then this  option is on by default. |
+
+# To do
+
+- Interpret the arguments using `argparse`.
+- Test and improve the learning models.
+- Make more documentation.
