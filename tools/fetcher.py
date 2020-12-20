@@ -3,13 +3,9 @@ import pathlib
 from datetime import datetime as dt
 from datetime import timedelta as td
 
-# from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
 from tools import spider
-
-# from models.summary import Summary
-# from models.answer import Answer
 
 __cache_dir = "data"
 __threshold = td(days=1)
@@ -34,7 +30,7 @@ def update_cache(filename, obj):
     cache_path.mkdir(parents=True, exist_ok=True)
     filepath = cache_path / filename
     with open(filepath, "w") as fh:
-        json.dump(obj, fh)
+        json.dump(obj, fh, indent=2)
 
 
 def get_QA(user_id):
@@ -97,13 +93,14 @@ def get_question_feed(url):
         return []
     questions = []
     for entry in feed.entries:
-        title = entry.title
         soup = BeautifulSoup(entry.summary, "html.parser")
-        tags = [x["term"] for x in entry.tags]
-        link = entry.link
-        s = Summary(title, 0, False, link)
-        a = Answer(s, soup.getText(" ", strip=True), "", tags)
-        questions.append(a)
+        q = {
+            "link": entry.link,
+            "title": entry.title,
+            "body": soup.getText(' ',strip=True),
+            "tags": [x["term"] for x in entry.tags]
+        }
+        questions.append(q)
     return questions
 
 
