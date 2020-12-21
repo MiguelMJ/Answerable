@@ -99,8 +99,8 @@ def get_question_feed(url):
         q = {
             "link": entry.link,
             "title": entry.title,
-            "body": soup.getText(' ',strip=True),
-            "tags": [x["term"] for x in entry.tags]
+            "body": soup.getText(" ", strip=True),
+            "tags": [x["term"] for x in entry.tags],
         }
         questions.append(q)
     return questions
