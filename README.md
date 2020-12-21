@@ -2,7 +2,7 @@
     <img src="doc/logo.svg" height="200px" alt="logo" title="Answerable">
 </p>
 <h1 align="center">Answerable</h1>
-<h3 align="center">Find questions on Stack Overflow suited for you</h3>
+<h3 align="center">Stack Overflow unanswered questions recommendation system</h3>
 <p align="center">
 	<a href="LICENSE">
         <img alt="license" src="https://img.shields.io/badge/license-MIT-informational">
