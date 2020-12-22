@@ -18,20 +18,23 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 
 ___This project is still under development.___
 
+**Table of contents**
+
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide22)
-  - [Commands](#Commands48)
-    - [`summary`](#`summary`50)
-    - [`tags`](#`tags`54)
-    - [`answers`](#`answers`58)
-    - [`questions`](#`questions`62)
-    - [`save`](#`save`66)
-        - [The `.config` file](#The-`.config`-file70)
-        - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file74)
-  - [To do](#To-do96)
+  - [Quick guide](#Quick-guide24)
+  - [Commands](#Commands51)
+    - [`summary`](#`summary`54)
+    - [`tags`](#`tags`58)
+    - [`answers`](#`answers`62)
+    - [`questions`](#`questions`66)
+    - [`save`](#`save`70)
+        - [The `.config` file](#The-`.config`-file74)
+        - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file78)
+  - [To do](#To-do100)
 
-<h2 id="Quick-guide22">Quick guide</h2> 
+<h2 id="Quick-guide24">Quick guide</h2> 
+[[TOC](#toc)]
 
 - **Save your user**
 
@@ -57,33 +60,34 @@ ___This project is still under development.___
 	python answerable.py -h
 	```
 
-<h2 id="Commands48">Commands</h2> 
+<h2 id="Commands51">Commands</h2> 
+[[TOC](#toc)]
 
-<h3 id="`summary`50">`summary`</h3> 
-
-...
-
-<h3 id="`tags`54">`tags`</h3> 
+<h3 id="`summary`54">`summary`</h3> 
 
 ...
 
-<h3 id="`answers`58">`answers`</h3> 
+<h3 id="`tags`58">`tags`</h3> 
 
 ...
 
-<h3 id="`questions`62">`questions`</h3> 
+<h3 id="`answers`62">`answers`</h3> 
 
 ...
 
-<h3 id="`save`66">`save`</h3> 
+<h3 id="`questions`66">`questions`</h3> 
+
+...
+
+<h3 id="`save`70">`save`</h3> 
 
 Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
 
-<h5 id="The-`.config`-file70">The `.config` file</h5> 
+<h5 id="The-`.config`-file74">The `.config` file</h5> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can save them to this file and the following executions will read them from it.
 
-<h5 id="Where-to-get-the-user-ID-and-tags-file74">Where to get the user ID and tags file</h5> 
+<h5 id="Where-to-get-the-user-ID-and-tags-file78">Where to get the user ID and tags file</h5> 
 
 You can find your id in the url of your profile, that has the following form:
 
@@ -105,7 +109,8 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
    That will be the tags file.
 
-<h2 id="To-do96">To do</h2> 
+<h2 id="To-do100">To do</h2> 
+[[TOC](#toc)]
 
 - [x] Use `argparse` to interpret the CLI options.
 - [ ] Implement all commands.
