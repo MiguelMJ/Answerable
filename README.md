@@ -33,32 +33,26 @@ _For now this is a reference for implementation, not its actual behaviour._
 ```
 python answerable.py -s ID [SOURCE-FILE]
 ```
-**Execute command**
+**Display summary of your top 5 answers**
 
 ```
-python answerable.py [-u ID] [--no-ansi] COMMAND
+python answerable.py summary -l 5 -k reputation
 ```
-- Commands
-  - `summary [-r] [-l LIMIT] [-t LENGTH] [-k reputation|votes]`
-  - `tags [-r] [-l LIMIT] [-k reputation|name|count|ratio]`
-  - `answers [-r] [-f FIRST] [-l LIMIT] [-k reputation|name|votes|value]`
-  - `questions [-a] [-l LIMIT]`
 
-- Options
+**Get recommendations from the latest questions**
 
-| Option      | Details                                                      |
-| ----------- | ------------------------------------------------------------ |
-| `-s`        | Save the user ID and, optionally, their tags from the downloaded source file to the `data/user.json` file. |
-| `-u`        | Specify the user ID. If no data has been saved before with the `-s` option, then this option is obligatory. |
-| `--no-ansi` | Don't display color.                                         |
-| `-r`        | Reverse information order. It has no effect `questions`.     |
-| `-l`        | Limit the number of items displayed.                         |
-| `-k`        | Order the items displayed to a given key. It has no effect in `questions` . |
-| `-t`        | Truncate titles with a max length in `summary`               |
-| `-a`        | Search through all the new questions, without tag filter. If the user tags haven't been saved before with the `-s` option, then this  option is on by default. |
+```
+python answerable.py questions
+```
 
-# To do
+**See all options**
 
-- Interpret the arguments using `argparse`.
+```
+python answerable.py -h
+```
+
+## To do
+
+- Implement all commands
 - Test and improve the learning models.
 - Make more documentation.
