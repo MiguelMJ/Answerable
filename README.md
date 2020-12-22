@@ -31,7 +31,10 @@ ___This project is still under development.___
     - [save](#save72)
         - [The .config file](#The-.config-file76)
         - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file80)
-  - [To do](#To-do102)
+  - [Contributors](#Contributors102)
+  - [To do](#To-do108)
+  - [Contributing](#Contributing123)
+  - [License](#License132)
 
 <h2 id="Quick-guide24">Quick guide</h2> 
 
@@ -111,7 +114,13 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
    That will be the tags file.
 
-<h2 id="To-do102">To do</h2> 
+<h2 id="Contributors102">Contributors</h2> 
+
+[[TOC](#toc)]
+
+Be the first on this list!
+
+<h2 id="To-do108">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -125,3 +134,19 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
 - [ ] Include the rest of the Stack Exchange communitites.
 - [ ] Make a GUI.
+
+<h2 id="Contributing123">Contributing</h2> 
+
+[[TOC](#toc)]
+
+- In addition to the tasks listed above, you can also contribute by testing the program yourself and reporting any bugs in an issue.
+- Give this project some visibility:
+  - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
+  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
+
+<h2 id="License132">License</h2> 
+
+[[TOC](#toc)]
+
+Answerable uses the MIT license, a copy of which you can find [here](LICENSE), in the repo.
+
