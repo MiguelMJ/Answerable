@@ -24,11 +24,11 @@ ___This project is still under development.___
 
   - [Quick guide](#Quick-guide24)
   - [Commands](#Commands52)
-    - [`summary`](#`summary`56)
-    - [`tags`](#`tags`60)
-    - [`answers`](#`answers`64)
-    - [`questions`](#`questions`68)
-    - [`save`](#`save`72)
+    - [summary](#summary56)
+    - [tags](#tags60)
+    - [answers](#answers64)
+    - [questions](#questions68)
+    - [save](#save72)
         - [The `.config` file](#The-`.config`-file76)
         - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file80)
   - [To do](#To-do102)
@@ -65,23 +65,23 @@ ___This project is still under development.___
 
 [[TOC](#toc)]
 
-<h3 id="`summary`56">`summary`</h3> 
+<h3 id="summary56">summary</h3> 
 
 ...
 
-<h3 id="`tags`60">`tags`</h3> 
+<h3 id="tags60">tags</h3> 
 
 ...
 
-<h3 id="`answers`64">`answers`</h3> 
+<h3 id="answers64">answers</h3> 
 
 ...
 
-<h3 id="`questions`68">`questions`</h3> 
+<h3 id="questions68">questions</h3> 
 
 ...
 
-<h3 id="`save`72">`save`</h3> 
+<h3 id="save72">save</h3> 
 
 Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
 
