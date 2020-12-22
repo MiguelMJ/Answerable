@@ -16,15 +16,22 @@
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
 
-**This project is still under development.**
+___This project is still under development.___
 
-## Features
+<span id="toc"></span>
 
-- Get insights on your Stack Overflow profile without leaving the console.
+  - [Quick guide](#Quick-guide22)
+  - [Commands](#Commands48)
+    - [`summary`](#`summary`50)
+    - [`tags`](#`tags`54)
+    - [`answers`](#`answers`58)
+    - [`questions`](#`questions`62)
+    - [`save`](#`save`66)
+        - [The `.config` file](#The-`.config`-file70)
+        - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file74)
+  - [To do](#To-do96)
 
-- Get the latest questions and sort them by their similarity to questions you have already answered.
-
-## Quick guide
+<h2 id="Quick-guide22">Quick guide</h2> 
 
 - **Save your user**
 
@@ -50,33 +57,33 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 	python answerable.py -h
 	```
 
-## Commands
+<h2 id="Commands48">Commands</h2> 
 
-### `summary`
-
-...
-
-### `tags`
+<h3 id="`summary`50">`summary`</h3> 
 
 ...
 
-### `answers`
+<h3 id="`tags`54">`tags`</h3> 
 
 ...
 
-### `questions`
+<h3 id="`answers`58">`answers`</h3> 
 
 ...
 
-### `save`
+<h3 id="`questions`62">`questions`</h3> 
+
+...
+
+<h3 id="`save`66">`save`</h3> 
 
 Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
 
-##### The `.config` file
+<h5 id="The-`.config`-file70">The `.config` file</h5> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can save them to this file and the following executions will read them from it.
 
-##### Where to get the user ID and tags file
+<h5 id="Where-to-get-the-user-ID-and-tags-file74">Where to get the user ID and tags file</h5> 
 
 You can find your id in the url of your profile, that has the following form:
 
@@ -98,7 +105,7 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
    That will be the tags file.
 
-## To do
+<h2 id="To-do96">To do</h2> 
 
 - [x] Use `argparse` to interpret the CLI options.
 - [ ] Implement all commands.
