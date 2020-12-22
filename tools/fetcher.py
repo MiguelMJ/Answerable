@@ -21,7 +21,7 @@ def check_cache(filename):
         modified = dt.fromtimestamp(filepath.stat().st_mtime)
         now = dt.now()
         delta = now - modified
-        print("Time since last crawl:", delta)
+        # print("Time since last crawl:", delta)
         return delta < __threshold, filepath
 
 
@@ -84,7 +84,7 @@ def get_QA(user_id):
         if q["question_id"] == a["question_id"]
     ]
     for qa in user_qa:
-        user_qa[0]["tags"] = user_qa[1].pop("tags")
+        qa[0]["tags"] = qa[1].pop("tags")
     update_cache(cache_file, user_qa)
     return user_qa
 

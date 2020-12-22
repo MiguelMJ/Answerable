@@ -17,6 +17,7 @@ black = (0, 0, 0)
 
 ansi = True
 
+
 def lighten(c, r):
     dr = (250 - c[0]) * r
     dg = (250 - c[1]) * r
@@ -64,18 +65,22 @@ def color(msg, fgc, bgc):
     return bg(fg(msg, fgc), bgc)
 
 
-def disp_summary(summaries, truncate=80, sort_key="reputation", limit=50):
+def disp_summary(user_qa, truncate, sort_key, limit, reverse):
     summary_format = "[{}] {}"
-    switch = {"reputation": lambda x: x.reputation, "votes": lambda x: x.votes}
-    summaries.sort(key=switch.get(sort_key, None), reverse=True)
-    if len(summaries) > limit:
-        summaries = summaries[:limit]
-    for s in summaries:
-        votes = fg(s.votes, green) if s.accepted else s.votes
+    switch = {
+        "reputation": lambda x: -x[1]["score"] * (10 - x[1]["is_accepted"] and 15 or 0),
+        "score": lambda x: x[1]["score"],
+    }
+    if sort_key:
+        user_qa.sort(key=switch[sort_key], reverse=reverse)
+    if len(user_qa) > limit:
+        user_qa = user_qa[:limit]
+    for q in [qa[1] for qa in user_qa]:
+        votes = fg(q["score"], green) if q["is_accepted"] else q["score"]
         title = (
-            (s.title[: truncate - 3] + "...")
-            if len(s.title) + 3 > truncate
-            else s.title
+            (q["title"][: truncate - 3] + "...")
+            if len(q["title"]) + 3 > truncate
+            else q["title"]
         )
         print(summary_format.format(votes, fg(title, cyan)))
 

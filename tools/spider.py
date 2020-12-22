@@ -19,7 +19,7 @@ class FalseResponse:
         self.content = content
 
 
-def ask_robots(url):
+def ask_robots(url, useragent):
     url_struct = urlparse(url)
     base = url_struct.netloc
     if base not in rp:
@@ -40,10 +40,10 @@ def get(url, cache=True, delay=2):
         return FalseResponse(200, res)
     p.parent.mkdir(parents=True, exist_ok=True)
     # Check the robot.txt
-    if not ask_robots(url):
+    if not ask_robots(url, useragent):
         return FalseResponse(403, "robots.txt forbids it")
     # Or make the petition
-    print("[{}] {}".format(fg("{:4.2f}".format(t), yellow), url))
+    print("[{}] {}".format(fg("{:4.2f}".format(delay), yellow), url))
     sleep(delay)
     headers = {"User-Agent": useragent}
     res = requests.get(url, timeout=10, headers=headers)
