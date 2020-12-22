@@ -94,6 +94,7 @@ def parse_arguments() -> argparse.Namespace:
     """
 
     parser = argparse.ArgumentParser(
+        usage="%(prog)s COMMAND [OPTIONS]",
         description="Stack Overflow unanswered questions recommendation system",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent(
