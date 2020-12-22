@@ -85,7 +85,7 @@ def disp_summary(user_qa, truncate, sort_key, limit, reverse):
         print(summary_format.format(votes, fg(title, cyan)))
 
 
-def disp_tags(tags, sort_key="ratio", limit=15):
+def disp_tags(tags, sort_key, limit):
     width = max(len(x.name) for x in tags) + 23  # for the ansi bytes
     tag_format = "{:>" + str(width) + "} - {:<7.4f}/{:3}"
     alt = True
@@ -95,7 +95,7 @@ def disp_tags(tags, sort_key="ratio", limit=15):
         "count": lambda x: -x.count,
         "ratio": lambda x: -x.reputation / x.count,
     }
-    tags.sort(key=switch.get(sort_key, None))
+    tags.sort(key=switch.get(sort_key,switch["reputation"]))
     if len(tags) > limit:
         tags = tags[:limit]
     for t in tags:

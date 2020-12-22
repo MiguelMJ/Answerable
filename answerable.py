@@ -63,6 +63,8 @@ def save_config(args):
 
 
 def summary(args):
+    """Display a summary of the answered questions"""
+    
     config = load_config(args)
     qa = fetcher.get_QA(config["user"])
     displayer.disp_summary(
@@ -75,14 +77,22 @@ def summary(args):
 
 
 def tags(args):
-    pass
+    """Display the stats of the tags of the answered questions"""
+    
+    config = load_config(args)
+    user_qa = fetcher.get_QA(config["user"])
+    tag_info = analyzer.tag_info(user_qa, False)
+    tags = list(tag_info.values())
+    displayer.disp_tags(tags, args.key, args.limit)
 
 
 def answers(args):
+    """Display the answered questions coloring the value of each word"""
     pass
 
 
 def questions(args):
+    """Recommend questions from the latest unanswered"""
     pass
 
 

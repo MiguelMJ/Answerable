@@ -11,14 +11,14 @@ def word_list(text):
     return wlist
 
 
-def tag_info(answers, normalize=True):
+def tag_info(user_qa, normalize=True):
     tags = dict()
     total_rep = 0
-    for ans in answers:
-        for t in ans["tags"]:
+    for qa in user_qa:
+        for t in qa[0]["tags"]:
             info = tags.get(t, Tag(t))
             info.count += 1
-            rep = ans["score"]*10 + (ans["is_accepted"] and 15 or 0)
+            rep = qa[1]["score"]*10 + (qa[1]["is_accepted"] and 15 or 0)
             info.reputation += rep
             total_rep += rep
             tags[t] = info
