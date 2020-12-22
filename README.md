@@ -16,7 +16,8 @@
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
 
-___This project is still under development.___
+___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/MiguelMJ/Answerable)
+
 
 **Table of contents**
 
