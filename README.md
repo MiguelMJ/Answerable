@@ -29,7 +29,7 @@ ___This project is still under development.___
     - [answers](#answers64)
     - [questions](#questions68)
     - [save](#save72)
-        - [The `.config` file](#The-`.config`-file76)
+        - [The .config file](#The-.config-file76)
         - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file80)
   - [To do](#To-do102)
 
@@ -83,9 +83,9 @@ ___This project is still under development.___
 
 <h3 id="save72">save</h3> 
 
-Take the options `-u|--user` and `-t|--tags` and save their information to a .config file. 
+Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
 
-<h5 id="The-`.config`-file76">The `.config` file</h5> 
+<h5 id="The-.config-file76">The .config file</h5> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can save them to this file and the following executions will read them from it.
 
