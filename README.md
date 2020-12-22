@@ -83,7 +83,7 @@ ___This project is still under development.___
 
 <h3 id="save72">save</h3> 
 
-Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
+Take the options `-u|--user` and `-t|--tags` and save their information to a .config file. 
 
 <h5 id="The-`.config`-file76">The `.config` file</h5> 
 
