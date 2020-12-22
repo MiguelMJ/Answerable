@@ -15,6 +15,7 @@ gray3 = (100, 100, 100)
 gray4 = (50, 50, 50)
 black = (0, 0, 0)
 
+ansi = True
 
 def lighten(c, r):
     dr = (250 - c[0]) * r
@@ -38,16 +39,22 @@ def interpolate(c, d, r):
 
 
 def bold(msg):
+    if not ansi:
+        return msg
     return "\033[1m{}\033[0m".format(msg)
 
 
 def fg(msg, color):
+    if not ansi:
+        return msg
     return "\033[38;2;{:03};{:03};{:03}m{}\033[0m".format(
         color[0], color[1], color[2], msg
     )
 
 
 def bg(msg, color):
+    if not ansi:
+        return msg
     return "\033[48;2;{:03};{:03};{:03}m{}\033[0m".format(
         color[0], color[1], color[2], msg
     )
