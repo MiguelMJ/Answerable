@@ -95,7 +95,7 @@ def disp_tags(tags, sort_key, limit):
         "count": lambda x: -x.count,
         "ratio": lambda x: -x.reputation / x.count,
     }
-    tags.sort(key=switch.get(sort_key,switch["reputation"]))
+    tags.sort(key=switch.get(sort_key, switch["reputation"]))
     if len(tags) > limit:
         tags = tags[:limit]
     for t in tags:

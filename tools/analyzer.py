@@ -18,7 +18,7 @@ def tag_info(user_qa, normalize=True):
         for t in qa[0]["tags"]:
             info = tags.get(t, Tag(t))
             info.count += 1
-            rep = qa[1]["score"]*10 + (qa[1]["is_accepted"] and 15 or 0)
+            rep = qa[1]["score"] * 10 + (qa[1]["is_accepted"] and 15 or 0)
             info.reputation += rep
             total_rep += rep
             tags[t] = info

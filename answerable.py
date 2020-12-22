@@ -64,7 +64,7 @@ def save_config(args):
 
 def summary(args):
     """Display a summary of the answered questions"""
-    
+
     config = load_config(args)
     qa = fetcher.get_QA(config["user"])
     displayer.disp_summary(
@@ -78,7 +78,7 @@ def summary(args):
 
 def tags(args):
     """Display the stats of the tags of the answered questions"""
-    
+
     config = load_config(args)
     user_qa = fetcher.get_QA(config["user"])
     tag_info = analyzer.tag_info(user_qa, False)
