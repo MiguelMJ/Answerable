@@ -4,7 +4,7 @@ import argparse
 import pathlib
 import textwrap
 
-from tools import fetcher, displayer, analyzer
+from tools import fetcher, displayer, analyzer, recommender
 
 _config_file = ".config"
 
@@ -91,8 +91,18 @@ def answers(args):
     pass
 
 
-def questions(args):
+def recommend(args):
     """Recommend questions from the latest unanswered"""
+    
+    config = load_config(args)
+    user_qa = fetcher.get_QA(config["user"])
+    feed = fetcher.get_question_feed()
+    # with open("data/test/feed.json") as fh:
+    #     feed = json.load(fh)
+    
+    rec_index = recommender.recommend(user_qa, feed)
+    selection = [feed[i] for i in rec_index[:args.limit]]
+    displayer.disp_feed(selection)
     pass
 
 
@@ -116,8 +126,9 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "command",
-        choices=("save", "summary", "tags", "answers", "questions"),
-        help="save,summary,tags,answers,questions",
+        choices=("save", "summary", "tags", "answers", "recommend"),
+        help="save,summary,tags,answers,recommend",
+        default="recommend"
         metavar="COMMAND",
     )
     parser.add_argument("-r", "--reverse", help="reverse sorting", action="store_true")
@@ -143,7 +154,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "-k",
         "--key",
-        help="sort the items displayed to a given key. It has no effect on <questions>",
+        help="sort the items displayed to a given key. It has no effect on <recommend>",
         choices=("count", "score", "value", "reputation"),
         default=None,
         metavar="K",
@@ -173,7 +184,7 @@ if __name__ == "__main__":
         "summary": summary,
         "tags": tags,
         "answers": answers,
-        "questions": questions,
+        "recommend": recommend,
     }
     args = parse_arguments()
     command = args.command

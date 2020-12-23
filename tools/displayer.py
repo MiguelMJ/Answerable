@@ -65,6 +65,12 @@ def color(msg, fgc, bgc):
     return bg(fg(msg, fgc), bgc)
 
 
+def disp_feed(feed):
+    for entry in feed:
+        print("-",bold(entry["title"]))
+        print(" ",entry["link"])
+
+
 def disp_summary(user_qa, truncate, sort_key, limit, reverse):
     summary_format = "[{}] {}"
     switch = {
