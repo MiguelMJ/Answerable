@@ -16,28 +16,22 @@
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
 
-___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/MiguelMJ/Answerable)
-
+___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/M
+iguelMJ/Answerable)
 
 **Table of contents**
 
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide24)
-  - [Commands](#Commands52)
-    - [summary](#summary56)
-    - [tags](#tags60)
-    - [answers](#answers64)
-    - [questions](#questions68)
-    - [save](#save72)
-        - [The .config file](#The-.config-file76)
-        - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file80)
-  - [Contributors](#Contributors102)
-  - [To do](#To-do108)
-  - [Contributing](#Contributing123)
-  - [License](#License132)
+  - [Quick guide](#Quick-guide25)
+    - [The .config file](#The-.config-file42)
+    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file46)
+  - [Contributors](#Contributors68)
+  - [To do](#To-do74)
+  - [Contributing](#Contributing91)
+  - [License](#License100)
 
-<h2 id="Quick-guide24">Quick guide</h2> 
+<h2 id="Quick-guide25">Quick guide</h2> 
 
 [[TOC](#toc)]
 
@@ -47,53 +41,18 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 	python answerable.py -s ID [SOURCE-FILE]
 	```
 	
-- **Display summary of your top 5 answers**
-
-	```
-	python answerable.py summary -l 5 -k reputation
-	```
-
 - **Get recommendations from the latest questions**
 
 	```
-	python answerable.py questions
+	python answerable.py [-u ID [SOURCE-FILE]]
 	```
 
-- **See all options**
 
-	```
-	python answerable.py -h
-	```
-
-<h2 id="Commands52">Commands</h2> 
-
-[[TOC](#toc)]
-
-<h3 id="summary56">summary</h3> 
-
-...
-
-<h3 id="tags60">tags</h3> 
-
-...
-
-<h3 id="answers64">answers</h3> 
-
-...
-
-<h3 id="questions68">questions</h3> 
-
-...
-
-<h3 id="save72">save</h3> 
-
-Take the options `-u|--user` and `-t|--tags` and save their information to a `.config` file. 
-
-<h5 id="The-.config-file76">The .config file</h5> 
+<h3 id="The-.config-file42">The .config file</h3> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can save them to this file and the following executions will read them from it.
 
-<h5 id="Where-to-get-the-user-ID-and-tags-file80">Where to get the user ID and tags file</h5> 
+<h3 id="Where-to-get-the-user-ID-and-tags-file46">Where to get the user ID and tags file</h3> 
 
 You can find your id in the url of your profile, that has the following form:
 
@@ -115,18 +74,19 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
    That will be the tags file.
 
-<h2 id="Contributors102">Contributors</h2> 
+<h2 id="Contributors68">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do108">To do</h2> 
+<h2 id="To-do74">To do</h2> 
 
 [[TOC](#toc)]
 
 - [x] Use `argparse` to interpret the CLI options.
-- [ ] Implement all commands.
+- [ ] ~~Implement all commands.~~
+- [ ] Document new behaviour
 - [ ] Test and improve the learning models.
 - [ ] Complete documentation.
 - [ ] Adapt behaviour for users with authentication token.
@@ -135,8 +95,9 @@ Be the first on this list!
 
 - [ ] Include the rest of the Stack Exchange communitites.
 - [ ] Make a GUI.
+- [ ] Display statistics about the information taken into account to make the recommendations.
 
-<h2 id="Contributing123">Contributing</h2> 
+<h2 id="Contributing91">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -145,7 +106,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License132">License</h2> 
+<h2 id="License100">License</h2> 
 
 [[TOC](#toc)]
 
