@@ -69,14 +69,3 @@ def recommend(user_qa, feed):
     by_mean = [x[1] for x in sorted(mean_index)]
 
     return by_mean
-
-
-with open("data/8757033.json") as fh:
-    user_qa = json.load(fh)
-
-with open("feed.json") as fh:
-    feed = json.load(fh)
-
-recommended = recommend(user_qa, feed)
-
-print("\n".join(["{:>3}. {}".format(i, feed[i]["title"]) for i in recommended]))
