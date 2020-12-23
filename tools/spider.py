@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 
 from tools.displayer import fg, green, yellow
 
-_rp = {} # robots.txt memory
+_rp = {}  # robots.txt memory
 
 
 class _FalseResponse:
