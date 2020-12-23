@@ -128,7 +128,7 @@ def parse_arguments() -> argparse.Namespace:
         "command",
         choices=("save", "summary", "tags", "answers", "recommend"),
         help="save,summary,tags,answers,recommend",
-        default="recommend"
+        default="recommend",
         metavar="COMMAND",
     )
     parser.add_argument("-r", "--reverse", help="reverse sorting", action="store_true")
