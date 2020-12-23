@@ -44,7 +44,6 @@ def get(url, cache=True, delay=2):
     useragent = "Answerable v0.1"
 
     # If a cached answer exists and is acceptable, then return the cached one.
-
     p = pathlib.Path.cwd() / "data" / "spider" / url.replace("/", "-")
     if cache and p.exists():
         with open(p, "r") as fh:
@@ -53,25 +52,21 @@ def get(url, cache=True, delay=2):
         return _FalseResponse(200, res)
 
     # If the robots.txt doesn't allow the scraping, return forbidden status
-
     if not ask_robots(url, useragent):
         return _FalseResponse(403, "robots.txt forbids it")
 
     # Make the request after the specified delay
-
     print("[{}] {}".format(fg("{:4.2f}".format(delay), yellow), url))
     sleep(delay)
     headers = {"User-Agent": useragent}
     res = requests.get(url, timeout=10, headers=headers)
 
     # Exit the program if the scraping was penalized
-
     if res.status_code == 429:  # too many requests
         print("TOO MANY REQUESTS: ABORTING", file=sys.stderr)
         exit()
 
     # Cache the response if allowed by user
-
     if cache:
         p.parent.mkdir(parents=True, exist_ok=True)
         with open(p, "w") as fh:
@@ -87,7 +82,6 @@ def get_feed(url, store=True):
     useragent = "Answerable RSS v0.1"
 
     # Get the conditions for the GET bandwith reduction
-
     p = pathlib.Path.cwd() / "data" / "spider" / "feed" / url.replace("/", "-")
     etag = None
     modified = None
@@ -98,11 +92,9 @@ def get_feed(url, store=True):
             modified = headers["modified"]
 
     # Get the feed
-
     feed = feedparser.parse(url, agent=useragent, etag=etag, modified=modified)
 
     # Store the etag and/or modified headers if told so
-
     if store:
         p.parent.mkdir(parents=True, exist_ok=True)
         with open(p, "w") as fh:
