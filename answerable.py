@@ -128,6 +128,7 @@ def parse_arguments() -> argparse.Namespace:
         "command",
         choices=("save", "summary", "tags", "answers", "recommend"),
         help="save,summary,tags,answers,recommend",
+        nargs="?",
         default="recommend",
         metavar="COMMAND",
     )
