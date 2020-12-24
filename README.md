@@ -26,46 +26,48 @@ iguelMJ/Answerable)
   - [Quick guide](#Quick-guide25)
     - [The .config file](#The-.config-file42)
     - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file46)
-  - [Contributors](#Contributors68)
-  - [To do](#To-do74)
-  - [Contributing](#Contributing92)
-  - [License](#License101)
+  - [Contributors](#Contributors70)
+  - [To do](#To-do76)
+  - [Contributing](#Contributing95)
+  - [License](#License104)
 
 <h2 id="Quick-guide25">Quick guide</h2> 
 
 [[TOC](#toc)]
 
-- **Save your user**
+1. **Save your user**
 
-	```
-	python answerable.py save -u ID [-t SOURCE-FILE]
-	```
-	
-- **Get recommendations from the latest questions**
+```bash
+python answerable.py save -u ID [-t SOURCE-FILE]
+```
 
-	```
-	python answerable.py recommend [-u ID [-t SOURCE-FILE]]
-	```
+2. **Get recommendations from the latest questions**
+
+```bash
+python answerable.py recommend [-u ID [-t SOURCE-FILE]]
+```
 
 
 <h3 id="The-.config-file42">The .config file</h3> 
 
-The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can save them to this file and the following executions will read them from it.
+The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can use `save` to store them in this file.
 
 <h3 id="Where-to-get-the-user-ID-and-tags-file46">Where to get the user ID and tags file</h3> 
 
-You can find your id in the url of your profile, that has the following form:
+You can find your **user ID** in the url of your profile, that has the following form:
 
 ```
-https://stackoverflow.com/users/{id}/{name}
+https://stackoverflow.com/users/{ID}/{name}
 ```
 
-The tags file requires few extra steps. The reason is that, for now, I won't be implementing the use of the authentication_token for the Stack Exchange API, and to obtain the tags the program must scrap the page. However, this page is private, so you must download. This should be simple. 
+The **tags file** requires few extra steps. For now, I won't be implementing the use of the authentication_token for the Stack Exchange API, so the program must scrap the page to obtain the tags.
 
-1. Go to the following page:
+As this page is private, you must download its contents following this steps: 
+
+1. Go to the following page in your browser (tested in Firefox and Chrome):
 
    ```
-   view-source:https://stackoverflow.com/users/tag-notifications/{id}
+   view-source:https://stackoverflow.com/users/tag-notifications/{ID}
    ```
 
 2. Select all (`Ctrl+A`).
@@ -74,21 +76,21 @@ The tags file requires few extra steps. The reason is that, for now, I won't be 
 
    That will be the tags file.
 
-<h2 id="Contributors68">Contributors</h2> 
+<h2 id="Contributors70">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do74">To do</h2> 
+<h2 id="To-do76">To do</h2> 
 
 [[TOC](#toc)]
 
 - [x] Use `argparse` to interpret the CLI options.
 - [ ] ~~Implement all commands.~~
-- [ ] Document new behaviour
+- [x] Document new behaviour
 - [ ] Make a tool for unifying cached content management.
-- [ ] Test and improve the learning models.
+- [x] Test and improve the learning models.
 - [ ] Complete documentation.
 - [ ] Adapt behaviour for users with authentication token.
 
@@ -97,8 +99,9 @@ Be the first on this list!
 - [ ] Include the rest of the Stack Exchange communitites.
 - [ ] Make a GUI.
 - [ ] Display statistics about the information taken into account to make the recommendations.
+- [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing92">Contributing</h2> 
+<h2 id="Contributing95">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -107,7 +110,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License101">License</h2> 
+<h2 id="License104">License</h2> 
 
 [[TOC](#toc)]
 
