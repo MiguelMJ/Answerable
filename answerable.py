@@ -93,15 +93,34 @@ def answers(args):
 
 def recommend(args):
     """Recommend questions from the latest unanswered"""
-    
+
+    # Load configuration, get user info and feed
     config = load_config(args)
     user_qa = fetcher.get_QA(config["user"])
-    feed = fetcher.get_question_feed()
+    if config["tags"] is None:
+        tags = ""
+    else:
+        tags = "tag?tagnames="
+        tags += "%20or%20".join(config["tags"]["followed"]).replace("+", "%2b")
+        tags += "&sort=newest"
+    url = "https://stackoverflow.com/feeds/" + tags
+    feed = fetcher.get_question_feed(url)
     # with open("data/test/feed.json") as fh:
     #     feed = json.load(fh)
-    
+    #     feed = [x for x in feed
+    #             if len(set(x["tags"]) & set(config["tags"]["followed"])) > 0]
+
+    # Filter feed from ignored tags
+    hide_tags = set(config["tags"]["ignored"])
+
+    def should_show(entry):
+        # True if empty intersection
+        return len(set(entry["tags"]) & hide_tags) == 0
+
+    feed = [e for e in feed if should_show(e)]
+
     rec_index = recommender.recommend(user_qa, feed)
-    selection = [feed[i] for i in rec_index[:args.limit]]
+    selection = [feed[i] for i in rec_index[: args.limit]]
     displayer.disp_feed(selection)
     pass
 

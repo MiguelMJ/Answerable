@@ -89,8 +89,7 @@ def get_QA(user_id):
     return user_qa
 
 
-def get_question_feed():
-    url = "https://stackoverflow.com/feeds"
+def get_question_feed(url):
     feed = spider.get_feed(url)
     if feed.status == 304:  # Not Modified
         return []

@@ -67,8 +67,16 @@ def color(msg, fgc, bgc):
 
 def disp_feed(feed):
     for entry in feed:
-        print("-",bold(entry["title"]))
-        print(" ",entry["link"])
+
+        def title(x):
+            return fg(bold(x), lighten(blue, 0.3))
+
+        def tag(x):
+            return fg("[" + x + "]", darken(cyan,0.2))
+
+        print("o", title(entry["title"]))
+        print(" ", " ".join(tag(t) for t in entry["tags"]))
+        print(" ", entry["link"])
 
 
 def disp_summary(user_qa, truncate, sort_key, limit, reverse):
