@@ -16,22 +16,21 @@
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
 
-___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/M
-iguelMJ/Answerable)
+___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/MiguelMJ/Answerable)
 
 **Table of contents**
 
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide25)
-    - [The .config file](#The-.config-file42)
-    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file46)
-  - [Contributors](#Contributors70)
-  - [To do](#To-do76)
-  - [Contributing](#Contributing95)
-  - [License](#License104)
+  - [Quick guide](#Quick-guide24)
+    - [The .config file](#The-.config-file41)
+    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file45)
+  - [Contributors](#Contributors69)
+  - [To do](#To-do75)
+  - [Contributing](#Contributing94)
+  - [License](#License103)
 
-<h2 id="Quick-guide25">Quick guide</h2> 
+<h2 id="Quick-guide24">Quick guide</h2> 
 
 [[TOC](#toc)]
 
@@ -48,11 +47,11 @@ python answerable.py recommend [-u ID [-t SOURCE-FILE]]
 ```
 
 
-<h3 id="The-.config-file42">The .config file</h3> 
+<h3 id="The-.config-file41">The .config file</h3> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can use `save` to store them in this file.
 
-<h3 id="Where-to-get-the-user-ID-and-tags-file46">Where to get the user ID and tags file</h3> 
+<h3 id="Where-to-get-the-user-ID-and-tags-file45">Where to get the user ID and tags file</h3> 
 
 You can find your **user ID** in the url of your profile, that has the following form:
 
@@ -76,13 +75,13 @@ As this page is private, you must download its contents following this steps:
 
    That will be the tags file.
 
-<h2 id="Contributors70">Contributors</h2> 
+<h2 id="Contributors69">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do76">To do</h2> 
+<h2 id="To-do75">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -101,7 +100,7 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing95">Contributing</h2> 
+<h2 id="Contributing94">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -110,7 +109,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License104">License</h2> 
+<h2 id="License103">License</h2> 
 
 [[TOC](#toc)]
 
