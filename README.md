@@ -28,8 +28,8 @@ iguelMJ/Answerable)
     - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file46)
   - [Contributors](#Contributors68)
   - [To do](#To-do74)
-  - [Contributing](#Contributing91)
-  - [License](#License100)
+  - [Contributing](#Contributing92)
+  - [License](#License101)
 
 <h2 id="Quick-guide25">Quick guide</h2> 
 
@@ -87,6 +87,7 @@ Be the first on this list!
 - [x] Use `argparse` to interpret the CLI options.
 - [ ] ~~Implement all commands.~~
 - [ ] Document new behaviour
+- [ ] Make a tool for unifying cached content management.
 - [ ] Test and improve the learning models.
 - [ ] Complete documentation.
 - [ ] Adapt behaviour for users with authentication token.
@@ -97,7 +98,7 @@ Be the first on this list!
 - [ ] Make a GUI.
 - [ ] Display statistics about the information taken into account to make the recommendations.
 
-<h2 id="Contributing91">Contributing</h2> 
+<h2 id="Contributing92">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -106,7 +107,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License100">License</h2> 
+<h2 id="License101">License</h2> 
 
 [[TOC](#toc)]
 
