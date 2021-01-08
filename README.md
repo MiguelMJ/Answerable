@@ -8,7 +8,10 @@
         <img alt="license" src="https://img.shields.io/badge/license-MIT-informational">
     </a>
 	<img alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable">
-	<img alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational">  
+	<img alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational">
+	<a href="https://github.com/MiguelMJ/Answerable/wiki">
+        <img alt="documentation" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+    </a>
 	<a href="https://github.com/psf/black">
         <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
     </a>
@@ -22,15 +25,15 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide24)
-    - [The .config file](#The-.config-file41)
-    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file45)
-  - [Contributors](#Contributors69)
-  - [To do](#To-do75)
-  - [Contributing](#Contributing95)
-  - [License](#License104)
+  - [Quick guide](#Quick-guide27)
+    - [The .config file](#The-.config-file44)
+    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file48)
+  - [Contributors](#Contributors72)
+  - [To do](#To-do78)
+  - [Contributing](#Contributing98)
+  - [License](#License107)
 
-<h2 id="Quick-guide24">Quick guide</h2> 
+<h2 id="Quick-guide27">Quick guide</h2> 
 
 [[TOC](#toc)]
 
@@ -47,11 +50,11 @@ python answerable.py recommend [-u ID [-t SOURCE-FILE]]
 ```
 
 
-<h3 id="The-.config-file41">The .config file</h3> 
+<h3 id="The-.config-file44">The .config file</h3> 
 
 The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can use `save` to store them in this file.
 
-<h3 id="Where-to-get-the-user-ID-and-tags-file45">Where to get the user ID and tags file</h3> 
+<h3 id="Where-to-get-the-user-ID-and-tags-file48">Where to get the user ID and tags file</h3> 
 
 You can find your **user ID** in the url of your profile, that has the following form:
 
@@ -75,13 +78,13 @@ As this page is private, you must download its contents following this steps:
 
    That will be the tags file.
 
-<h2 id="Contributors69">Contributors</h2> 
+<h2 id="Contributors72">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do75">To do</h2> 
+<h2 id="To-do78">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -101,7 +104,7 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing95">Contributing</h2> 
+<h2 id="Contributing98">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -110,7 +113,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License104">License</h2> 
+<h2 id="License107">License</h2> 
 
 [[TOC](#toc)]
 
