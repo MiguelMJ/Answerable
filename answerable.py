@@ -7,12 +7,13 @@ import textwrap
 from tools import fetcher, displayer, analyzer, recommender
 
 _config_file = ".config"
+_log_files = []
 
 
 def log(msg, *argv):
     """Print to stderr a formatted message"""
-
-    print(msg.format(*argv), file=sys.stderr)
+    for f in _log_files:
+        print(msg.format(*argv), file=f)
 
 
 def get_user_tags(args):
@@ -76,6 +77,7 @@ def summary(args):
     )
 
 
+'''
 def tags(args):
     """Display the stats of the tags of the answered questions"""
 
@@ -89,6 +91,7 @@ def tags(args):
 def answers(args):
     """Display the answered questions coloring the value of each word"""
     pass
+'''
 
 
 def recommend(args):
@@ -180,7 +183,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument(
         "-a",
         "--all",
-        help="search through all the new questions, without tag filter. If the user tags haven't been saved before with the <save> command, this option is on by default.",
+        help="search through all the new questions, without tag filter. If the user tags haven't been saved before with the <save> command, this option is on by default",
         action="store_true",
     )
     parser.add_argument(
@@ -188,6 +191,12 @@ def parse_arguments() -> argparse.Namespace:
         "--tags",
         help="file with the source of the page with the user followed and ignored tags",
         metavar="FILE",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Show the log content in stderr too",
+        action="store_true",
     )
     parser.add_argument("--no-ansi", help="print without colors", action="store_true")
     args = parser.parse_args()
@@ -200,10 +209,14 @@ if __name__ == "__main__":
     switch = {
         "save": save_config,
         "summary": summary,
-        "tags": tags,
-        "answers": answers,
         "recommend": recommend,
     }
     args = parse_arguments()
     command = args.command
+
+    _log_files.add(open("answerable.log"))
+    if args.verbose:
+        _log_files.add(sys.stderr)
+
     switch[command](args)
+    _log_files[0].close()
