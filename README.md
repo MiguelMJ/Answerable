@@ -27,65 +27,46 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 <span id="toc"></span>
 
   - [Quick guide](#Quick-guide28)
-    - [The .config file](#The-.config-file45)
-    - [Where to get the user ID and tags file](#Where-to-get-the-user-ID-and-tags-file49)
-  - [Contributors](#Contributors73)
-  - [To do](#To-do79)
-  - [Contributing](#Contributing99)
-  - [License](#License108)
+  - [Contributors](#Contributors56)
+  - [To do](#To-do62)
+  - [Contributing](#Contributing82)
+  - [License](#License91)
 
 <h2 id="Quick-guide28">Quick guide</h2> 
 
 [[TOC](#toc)]
 
-1. **Save your user**
+1. Clone the repository
 
-```bash
-python answerable.py save -u ID [-t SOURCE-FILE]
-```
-
-2. **Get recommendations from the latest questions**
-
-```bash
-python answerable.py recommend [-u ID [-t SOURCE-FILE]]
-```
-
-
-<h3 id="The-.config-file45">The .config file</h3> 
-
-The most probable thing is that you will be using this program with your user, repeteadly. For this reason, instead of having to call Answerable always with the `-u|--user` and `-t|--tags`, you can use `save` to store them in this file.
-
-<h3 id="Where-to-get-the-user-ID-and-tags-file49">Where to get the user ID and tags file</h3> 
-
-You can find your **user ID** in the url of your profile, that has the following form:
-
-```
-https://stackoverflow.com/users/{ID}/{name}
-```
-
-The **tags file** requires few extra steps. For now, I won't be implementing the use of the authentication_token for the Stack Exchange API, so the program must scrap the page to obtain the tags.
-
-As this page is private, you must download its contents following this steps: 
-
-1. Go to the following page in your browser (tested in Firefox and Chrome):
-
-   ```
-   view-source:https://stackoverflow.com/users/tag-notifications/{ID}
+   ```bash
+   git clone https://github.com/MiguelMJ/Answerable.git
    ```
 
-2. Select all (`Ctrl+A`).
+2. Save the user (see [how to get your relevant user information](https://github.com/MiguelMJ/Answerable/wiki/Getting_user_info))
 
-3. Copy and paste in a new file in your system.
+   ```bash
+   python answerable.py save -u ID -t FILE
+   ```
 
-   That will be the tags file.
+3. Get information of your profile
 
-<h2 id="Contributors73">Contributors</h2> 
+   ```bash
+   python answerable.py summary
+   ```
+
+4. Get recommendations
+
+   ```bash
+   python answerable.py recommend
+   ```
+
+<h2 id="Contributors56">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do79">To do</h2> 
+<h2 id="To-do62">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -105,7 +86,7 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing99">Contributing</h2> 
+<h2 id="Contributing82">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -114,7 +95,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License108">License</h2> 
+<h2 id="License91">License</h2> 
 
 [[TOC](#toc)]
 
