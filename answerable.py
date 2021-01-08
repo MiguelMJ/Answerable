@@ -147,8 +147,7 @@ def parse_arguments() -> argparse.Namespace:
         "command",
         choices=("save", "summary", "tags", "answers", "recommend"),
         help="save,summary,tags,answers,recommend",
-        nargs="?",
-        default="recommend",
+        default=None,
         metavar="COMMAND",
     )
     parser.add_argument("-r", "--reverse", help="reverse sorting", action="store_true")
@@ -175,7 +174,6 @@ def parse_arguments() -> argparse.Namespace:
         "-k",
         "--key",
         help="sort the items displayed to a given key. It has no effect on <recommend>",
-        choices=("count", "score", "value", "reputation"),
         default=None,
         metavar="K",
     )
