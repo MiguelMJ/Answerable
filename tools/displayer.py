@@ -72,7 +72,7 @@ def disp_feed(feed):
             return fg(bold(x), lighten(blue, 0.3))
 
         def tag(x):
-            return fg("[" + x + "]", darken(cyan,0.2))
+            return fg("[" + x + "]", darken(cyan, 0.2))
 
         print("o", title(entry["title"]))
         print(" ", " ".join(tag(t) for t in entry["tags"]))
@@ -101,7 +101,7 @@ def disp_summary(user_qa, truncate, sort_key, limit, reverse):
 
 def disp_tags(tags, sort_key, limit):
     width = max(len(x.name) for x in tags) + 23  # for the ansi bytes
-    tag_format = "{:>" + str(width) + "} - {:<7.4f}/{:3}"
+    tag_format = "{:>" + str(width) + "} - {:<} / {:} = {:<.2f}"
     alt = True
     switch = {
         "reputation": lambda x: -x.reputation,
@@ -113,7 +113,11 @@ def disp_tags(tags, sort_key, limit):
     if len(tags) > limit:
         tags = tags[:limit]
     for t in tags:
-        print(tag_format.format(fg(t.name, yellow), t.reputation, t.count))
+        print(
+            tag_format.format(
+                fg(t.name, yellow), t.reputation, t.count, t.reputation / t.count
+            )
+        )
         alt = not alt
 
 
