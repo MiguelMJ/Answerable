@@ -27,10 +27,10 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 <span id="toc"></span>
 
   - [Quick guide](#Quick-guide28)
-  - [Contributors](#Contributors56)
-  - [To do](#To-do62)
-  - [Contributing](#Contributing82)
-  - [License](#License91)
+  - [Contributors](#Contributors58)
+  - [To do](#To-do64)
+  - [Contributing](#Contributing84)
+  - [License](#License93)
 
 <h2 id="Quick-guide28">Quick guide</h2> 
 
@@ -60,13 +60,15 @@ ___This project is still under development.___ [![last commit](https://img.shiel
    python answerable.py recommend
    ```
 
-<h2 id="Contributors56">Contributors</h2> 
+_To see a more complete guide, visit the [wiki](https://github.com/Answerable/wiki)._
+
+<h2 id="Contributors58">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do62">To do</h2> 
+<h2 id="To-do64">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -86,7 +88,7 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing82">Contributing</h2> 
+<h2 id="Contributing84">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -95,7 +97,7 @@ Be the first on this list!
   - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License91">License</h2> 
+<h2 id="License93">License</h2> 
 
 [[TOC](#toc)]
 
