@@ -10,9 +10,11 @@ import feedparser
 from urllib.robotparser import RobotFileParser
 from urllib.parse import urlparse
 
-from tools.displayer import fg, green, yellow
+from tools.displayer import fg, bold, green, yellow, red
+from tools.log import log
 
 _rp = {}  # robots.txt memory
+log_who = "Spider"
 
 
 class _FalseResponse:
@@ -49,22 +51,25 @@ def get(url, cache=True, delay=2):
     if cache and p.exists():
         with open(p, "r") as fh:
             res = fh.read().replace("\\r\\n", "")
-        print(fg("CACHE", green), url)
+        log(log_who, "Used cached {}", fg(url, green))
         return _FalseResponse(200, res)
 
     # If the robots.txt doesn't allow the scraping, return forbidden status
     if not ask_robots(url, useragent):
+        log(log_who, fg("robots.txt forbids {}"), fg(url, red))
         return _FalseResponse(403, "robots.txt forbids it")
 
     # Make the request after the specified delay
-    print("[{}] {}".format(fg("{:4.2f}".format(delay), yellow), url))
+    # log("[{}] {}".format(fg("{:4.2f}".format(delay), yellow), url))
+    log(log_who, "Waiting to ask for {}", fg(url, yellow))
+    log(log_who, "  in {:4.2f} seconds", delay)
     sleep(delay)
     headers = {"User-Agent": useragent}
+    log(log_who, "Requesting")
     res = requests.get(url, timeout=10, headers=headers)
-
     # Exit the program if the scraping was penalized
     if res.status_code == 429:  # too many requests
-        print("TOO MANY REQUESTS: ABORTING", file=sys.stderr)
+        log(log_who, bold(red("Too many requests - Aborting")))
         exit()
 
     # Cache the response if allowed by user
@@ -72,7 +77,7 @@ def get(url, cache=True, delay=2):
         p.parent.mkdir(parents=True, exist_ok=True)
         with open(p, "w") as fh:
             fh.write(res.content.decode(res.encoding))
-            print("\tCached")
+        log(log_who, fg("  Cached", green))
 
     return res
 
@@ -81,6 +86,7 @@ def get_feed(url, store=True):
     """Get RSS feed and optionally remember to reduce bandwith"""
 
     useragent = "Answerable RSS v0.1"
+    log(log_who, "Requesting feed {}", fg(url, yellow))
 
     # Get the conditions for the GET bandwith reduction
     p = pathlib.Path.cwd() / "data" / "spider" / "feed" / url.replace("/", "-")
@@ -91,20 +97,26 @@ def get_feed(url, store=True):
             headers = json.load(fh)
             etag = headers["etag"]
             modified = headers["modified"]
+    log(log_who, "with {}: {}", bold("etag"), fg(etag, yellow))
+    log(log_who, "with {}: {}", bold("modified"), (fg(modified, yellow)))
 
     # Get the feed
     feed = feedparser.parse(url, agent=useragent, etag=etag, modified=modified)
 
     # Store the etag and/or modified headers if told so
-    if store:
+    if store and feed.status != 304:
         p.parent.mkdir(parents=True, exist_ok=True)
         with open(p, "w") as fh:
+            etag = feed.etag if "etag" in feed else None
+            modified = feed.modified if "modified" in feed else None
             json.dump(
                 {
-                    "etag": feed.etag if "etag" in feed else None,
-                    "modified": feed.modified if "modified" in feed else None,
+                    "etag": etag,
+                    "modified": modified,
                 },
                 fh,
             )
+        log(log_who, "Stored new {}: {}", bold("etag"), fg(etag, green))
+        log(log_who, "Stored new {}: {}", bold("modified"), fg(modified, green))
 
     return feed

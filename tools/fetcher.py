@@ -6,34 +6,48 @@ from datetime import timedelta as td
 from bs4 import BeautifulSoup
 
 from tools import spider
+from tools.log import log
+from tools.displayer import fg, yellow, magenta, green, bold
 
 __cache_dir = "data"
 __threshold = td(days=1)
+log_who = "Fetcher"
 
 
 def check_cache(filename):
+    log(log_who, "Checking cache: {}", fg(filename, yellow))
     cache_path = pathlib.Path.cwd() / __cache_dir
     cache_path.mkdir(parents=True, exist_ok=True)
     filepath = cache_path / filename
     if not filepath.exists():
+        log(log_who, fg("  Fail", magenta))
         return False, filepath
     else:
+        log(log_who, "  Hit")
         modified = dt.fromtimestamp(filepath.stat().st_mtime)
         now = dt.now()
         delta = now - modified
-        # print("Time since last crawl:", delta)
-        return delta < __threshold, filepath
+        log(log_who, "  Time since last fetch: {}", delta)
+        valid = delta < __threshold
+        if valid:
+            log(log_who, fg("  Recent enough", green))
+        else:
+            log(log_who, fg("  Too old", yellow))
+        return valid, filepath
 
 
 def update_cache(filename, obj):
+    log(log_who, "Saving in cache: {}", fg(filename, green))
     cache_path = pathlib.Path.cwd() / __cache_dir
     cache_path.mkdir(parents=True, exist_ok=True)
     filepath = cache_path / filename
     with open(filepath, "w") as fh:
         json.dump(obj, fh, indent=2)
+    log(log_who, "  Done")
 
 
 def get_QA(user_id):
+    log(log_who, bold("Fetching user information"))
     cache_file = str(user_id) + ".json"
     # Check cache
     hit, fpath = check_cache(cache_file)
@@ -90,9 +104,12 @@ def get_QA(user_id):
 
 
 def get_question_feed(url):
+    log(log_who, bold("Fetching question feed"))
     feed = spider.get_feed(url)
     if feed.status == 304:  # Not Modified
+        log(log_who, fg("Feed not modified since last retrieval (status 304)", magenta))
         return []
+    log(log_who, "Number of entries in feed: {}", fg(len(feed.entries), green))
     questions = []
     for entry in feed.entries:
         soup = BeautifulSoup(entry.summary, "html.parser")

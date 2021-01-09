@@ -2,18 +2,13 @@ import sys
 import json
 import argparse
 import pathlib
+import datetime
 import textwrap
 
-from tools import fetcher, displayer, analyzer, recommender
+from tools import fetcher, displayer, analyzer, recommender, log
 
 _config_file = ".config"
-_log_files = []
-
-
-def log(msg, *argv):
-    """Print to stderr a formatted message"""
-    for f in _log_files:
-        print(msg.format(*argv), file=f)
+log_who = "Answerable"
 
 
 def get_user_tags(args):
@@ -26,7 +21,7 @@ def get_user_tags(args):
     if args.tags is not None:
         return fetcher.get_user_tags(args.tags)
     else:
-        log("No tags file provided.")
+        log.log(log_who, "No tags file provided.")
         return None
 
 
@@ -42,7 +37,7 @@ def load_config(args) -> dict:
         config = json.load(fh)
     except IOError:
         if args.user == None:
-            log(".config not found: provide user id with -u option")
+            log.log(log_who, ".config not found: provide user id with -u option")
             exit(1)
         config = {"user": args.user, "tags": get_user_tags(args)}
     finally:
@@ -60,7 +55,7 @@ def save_config(args):
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
         json.dump({"user": args.user, "tags": tags}, fh, indent=2)
-        log("Configuration saved in {}", _config_file)
+        log.log(log_who, "Configuration saved in {}", _config_file)
 
 
 def summary(args):
@@ -214,9 +209,12 @@ if __name__ == "__main__":
     args = parse_arguments()
     command = args.command
 
-    _log_files.add(open("answerable.log"))
+    log.add_log("answerable.log")
     if args.verbose:
-        _log_files.add(sys.stderr)
+        log.add_stderr()
+
+    log.log(log_who, displayer.bold("Log of {}"), datetime.datetime.now())
 
     switch[command](args)
-    _log_files[0].close()
+
+    log.close_logs()
