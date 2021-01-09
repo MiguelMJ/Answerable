@@ -60,7 +60,7 @@ ___This project is still under development.___ [![last commit](https://img.shiel
    python answerable.py recommend
    ```
 
-_To see a more complete guide, visit the [wiki](https://github.com/Answerable/wiki)._
+_To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answerable/wiki)._
 
 <h2 id="Contributors58">Contributors</h2> 
 
