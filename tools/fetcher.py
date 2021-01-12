@@ -1,3 +1,10 @@
+"""Fetcher Tool for Answerable
+
+This file contains the high level functions in charge of data retrieval.
+It provides a interface between the spider/crawler and another level of
+cacheable information.
+"""
+
 import json
 import pathlib
 from datetime import datetime as dt
@@ -5,56 +12,25 @@ from datetime import timedelta as td
 
 from bs4 import BeautifulSoup
 
-from tools import spider
+from tools import spider, cache
 from tools.log import log
 from tools.displayer import fg, yellow, magenta, green, bold
 
-__cache_dir = "data"
-__threshold = td(days=1)
 log_who = "Fetcher"
+cache_where = "fetcher"
+cache_threshold = td(hours=12)
 
 
-def check_cache(filename):
-    log(log_who, "Checking cache: {}", fg(filename, yellow))
-    cache_path = pathlib.Path.cwd() / __cache_dir
-    cache_path.mkdir(parents=True, exist_ok=True)
-    filepath = cache_path / filename
-    if not filepath.exists():
-        log(log_who, fg("  Fail", magenta))
-        return False, filepath
-    else:
-        log(log_who, "  Hit")
-        modified = dt.fromtimestamp(filepath.stat().st_mtime)
-        now = dt.now()
-        delta = now - modified
-        log(log_who, "  Time since last fetch: {}", delta)
-        valid = delta < __threshold
-        if valid:
-            log(log_who, fg("  Recent enough", green))
-        else:
-            log(log_who, fg("  Too old", yellow))
-        return valid, filepath
-
-
-def update_cache(filename, obj):
-    log(log_who, "Saving in cache: {}", fg(filename, green))
-    cache_path = pathlib.Path.cwd() / __cache_dir
-    cache_path.mkdir(parents=True, exist_ok=True)
-    filepath = cache_path / filename
-    with open(filepath, "w") as fh:
-        json.dump(obj, fh, indent=2)
-    log(log_who, "  Done")
-
-
-def get_QA(user_id):
+def get_QA(user_id, force_reload=False):
     log(log_who, bold("Fetching user information"))
     cache_file = str(user_id) + ".json"
     # Check cache
-    hit, fpath = check_cache(cache_file)
-    if hit:
-        with open(fpath) as fh:
-            stored = json.load(fh)
-        return stored
+    if not force_reload:
+        hit, fpath = cache.check(cache_where, cache_file, cache_threshold)
+        if hit:
+            with open(fpath) as fh:
+                stored = json.load(fh)
+            return stored
     # Get the answers
     api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&order=desc&sort=creation&site=stackoverflow&filter=!.Fjr43gf6UvsWf.-.z(SMRV3sqodT"
     page = 1
@@ -77,7 +53,7 @@ def get_QA(user_id):
     k = int(len(answers) / max_ids) + 1
     for i in range(0, k):
         subset = answers[i * max_ids : (i + 1) * max_ids]
-        q_ids = ";".join([str(a["question_id"]) for a in answers])
+        q_ids = ";".join([str(a["question_id"]) for a in subset])
         page = 1
         while True:
             api_request = api_request_f.format(q_ids, page)
@@ -99,7 +75,9 @@ def get_QA(user_id):
     ]
     for qa in user_qa:
         qa[0]["tags"] = qa[1].pop("tags")
-    update_cache(cache_file, user_qa)
+
+    cache.update(cache_where, cache_file, user_qa)
+
     return user_qa
 
 
