@@ -17,7 +17,6 @@ def recommend(user_qa, feed):
 
     nans = len(answered)
     nunans = len(questions)
-    qindex = {x["title"]: i for i, x in enumerate(feed)}
 
     """
     The following code is an adapted version of the Content-Based recommmender
