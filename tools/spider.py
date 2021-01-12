@@ -1,3 +1,10 @@
+"""Spider Tool for Answerable
+
+This file contains the functions used to wrapp requests following
+respecful practices, taking into account robots.txt, conditional
+gets, caching contente, etc.
+"""
+
 import sys
 import json
 import pathlib

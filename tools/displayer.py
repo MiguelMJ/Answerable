@@ -1,3 +1,11 @@
+"""Displayer Tool for Answerable
+
+This file contains the functions and variables used to present the data.
+"""
+
+#
+# COLOR RELATED VARIABLES AND FUNCTIONS
+#
 red = (250, 0, 0)
 green = (0, 250, 0)
 blue = (0, 0, 250)
@@ -12,9 +20,6 @@ gray2 = (150, 150, 150)
 gray3 = (100, 100, 100)
 gray4 = (50, 50, 50)
 black = (0, 0, 0)
-
-ansi = True
-
 
 def lighten(c, r):
     dr = (250 - c[0]) * r
@@ -35,6 +40,12 @@ def interpolate(c, d, r):
     dg = (d[1] - c[1]) * r
     db = (d[2] - c[2]) * r
     return (int(c[0] + dr), int(c[1] + dg), int(c[2] + db))
+
+
+# 
+# ANSI RELATED VARIABLES AND FUNCTIONS
+# 
+ansi = True
 
 
 def bold(msg):
@@ -63,6 +74,9 @@ def color(msg, fgc, bgc):
     return bg(fg(msg, fgc), bgc)
 
 
+# 
+# DATA DISPLAY FUNCTIONS
+# 
 def disp_feed(feed):
     for entry in feed:
 
