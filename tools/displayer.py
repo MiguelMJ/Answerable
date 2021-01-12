@@ -1,5 +1,3 @@
-from tools.analyzer import word_expected_reputation
-
 red = (250, 0, 0)
 green = (0, 250, 0)
 blue = (0, 0, 250)
@@ -97,62 +95,3 @@ def disp_summary(user_qa, truncate, sort_key, limit, reverse):
             else q["title"]
         )
         print(summary_format.format(votes, fg(title, cyan)))
-
-
-def disp_tags(tags, sort_key, limit):
-    width = max(len(x.name) for x in tags) + 23  # for the ansi bytes
-    tag_format = "{:>" + str(width) + "} - {:<} / {:} = {:<.2f}"
-    alt = True
-    switch = {
-        "reputation": lambda x: -x.reputation,
-        "name": lambda x: x.name,
-        "count": lambda x: -x.count,
-        "ratio": lambda x: -x.reputation / x.count,
-    }
-    tags.sort(key=switch.get(sort_key, switch["reputation"]))
-    if len(tags) > limit:
-        tags = tags[:limit]
-    for t in tags:
-        print(
-            tag_format.format(
-                fg(t.name, yellow), t.reputation, t.count, t.reputation / t.count
-            )
-        )
-        alt = not alt
-
-
-def disp_word_freq(word_info, limit=10):
-    word_info.sort(key=lambda x: x.frequency, reverse=True)
-    if len(word_info) > limit:
-        word_info = word_info[:limit]
-    print("\n".join(str((x.word, x.frequency)) for x in word_info))
-
-
-def disp_answer_rated(answer, word_info, tag_info):
-    all_words = set(answer.qBody.split())
-    word_value = dict()
-    for w in all_words:
-        v = word_expected_reputation(w, word_info, tag_info)
-        word_value[w] = v
-    max_value = max(word_value.values())
-    ll = [x.split() for x in answer.qBody.split("\n")]
-    print(bold(answer.summary.title))
-    for l in ll:
-        for w in l:
-            rel_value = word_value[w] / max_value
-            col = (
-                gray3
-                if rel_value == 0
-                else interpolate(darken(yellow, 0.25), magenta, rel_value)
-            )
-            print(fg(w, col) + " ", end="")
-        print()
-    print()
-
-
-def disp_questions(questions):
-    for q in questions:
-        s = q.summary
-        print(fg(s.title, darken(yellow, 0.3)))
-        print("\t" + ", ".join([fg(t, darken(cyan, 0.3)) for t in q.tags]))
-        print("\t" + s.link)
