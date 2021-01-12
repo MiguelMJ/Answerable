@@ -22,53 +22,57 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 
 ___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/MiguelMJ/Answerable)
 
+**Preview**
+
+<p align="center"><img src="doc/preview.png" alt="preview"></p>
+
 **Table of contents**
 
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide28)
-  - [Contributors](#Contributors58)
-  - [To do](#To-do64)
-  - [Contributing](#Contributing84)
-  - [License](#License93)
+  - [Quick guide](#Quick-guide32)
+  - [Contributors](#Contributors62)
+  - [To do](#To-do68)
+  - [Contributing](#Contributing88)
+  - [License](#License97)
 
-<h2 id="Quick-guide28">Quick guide</h2> 
+<h2 id="Quick-guide32">Quick guide</h2> 
 
 [[TOC](#toc)]
 
-1. Clone the repository
+- Clone the repository
 
-   ```bash
-   git clone https://github.com/MiguelMJ/Answerable.git
-   ```
+    ```bash
+    git clone https://github.com/MiguelMJ/Answerable.git
+    ```
 
-2. Save the user (see [how to get your relevant user information](https://github.com/MiguelMJ/Answerable/wiki/Getting_user_info))
+- Save the user (see [how to get your relevant user information](https://github.com/MiguelMJ/Answerable/wiki/Getting_user_info))
 
-   ```bash
-   python answerable.py save -u ID -t FILE
-   ```
+    ```bash
+    python answerable.py save -u ID [-t FILE]
+    ```
 
-3. Get information of your profile
+- Get information of your profile
 
-   ```bash
-   python answerable.py summary
-   ```
+    ```bash
+    python answerable.py summary -u ID
+    ```
 
-4. Get recommendations
+- Get recommendations
 
-   ```bash
-   python answerable.py recommend
-   ```
+  ```bash
+  python answerable.py recommend -u ID
+  ```
 
 _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answerable/wiki)._
 
-<h2 id="Contributors58">Contributors</h2> 
+<h2 id="Contributors62">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do64">To do</h2> 
+<h2 id="To-do68">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -77,7 +81,7 @@ Be the first on this list!
 - [x] Document new behaviour
 - [ ] Make a tool for unifying cached content management.
 - [x] Test and improve the learning models.
-- [ ] Complete documentation.
+- [x] Complete documentation.
 - [ ] Adapt behaviour for users with authentication token.
 - [ ] Add flexible filters (Don't show questions with negative score e.g).
 
@@ -88,18 +92,22 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing84">Contributing</h2> 
+<h2 id="Contributing88">Contributing</h2> 
 
 [[TOC](#toc)]
 
-- In addition to the tasks listed above, you can also contribute by testing the program yourself and reporting any bugs in an issue.
+- In addition to the tasks listed above, you can also contribute by testing the program yourself and reporting any issue[![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
 - Give this project some visibility:
-  - :star: Star this repository ![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social).
+  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License93">License</h2> 
+<h2 id="License97">License</h2> 
 
 [[TOC](#toc)]
 
 Answerable uses the MIT license, a copy of which you can find [here](LICENSE), in the repo.
 
+
+```
+
+```
