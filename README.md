@@ -79,7 +79,7 @@ Be the first on this list!
 - [x] Use `argparse` to interpret the CLI options.
 - [ ] ~~Implement all commands.~~
 - [x] Document new behaviour
-- [ ] Make a tool for unifying cached content management.
+- [x] Make a tool for unifying cached content management.
 - [x] Test and improve the learning models.
 - [x] Complete documentation.
 - [ ] Adapt behaviour for users with authentication token.
