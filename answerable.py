@@ -35,8 +35,7 @@ def load_config(args) -> dict:
         config = json.load(fh)
     except IOError:
         if args.user == None:
-            log.log(log_who, ".config not found: provide user id with -u option")
-            exit(1)
+            abort(log_who, ".config not found: provide user id with -u option")
         config = {"user": args.user, "tags": get_user_tags(args)}
     finally:
         fh.close()
@@ -90,7 +89,7 @@ def recommend(args):
     #             if len(set(x["tags"]) & set(config["tags"]["followed"])) > 0]
 
     # Filter feed from ignored tags
-    hide_tags = set(config["tags"]["ignored"])
+    hide_tags = set(config["tags"]["ignored"]) if config["tags"] is not  None else set()
 
     def should_show(entry):
         # True if empty intersection

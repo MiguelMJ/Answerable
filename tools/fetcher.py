@@ -11,8 +11,8 @@ from datetime import timedelta as td
 from bs4 import BeautifulSoup
 
 from tools import spider, cache
-from tools.log import log
-from tools.displayer import fg, magenta, green, bold
+from tools.log import log, abort
+from tools.displayer import fg, magenta, green, bold, red
 
 log_who = "Fetcher"
 cache_where = "fetcher"
@@ -65,8 +65,7 @@ def get_QA(user_id, force_reload=False):
         api_request = api_request_f.format(user_id, page)
         response = spider.get(api_request)
         if response.status_code != 200:
-            print(response)
-            exit()
+            abort(log_who, response)
         result = json.loads(response.content)
         answers += result["items"]
         if not result["has_more"]:
@@ -85,8 +84,7 @@ def get_QA(user_id, force_reload=False):
             api_request = api_request_f.format(q_ids, page)
             response = spider.get(api_request, False)  # urls too long to cache
             if response.status_code != 200:
-                print(response)
-                exit()
+                abort(log_who, response)
             result = json.loads(response.content)
             questions += result["items"]
             if not result["has_more"]:
@@ -142,15 +140,18 @@ def get_question_feed(url):
 def get_user_tags(filename):
     """Parse the tags file and return the user followed and ignored tags"""
 
-    with open(filename, "r") as fh:
-        bs = BeautifulSoup(fh.read(), "html.parser")
-    return {
-        "followed": [
-            x.getText(" ", strip=True)
-            for x in bs.find(id="watching-1").find_all("a", class_="post-tag")
-        ],
-        "ignored": [
-            x.getText(" ", strip=True)
-            for x in bs.find(id="ignored-1").find_all("a", class_="post-tag")
-        ],
-    }
+    try:
+        with open(filename, "r") as fh:
+            bs = BeautifulSoup(fh.read(), "html.parser")
+        return {
+            "followed": [
+                x.getText(" ", strip=True)
+                for x in bs.find(id="watching-1").find_all("a", class_="post-tag")
+            ],
+            "ignored": [
+                x.getText(" ", strip=True)
+                for x in bs.find(id="ignored-1").find_all("a", class_="post-tag")
+            ],
+        }
+    except FileNotFoundError:
+        abort(log_who, "File not found: {}", filename)

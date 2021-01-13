@@ -7,7 +7,7 @@ in a unified format.
 import re
 import sys
 
-from tools.displayer import bold
+from tools.displayer import bold, red, fg
 
 _logs = []  # list of file handlers
 _ansire = re.compile("\\033\[[^m]+m")  # ansi escape sequences
@@ -37,6 +37,21 @@ def close_logs():
     for f in _logs:
         if f is not sys.stderr:
             f.close()
+
+
+def abort(who, msg, *argv):
+    """Print an error message and aborts execution"""
+
+    advice = False
+    if sys.stderr not in _logs:
+        add_stderr()
+        advice = True
+    log(who, fg(msg, red), *argv)
+    if advice:
+        lognames = ", ".join([fh.name for fh in _logs if fh is not sys.stderr])
+        print("Full log in", lognames, file=sys.stderr)
+    close_logs()
+    exit()
 
 
 def log(who, msg, *argv):

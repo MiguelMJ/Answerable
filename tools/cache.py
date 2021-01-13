@@ -68,7 +68,7 @@ def update(category: str, _file: str, obj):
     """
 
     subpath = pathlib.Path(category) / _file
-    path = pathlib.Path.cwd() / subpath
+    path = pathlib.Path.cwd() / __cache_dir / subpath
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w") as fh:
         json.dump(obj, fh, indent=2)

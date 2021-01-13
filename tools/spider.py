@@ -75,8 +75,7 @@ def get(url, cache=True, delay=2):
     res = requests.get(url, timeout=10, headers=headers)
     # Exit the program if the scraping was penalized
     if res.status_code == 429:  # too many requests
-        log(log_who, bold(red("Too many requests - Aborting")))
-        exit()
+        abort(log_who, "Too many requests")
 
     # Cache the response if allowed by user
     if cache:
