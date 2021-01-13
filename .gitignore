@@ -4,3 +4,4 @@ data
 *.in
 *.log
 .config
+whitelist.py
