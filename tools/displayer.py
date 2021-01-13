@@ -21,6 +21,7 @@ gray3 = (100, 100, 100)
 gray4 = (50, 50, 50)
 black = (0, 0, 0)
 
+
 def lighten(c, r):
     dr = (250 - c[0]) * r
     dg = (250 - c[1]) * r
@@ -42,9 +43,9 @@ def interpolate(c, d, r):
     return (int(c[0] + dr), int(c[1] + dg), int(c[2] + db))
 
 
-# 
+#
 # ANSI RELATED VARIABLES AND FUNCTIONS
-# 
+#
 ansi = True
 
 
@@ -74,9 +75,9 @@ def color(msg, fgc, bgc):
     return bg(fg(msg, fgc), bgc)
 
 
-# 
+#
 # DATA DISPLAY FUNCTIONS
-# 
+#
 def disp_feed(feed):
     for entry in feed:
 

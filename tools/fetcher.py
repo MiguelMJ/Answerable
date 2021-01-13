@@ -23,14 +23,14 @@ cache_threshold = td(hours=12)
 
 def get_QA(user_id, force_reload=False):
     """Retrieve information about the questions answered by the user
-    
+
     Returns a structure with the following format:
       [
         [Question_1, Answer_1],
-        [Question_2, Answer_2], 
+        [Question_2, Answer_2],
         ...
       ]
-    
+
     where Question_n has the following keys:
       view_count: int
       score: int
@@ -40,7 +40,7 @@ def get_QA(user_id, force_reload=False):
       title: str
       body: str (html)
       tags: list of str
-    
+
     and Answer_n has the following keys:
       is_accepted: bool
       score: int
@@ -49,7 +49,7 @@ def get_QA(user_id, force_reload=False):
       title: str
       body: str (html)
     """
-    
+
     log(log_who, bold("Fetching user information"))
     cache_file = str(user_id) + ".json"
     # Check cache
@@ -111,17 +111,17 @@ def get_QA(user_id, force_reload=False):
 
 def get_question_feed(url):
     """Retrieve the last questions of the feed
-    
+
     Returns a structure with the followint format:
       [Question_1, Question_2, ...]
-    
+
     where Question_n has the following keys:
       link: str
       title: str
       body: str (html)
       tags: list of str
     """
-    
+
     log(log_who, bold("Fetching question feed"))
     feed = spider.get_feed(url)
     if feed.status == 304:  # Not Modified
@@ -143,7 +143,7 @@ def get_question_feed(url):
 
 def get_user_tags(filename):
     """Parse the tags file and return the user followed and ignored tags"""
-    
+
     with open(filename, "r") as fh:
         bs = BeautifulSoup(fh.read(), "html.parser")
     return {
