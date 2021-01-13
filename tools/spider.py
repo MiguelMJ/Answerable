@@ -17,7 +17,7 @@ from urllib.robotparser import RobotFileParser
 from urllib.parse import urlparse
 
 from tools.displayer import fg, bold, green, yellow, red
-from tools.log import log
+from tools.log import log, abort
 
 _rp = {}  # robots.txt memory
 log_who = "Spider"

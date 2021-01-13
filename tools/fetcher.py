@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 
 from tools import spider, cache
 from tools.log import log, abort
-from tools.displayer import fg, magenta, green, bold, red
+from tools.displayer import fg, magenta, green, bold
 
 log_who = "Fetcher"
 cache_where = "fetcher"
