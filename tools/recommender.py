@@ -3,7 +3,6 @@
 This file contains the recommendation algorithm.
 """
 
-import json
 from bs4 import BeautifulSoup as bs
 from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics.pairwise import linear_kernel

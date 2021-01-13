@@ -5,7 +5,6 @@ respecful practices, taking into account robots.txt, conditional
 gets, caching contente, etc.
 """
 
-import sys
 import json
 import pathlib
 import requests

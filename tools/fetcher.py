@@ -6,15 +6,13 @@ cacheable information.
 """
 
 import json
-import pathlib
-from datetime import datetime as dt
 from datetime import timedelta as td
 
 from bs4 import BeautifulSoup
 
 from tools import spider, cache
 from tools.log import log
-from tools.displayer import fg, yellow, magenta, green, bold
+from tools.displayer import fg, magenta, green, bold
 
 log_who = "Fetcher"
 cache_where = "fetcher"

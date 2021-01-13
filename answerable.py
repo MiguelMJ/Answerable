@@ -1,7 +1,5 @@
-import sys
 import json
 import argparse
-import pathlib
 import datetime
 import textwrap
 
