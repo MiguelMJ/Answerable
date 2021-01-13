@@ -31,14 +31,15 @@ def load_config(args) -> dict:
     """
 
     try:
-        fh = open(_config_file)
-        config = json.load(fh)
+        with open(_config_file) as fh:
+            config = json.load(fh)
     except IOError:
-        if args.user == None:
-            abort(log_who, ".config not found: provide user id with -u option")
-        config = {"user": args.user, "tags": get_user_tags(args)}
+        config = {"user": None, "tags": get_user_tags(args)}
     finally:
-        fh.close()
+        if args.user is not None:
+            config["user"] = args.user
+        if config["user"] is None:
+            log.abort(log_who, ".config not found: provide user id with -u option")
     return config
 
 
