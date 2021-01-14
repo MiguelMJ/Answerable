@@ -60,13 +60,13 @@ def summary(args):
     """Display a summary of the answered questions"""
 
     config = load_config(args)
-    qa = fetcher.get_QA(config["user"])
+    qa = fetcher.get_QA(config["user"], force_reload=args.f)
     displayer.disp_summary(
         qa,
-        truncate=args.max_line,
-        sort_key=args.key,
+        truncate=80,
+        sort_key=None,
         limit=args.limit,
-        reverse=args.reverse,
+        reverse=False,
     )
 
 
@@ -75,31 +75,33 @@ def recommend(args):
 
     # Load configuration, get user info and feed
     config = load_config(args)
-    user_qa = fetcher.get_QA(config["user"])
-    if config["tags"] is None:
+    user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
+    if args.all or config["tags"] is None:
         tags = ""
     else:
         tags = "tag?tagnames="
         tags += "%20or%20".join(config["tags"]["followed"]).replace("+", "%2b")
         tags += "&sort=newest"
     url = "https://stackoverflow.com/feeds/" + tags
-    feed = fetcher.get_question_feed(url)
+    feed = fetcher.get_question_feed(url, force_reload=args.F)
     # with open("data/test/feed.json") as fh:
     #     feed = json.load(fh)
     #     feed = [x for x in feed
     #             if len(set(x["tags"]) & set(config["tags"]["followed"])) > 0]
 
     # Filter feed from ignored tags
-    hide_tags = set(config["tags"]["ignored"]) if config["tags"] is not None else set()
+    hide_tags = (
+        set() if args.all or config["tags"] is None else set(config["tags"]["ignored"])
+    )
 
     def should_show(entry):
         # True if empty intersection
         return len(set(entry["tags"]) & hide_tags) == 0
 
-    feed = [e for e in feed if should_show(e)]
-
-    rec_index = recommender.recommend(user_qa, feed)
-    selection = [feed[i] for i in rec_index[: args.limit]]
+    useful_feed = [e for e in feed if should_show(e)]
+    log.log(log_who, "{} questions filtered out by tags", len(feed) - len(useful_feed))
+    rec_index = recommender.recommend(user_qa, useful_feed)
+    selection = [useful_feed[i] for i in rec_index[: args.limit]]
     displayer.disp_feed(selection)
     pass
 
@@ -117,21 +119,27 @@ def parse_arguments() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent(
             """\
-                For more information, see the README.md
-                The code for Answerable is available in https://github.com/MiguelMJ/Answerable
+                Code: https://github.com/MiguelMJ/Answerable
+                Documentation: in https://github.com/MiguelMJ/Answerable/wiki
                 """
         ),
     )
     parser.add_argument(
         "command",
-        choices=("save", "summary", "tags", "answers", "recommend"),
-        help="save,summary,tags,answers,recommend",
-        default=None,
+        choices=("save", "summary", "recommend"),
+        help="save,summary,recommend",
         metavar="COMMAND",
     )
-    parser.add_argument("-r", "--reverse", help="reverse sorting", action="store_true")
     parser.add_argument(
-        "-u", "--user", help="identifier of Stack Overflow user", metavar="ID"
+        "-v",
+        "--verbose",
+        help="show the log content in stderr too",
+        action="store_true",
+    )
+    parser.add_argument("--no-ansi", help="print without colors", action="store_true")
+    parser.add_argument("-f", help="force reload of user data", action="store_true")
+    parser.add_argument(
+        "-F", help="force retrieval of question feed", action="store_true"
     )
     parser.add_argument(
         "-l",
@@ -142,25 +150,13 @@ def parse_arguments() -> argparse.Namespace:
         metavar="N",
     )
     parser.add_argument(
-        "-m",
-        "--max-line",
-        help="truncate titles with a max length in <summary>",
-        type=int,
-        default=80,
-        metavar="N",
-    )
-    parser.add_argument(
-        "-k",
-        "--key",
-        help="sort the items displayed to a given key. It has no effect on <recommend>",
-        default=None,
-        metavar="K",
-    )
-    parser.add_argument(
         "-a",
         "--all",
-        help="search through all the new questions, without tag filter. If the user tags haven't been saved before with the <save> command, this option is on by default",
+        help="don't use tags to filter the feed. If the user tags haven't been saved before with the <save> command, this option is on by default",
         action="store_true",
+    )
+    parser.add_argument(
+        "-u", "--user", help="identifier of Stack Overflow user", metavar="ID"
     )
     parser.add_argument(
         "-t",
@@ -168,13 +164,6 @@ def parse_arguments() -> argparse.Namespace:
         help="file with the source of the page with the user followed and ignored tags",
         metavar="FILE",
     )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        help="Show the log content in stderr too",
-        action="store_true",
-    )
-    parser.add_argument("--no-ansi", help="print without colors", action="store_true")
     args = parser.parse_args()
     if args.no_ansi:
         displayer.ansi = False

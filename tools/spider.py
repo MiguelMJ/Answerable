@@ -90,7 +90,7 @@ def get(url, delay=2, use_cache=True, max_delta=td(hours=12)):
     return res
 
 
-def get_feed(url, store=True):
+def get_feed(url, force_reload=False):
     """Get RSS feed and optionally remember to reduce bandwith"""
 
     useragent = "Answerable RSS v0.1"
@@ -98,23 +98,23 @@ def get_feed(url, store=True):
     cache_file = url.replace("/", "_")
 
     # Get the conditions for the GET bandwith reduction
-
-    hit, path = cache.check("spider.rss", cache_file, td(days=999))
     etag = None
     modified = None
-    if hit:
-        with open(path, "r") as fh:
-            headers = json.load(fh)
-            etag = headers["etag"]
-            modified = headers["modified"]
-    log(log_who, "with {}: {}", bold("etag"), fg(etag, yellow))
-    log(log_who, "with {}: {}", bold("modified"), (fg(modified, yellow)))
+    if not force_reload:
+        hit, path = cache.check("spider.rss", cache_file, td(days=999))
+        if hit:
+            with open(path, "r") as fh:
+                headers = json.load(fh)
+                etag = headers["etag"]
+                modified = headers["modified"]
+        log(log_who, "with {}: {}", bold("etag"), fg(etag, yellow))
+        log(log_who, "with {}: {}", bold("modified"), fg(modified, yellow))
 
     # Get the feed
     feed = feedparser.parse(url, agent=useragent, etag=etag, modified=modified)
 
-    # Store the etag and/or modified headers if told so
-    if store and feed.status != 304:
+    # Store the etag and/or modified headers
+    if feed.status != 304:
         etag = feed.etag if "etag" in feed else None
         modified = feed.modified if "modified" in feed else None
         new_headers = {

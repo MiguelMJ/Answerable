@@ -19,7 +19,7 @@ cache_where = "fetcher"
 cache_threshold = td(hours=12)
 
 
-def get_QA(user_id, force_reload=False):
+def get_QA(user_id, force_reload=False, max_page=5):
     """Retrieve information about the questions answered by the user
 
     Returns a structure with the following format:
@@ -49,6 +49,8 @@ def get_QA(user_id, force_reload=False):
     """
 
     log(log_who, bold("Fetching user information"))
+    if force_reload:
+        log(log_who, fg("Force reload", magenta))
     cache_file = str(user_id) + ".json"
     # Check cache
     if not force_reload:
@@ -61,9 +63,11 @@ def get_QA(user_id, force_reload=False):
     api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&order=desc&sort=creation&site=stackoverflow&filter=!.Fjr43gf6UvsWf.-.z(SMRV3sqodT"
     page = 1
     answers = []
-    while True:
+    while page <= max_page:
         api_request = api_request_f.format(user_id, page)
-        response = spider.get(api_request)
+        response = spider.get(
+            api_request, max_delta=td() if force_reload else td(hours=12)
+        )
         if response.status_code != 200:
             abort(log_who, response)
         result = json.loads(response.content)
@@ -107,7 +111,7 @@ def get_QA(user_id, force_reload=False):
     return user_qa
 
 
-def get_question_feed(url):
+def get_question_feed(url, force_reload=False):
     """Retrieve the last questions of the feed
 
     Returns a structure with the followint format:
@@ -121,7 +125,9 @@ def get_question_feed(url):
     """
 
     log(log_who, bold("Fetching question feed"))
-    feed = spider.get_feed(url)
+    if force_reload:
+        log(log_who, fg("Force reload", magenta))
+    feed = spider.get_feed(url, force_reload=force_reload)
     if feed.status == 304:  # Not Modified
         log(log_who, fg("Feed not modified since last retrieval (status 304)", magenta))
         return []
