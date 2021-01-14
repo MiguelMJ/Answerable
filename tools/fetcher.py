@@ -60,13 +60,13 @@ def get_QA(user_id, force_reload=False, max_page=5):
                 stored = json.load(fh)
             return stored
     # Get the answers
-    api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&order=desc&sort=creation&site=stackoverflow&filter=!.Fjr43gf6UvsWf.-.z(SMRV3sqodT"
+    api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!.Fjr43gf6UvsWf.-.z(SMRV3sqodT"
     page = 1
     answers = []
     while page <= max_page:
         api_request = api_request_f.format(user_id, page)
         response = spider.get(
-            api_request, max_delta=td() if force_reload else td(hours=12)
+            api_request, delay=0.5, max_delta=td() if force_reload else td(hours=12)
         )
         if response.status_code != 200:
             abort(log_who, response)
@@ -76,18 +76,22 @@ def get_QA(user_id, force_reload=False, max_page=5):
             break
         page += 1
     # Get the questions
-    api_request_f = "https://api.stackexchange.com/2.2/questions/{}?page={}&order=desc&sort=creation&site=stackoverflow&filter=!5RCLVFC_3nVp6Kjoti6BKirZj"
+    api_request_f = "https://api.stackexchange.com/2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!5RCLVFC_3nVp6Kjoti6BKirZj"
     questions = []
     max_ids = 100  # no more than 100 ids allowed at once
     k = int(len(answers) / max_ids) + 1
+    if k - len(answers)/max_ids == 1: # answers are exact
+        k = k-1
+    log(log_who, "{} answers, {} batches", len(answers), k)
     for i in range(0, k):
+        log(log_who, "batch {}", i)
         subset = answers[i * max_ids : (i + 1) * max_ids]
         q_ids = ";".join([str(a["question_id"]) for a in subset])
         page = 1
         while True:
             api_request = api_request_f.format(q_ids, page)
             response = spider.get(
-                api_request, use_cache=False
+                api_request, delay=0.5, use_cache=False
             )  # urls too long to cache
             if response.status_code != 200:
                 abort(log_who, response)
