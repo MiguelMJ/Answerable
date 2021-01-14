@@ -82,7 +82,9 @@ def get_QA(user_id, force_reload=False):
         page = 1
         while True:
             api_request = api_request_f.format(q_ids, page)
-            response = spider.get(api_request, False)  # urls too long to cache
+            response = spider.get(
+                api_request, use_cache=False
+            )  # urls too long to cache
             if response.status_code != 200:
                 abort(log_who, response)
             result = json.loads(response.content)
