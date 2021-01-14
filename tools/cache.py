@@ -58,7 +58,7 @@ def check(category: str, _file: str, max_delta: td) -> (bool, pathlib.Path):
         return valid, path
 
 
-def update(category: str, _file: str, obj):
+def update(category: str, _file: str, obj, json_format=True):
     """Update or create a file in the cache
 
     Parameters:
@@ -71,5 +71,8 @@ def update(category: str, _file: str, obj):
     path = pathlib.Path.cwd() / __cache_dir / subpath
     path.parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w") as fh:
-        json.dump(obj, fh, indent=2)
+        if json_format:
+            json.dump(obj, fh, indent=2)
+        else:
+            fh.write(obj)
     log(log_who, "  Cache updated: {}", fg(subpath, green))
