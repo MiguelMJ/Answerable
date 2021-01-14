@@ -33,8 +33,8 @@ ___This project is still under development.___ [![last commit](https://img.shiel
   - [Quick guide](#Quick-guide32)
   - [Contributors](#Contributors62)
   - [To do](#To-do68)
-  - [Contributing](#Contributing86)
-  - [License](#License95)
+  - [Contributing](#Contributing88)
+  - [License](#License97)
 
 <h2 id="Quick-guide32">Quick guide</h2> 
 
@@ -78,9 +78,11 @@ Be the first on this list!
 
 - [x] Test all documented behaviour (argument usage).
 - [ ] Adapt behaviour for users with authentication token.
+  - With an authentication token, the program could get the tags directly.
 - [x] Limit the number of answers retrieved from users with too many answers.
   - Too many answers reduce the recommendation quality.
   - Too many answers drastically increases the retrieval time.
+- [ ] Implement statistics for `summary` command.
 
 **Low priority**
 
@@ -90,7 +92,7 @@ Be the first on this list!
 - [ ] Display statistics about the information taken into account to make the recommendations.
 - [ ] Try out more learning models and integrate them.
 
-<h2 id="Contributing86">Contributing</h2> 
+<h2 id="Contributing88">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -99,13 +101,9 @@ Be the first on this list!
   - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License95">License</h2> 
+<h2 id="License97">License</h2> 
 
 [[TOC](#toc)]
 
 Answerable uses the MIT license, a copy of which you can find [here](LICENSE), in the repo.
 
-
-```
-
-```
