@@ -14,12 +14,14 @@ cyan = (0, 250, 250)
 magenta = (250, 0, 250)
 yellow = (250, 250, 0)
 
+"""
 white = (250, 250, 250)
 gray1 = (200, 200, 200)
 gray2 = (150, 150, 150)
 gray3 = (100, 100, 100)
 gray4 = (50, 50, 50)
 black = (0, 0, 0)
+"""
 
 
 def lighten(c, r):
@@ -36,11 +38,13 @@ def darken(c, r):
     return (int(c[0] - dr), int(c[1] - dg), int(c[2] - db))
 
 
+"""
 def interpolate(c, d, r):
     dr = (d[0] - c[0]) * r
     dg = (d[1] - c[1]) * r
     db = (d[2] - c[2]) * r
     return (int(c[0] + dr), int(c[1] + dg), int(c[2] + db))
+"""
 
 
 #
