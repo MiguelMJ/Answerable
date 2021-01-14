@@ -76,9 +76,9 @@ Be the first on this list!
 
 [[TOC](#toc)]
 
-- [ ] Test all documented behaviour (argument usage).
+- [x] Test all documented behaviour (argument usage).
 - [ ] Adapt behaviour for users with authentication token.
-- [ ] Limit the number of answers retrieved from users with too many answers.
+- [x] Limit the number of answers retrieved from users with too many answers.
   - Too many answers reduce the recommendation quality.
   - Too many answers drastically increases the retrieval time.
 
