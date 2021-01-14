@@ -6,16 +6,17 @@ gets, caching contente, etc.
 """
 
 import json
-import pathlib
 import requests
 
 # from random import random as rnd
 from time import sleep
+from datetime import timedelta as td
 
 import feedparser
 from urllib.robotparser import RobotFileParser
 from urllib.parse import urlparse
 
+from tools import cache
 from tools.displayer import fg, bold, green, yellow, red
 from tools.log import log, abort
 
@@ -47,18 +48,21 @@ def ask_robots(url: str, useragent: str) -> bool:
     return _rp[base].can_fetch(useragent, url)
 
 
-def get(url, cache=True, delay=2):
+def get(url, delay=2, use_cache=True, max_delta=td(hours=12)):
     """Respectful wrapper around requests.get"""
 
     useragent = "Answerable v0.1"
 
     # If a cached answer exists and is acceptable, then return the cached one.
-    p = pathlib.Path.cwd() / "data" / "spider" / url.replace("/", "-")
-    if cache and p.exists():
-        with open(p, "r") as fh:
-            res = fh.read().replace("\\r\\n", "")
-        log(log_who, "Used cached {}", fg(url, green))
-        return _FalseResponse(200, res)
+
+    cache_file = url.replace("/", "-")
+    if use_cache:
+        log(log_who, "Checking cache before petition {}", fg(url, yellow))
+        hit, path = cache.check("spider", cache_file, max_delta)
+        if hit:
+            with open(path, "r") as fh:
+                res = fh.read().replace("\\r\\n", "")
+            return _FalseResponse(200, res)
 
     # If the robots.txt doesn't allow the scraping, return forbidden status
     if not ask_robots(url, useragent):
@@ -78,11 +82,10 @@ def get(url, cache=True, delay=2):
         abort(log_who, "Too many requests")
 
     # Cache the response if allowed by user
-    if cache:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        with open(p, "w") as fh:
-            fh.write(res.content.decode(res.encoding))
-        log(log_who, fg("  Cached", green))
+    if use_cache:
+        cache.update(
+            "spider", cache_file, res.content.decode(res.encoding), json_format=False
+        )
 
     return res
 
@@ -92,13 +95,15 @@ def get_feed(url, store=True):
 
     useragent = "Answerable RSS v0.1"
     log(log_who, "Requesting feed {}", fg(url, yellow))
+    cache_file = url.replace("/", "_")
 
     # Get the conditions for the GET bandwith reduction
-    p = pathlib.Path.cwd() / "data" / "spider" / "feed" / url.replace("/", "-")
+
+    hit, path = cache.check("spider.rss", cache_file, td(days=999))
     etag = None
     modified = None
-    if (p).exists():
-        with open(p, "r") as fh:
+    if hit:
+        with open(path, "r") as fh:
             headers = json.load(fh)
             etag = headers["etag"]
             modified = headers["modified"]
@@ -110,17 +115,13 @@ def get_feed(url, store=True):
 
     # Store the etag and/or modified headers if told so
     if store and feed.status != 304:
-        p.parent.mkdir(parents=True, exist_ok=True)
-        with open(p, "w") as fh:
-            etag = feed.etag if "etag" in feed else None
-            modified = feed.modified if "modified" in feed else None
-            json.dump(
-                {
-                    "etag": etag,
-                    "modified": modified,
-                },
-                fh,
-            )
+        etag = feed.etag if "etag" in feed else None
+        modified = feed.modified if "modified" in feed else None
+        new_headers = {
+            "etag": etag,
+            "modified": modified,
+        }
+        cache.update("spider.rss", cache_file, new_headers)
         log(log_who, "Stored new {}: {}", bold("etag"), fg(etag, green))
         log(log_who, "Stored new {}: {}", bold("modified"), fg(modified, green))
 
