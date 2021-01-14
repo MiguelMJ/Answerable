@@ -5,6 +5,7 @@ It provides a interface between the spider/crawler and another level of
 cacheable information.
 """
 
+import math
 import json
 from datetime import timedelta as td
 
@@ -79,12 +80,10 @@ def get_QA(user_id, force_reload=False, max_page=5):
     api_request_f = "https://api.stackexchange.com/2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!5RCLVFC_3nVp6Kjoti6BKirZj"
     questions = []
     max_ids = 100  # no more than 100 ids allowed at once
-    k = int(len(answers) / max_ids) + 1
-    if k - len(answers)/max_ids == 1: # answers are exact
-        k = k-1
+    k = math.ceil(len(answers) / max_ids)
     log(log_who, "{} answers, {} batches", len(answers), k)
     for i in range(0, k):
-        log(log_who, "batch {}", i)
+        log(log_who, "batch {}", i+1)
         subset = answers[i * max_ids : (i + 1) * max_ids]
         q_ids = ";".join([str(a["question_id"]) for a in subset])
         page = 1
