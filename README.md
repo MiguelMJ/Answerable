@@ -33,8 +33,8 @@ ___This project is still under development.___ [![last commit](https://img.shiel
   - [Quick guide](#Quick-guide32)
   - [Contributors](#Contributors62)
   - [To do](#To-do68)
-  - [Contributing](#Contributing87)
-  - [License](#License96)
+  - [Contributing](#Contributing89)
+  - [License](#License98)
 
 <h2 id="Quick-guide32">Quick guide</h2> 
 
@@ -80,7 +80,9 @@ Be the first on this list!
 - [x] Limit the number of answers retrieved from users with too many answers.
   - Too many answers reduce the recommendation quality.
   - Too many answers drastically increases the retrieval time.
-- [ ] Implement statistics for `summary` command.
+- [ ] Allow said users to set which answers want to use.
+  - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option).
+- [x] Implement statistics for `summary` command.
 
 **Low priority**
 
@@ -91,7 +93,7 @@ Be the first on this list!
 - [ ] Try out more learning models and integrate them.
 - [ ] Adapt behaviour for users with authentication token.
 
-<h2 id="Contributing87">Contributing</h2> 
+<h2 id="Contributing89">Contributing</h2> 
 
 [[TOC](#toc)]
 
@@ -100,7 +102,7 @@ Be the first on this list!
   - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
   - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
 
-<h2 id="License96">License</h2> 
+<h2 id="License98">License</h2> 
 
 [[TOC](#toc)]
 
