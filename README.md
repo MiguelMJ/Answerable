@@ -34,7 +34,7 @@ ___This project is still under development.___ [![last commit](https://img.shiel
   - [Contributors](#Contributors62)
   - [To do](#To-do68)
   - [Contributing](#Contributing89)
-  - [License](#License98)
+  - [License](#License100)
 
 <h2 id="Quick-guide32">Quick guide</h2> 
 
@@ -97,12 +97,14 @@ Be the first on this list!
 
 [[TOC](#toc)]
 
-- In addition to the tasks listed above, you can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
-- Give this project some visibility:
-  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
-  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions).
+- Find the contributing guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-<h2 id="License98">License</h2> 
+- You can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
+- Give this project some visibility and feedback:
+  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
+  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions) and comment your feedback there.
+
+<h2 id="License100">License</h2> 
 
 [[TOC](#toc)]
 
