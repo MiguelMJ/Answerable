@@ -61,13 +61,8 @@ def summary(args):
 
     config = load_config(args)
     qa = fetcher.get_QA(config["user"], force_reload=args.f)
-    displayer.disp_summary(
-        qa,
-        truncate=80,
-        sort_key=None,
-        limit=args.limit,
-        reverse=False,
-    )
+
+    displayer.disp_statistics(qa)
 
 
 def recommend(args):

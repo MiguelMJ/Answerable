@@ -3,6 +3,8 @@
 This file contains the functions and variables used to present the data.
 """
 
+import tools.statistics as st
+
 #
 # COLOR RELATED VARIABLES AND FUNCTIONS
 #
@@ -45,7 +47,6 @@ def interpolate(c, d, r):
     db = (d[2] - c[2]) * r
     return (int(c[0] + dr), int(c[1] + dg), int(c[2] + db))
 """
-
 
 #
 # ANSI RELATED VARIABLES AND FUNCTIONS
@@ -96,21 +97,73 @@ def disp_feed(feed):
         print(" ", entry["link"])
 
 
-def disp_summary(user_qa, truncate, sort_key, limit, reverse):
-    summary_format = "[{}] {}"
-    switch = {
-        "reputation": lambda x: -x[1]["score"] * (10 - x[1]["is_accepted"] and 15 or 0),
-        "score": lambda x: x[1]["score"],
-    }
-    if sort_key:
-        user_qa.sort(key=switch[sort_key], reverse=reverse)
-    if len(user_qa) > limit:
-        user_qa = user_qa[:limit]
-    for q in [qa[1] for qa in user_qa]:
-        votes = fg(q["score"], green) if q["is_accepted"] else q["score"]
-        title = (
-            (q["title"][: truncate - 3] + "...")
-            if len(q["title"]) + 3 > truncate
-            else q["title"]
-        )
-        print(summary_format.format(votes, fg(title, cyan)))
+def table(data, align=""):
+    cols = len(data[0])
+    widths = []
+    for i in range(0, cols):
+        col = [x[i] for x in data]
+        widths.append(max([len(str(c)) for c in col]))
+
+    row_f = " ".join(["{{:{}{}}}".format(align, w) for w in widths])
+    for d in data:
+        print(row_f.format(*d))
+
+
+def disp_statistics(user_qa):
+
+    ans_f = fg("{}", lighten(blue, 0.3))
+    tag_f = fg("[{}]", darken(cyan, 0.2))
+    val_f = bold(fg("{}", green))
+
+    def print_section(txt):
+        print(bold(txt.upper()))
+        print()
+
+    def print_metric(txt):
+        def mark(x):
+            return bold(x)
+
+        print(mark(txt))
+
+    def print_answer_and_value(answer, value):
+        tags = [
+            qa[0] for qa in user_qa if qa[0]["question_id"] == answer["question_id"]
+        ][0]["tags"]
+        print(val_f.format(value), ans_f.format(answer["title"]))
+        print(" " * len(str(value)), " ".join([tag_f.format(t) for t in tags]))
+
+    user_answers = [x[1] for x in user_qa]
+
+    print_section("Answer metrics")
+    metrics = [
+        (bold(k), val_f.format(m(user_answers))) for k, m in st.answer_metrics_single
+    ]
+    table(metrics)
+    print()
+    for (name, metric, key) in st.answer_metrics_tops:
+        print_metric(name)
+        results = metric(user_answers)
+        for a in results:
+            print_answer_and_value(a, key(a))
+        print()
+
+    print_section("Tag metrics")
+    for (name, metric) in st.tag_metrics:
+        print_metric(name)
+        results = metric(user_qa)
+        results = [(tag_f.format(r[0]), val_f.format(r[1])) for r in results]
+        table(results)
+        print()
+
+    print_section("Reputation metrics")
+    metrics = [
+        (bold(k), val_f.format(m(user_answers)))
+        for k, m in st.reputation_metrics_single
+    ]
+    table(metrics)
+    print()
+    for w in st.reputation_weight_metrics[0]:
+        results = st.reputation_weight_metrics[1](user_answers, w)
+        for i, info in enumerate(st.reputation_weight_metrics[2]):
+            print_metric(info.format(w * 100))
+            print(val_f.format(results[i]))
