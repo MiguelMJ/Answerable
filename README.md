@@ -18,9 +18,7 @@
 </p>
 
 
-Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend you questions that you could answer.
-
-___This project is still under development.___ [![last commit](https://img.shields.io/github/last-commit/MiguelMJ/Answerable)](https://github.com/MiguelMJ/Answerable)
+Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend questions that you could answer.
 
 **Preview**
 
@@ -30,13 +28,13 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 
 <span id="toc"></span>
 
-  - [Quick guide](#Quick-guide32)
-  - [Contributors](#Contributors62)
-  - [To do](#To-do68)
-  - [Contributing](#Contributing89)
-  - [License](#License100)
+  - [Quick guide](#Quick-guide30)
+  - [Contributors](#Contributors60)
+  - [Contributing](#Contributing66)
+  - [To do](#To-do77)
+  - [License](#License98)
 
-<h2 id="Quick-guide32">Quick guide</h2> 
+<h2 id="Quick-guide30">Quick guide</h2> 
 
 [[TOC](#toc)]
 
@@ -66,13 +64,24 @@ ___This project is still under development.___ [![last commit](https://img.shiel
 
 _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answerable/wiki)._
 
-<h2 id="Contributors62">Contributors</h2> 
+<h2 id="Contributors60">Contributors</h2> 
 
 [[TOC](#toc)]
 
 Be the first on this list!
 
-<h2 id="To-do68">To do</h2> 
+<h2 id="Contributing66">Contributing</h2> 
+
+[[TOC](#toc)]
+
+- Find the contributing guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+- You can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
+- Give this project some visibility and feedback:
+  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
+  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions) and comment your feedback there.
+
+<h2 id="To-do77">To do</h2> 
 
 [[TOC](#toc)]
 
@@ -93,18 +102,7 @@ Be the first on this list!
 - [ ] Try out more learning models and integrate them.
 - [ ] Adapt behaviour for users with authentication token.
 
-<h2 id="Contributing89">Contributing</h2> 
-
-[[TOC](#toc)]
-
-- Find the contributing guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
-
-- You can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
-- Give this project some visibility and feedback:
-  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
-  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions) and comment your feedback there.
-
-<h2 id="License100">License</h2> 
+<h2 id="License98">License</h2> 
 
 [[TOC](#toc)]
 
