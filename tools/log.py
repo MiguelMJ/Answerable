@@ -39,6 +39,12 @@ def close_logs():
             f.close()
 
 
+def advice_message():
+    """Returns the advice of where to find the full logs"""
+    lognames = ", ".join([fh.name for fh in _logs if fh is not sys.stderr])
+    return "Full log in " + lognames
+
+
 def abort(who, msg, *argv):
     """Print an error message and aborts execution"""
 
@@ -48,10 +54,16 @@ def abort(who, msg, *argv):
         advice = True
     log(who, fg(msg, red), *argv)
     if advice:
-        lognames = ", ".join([fh.name for fh in _logs if fh is not sys.stderr])
-        print("Full log in", lognames, file=sys.stderr)
+        print(advice_message(), file=sys.stderr)
     close_logs()
     exit()
+
+
+def print_advice():
+    """Print where to find the full log if necessary"""
+
+    if sys.stderr not in _logs:
+        print(advice_message(), file=sys.stderr)
 
 
 def log(who, msg, *argv):
