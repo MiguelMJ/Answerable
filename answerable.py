@@ -1,3 +1,4 @@
+import sys
 import json
 import argparse
 import datetime
@@ -68,6 +69,31 @@ def summary(args):
 def recommend(args):
     """Recommend questions from the latest unanswered"""
 
+    filtered = {"hidden": 0, "closed": 0, "duplicate": 0}
+
+    def valid_entry(entry):
+        """Check if a entry should be taken into account"""
+
+        if len(set(entry["tags"]) & hide_tags) > 0:
+            filtered["hidden"] += 1
+            return False
+        if entry["title"][-8:] == "[closed]":
+            filtered["closed"] += 1
+            return False
+        if entry["title"][-11:] == "[duplicate]":
+            filtered["duplicate"] += 1
+            return False
+        return True
+
+    def cf(x):
+        """Color a value according to its value"""
+
+        return (
+            displayer.fg(x, displayer.green)
+            if x == 0
+            else displayer.fg(x, displayer.magenta)
+        )
+
     # Load configuration, get user info and feed
     config = load_config(args)
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
@@ -78,27 +104,32 @@ def recommend(args):
         tags += "%20or%20".join(config["tags"]["followed"]).replace("+", "%2b")
         tags += "&sort=newest"
     url = "https://stackoverflow.com/feeds/" + tags
-    feed = fetcher.get_question_feed(url, force_reload=args.F)
-    # with open("data/test/feed.json") as fh:
-    #     feed = json.load(fh)
-    #     feed = [x for x in feed
-    #             if len(set(x["tags"]) & set(config["tags"]["followed"])) > 0]
-
-    # Filter feed from ignored tags
-    hide_tags = (
-        set() if args.all or config["tags"] is None else set(config["tags"]["ignored"])
-    )
-
-    def should_show(entry):
-        # True if empty intersection
-        return len(set(entry["tags"]) & hide_tags) == 0
-
-    useful_feed = [e for e in feed if should_show(e)]
-    log.log(log_who, "{} questions filtered out by tags", len(feed) - len(useful_feed))
-    rec_index = recommender.recommend(user_qa, useful_feed)
-    selection = [useful_feed[i] for i in rec_index[: args.limit]]
-    displayer.disp_feed(selection)
-    pass
+    try:
+        feed = fetcher.get_question_feed(url, force_reload=args.F)
+        if len(feed) == 0:
+            raise ValueError("No feed returned")
+        # Filter feed from ignored tags
+        hide_tags = (
+            set()
+            if args.all or config["tags"] is None
+            else set(config["tags"]["ignored"])
+        )
+        useful_feed = [e for e in feed if valid_entry(e)]
+        if len(useful_feed) == 0:
+            raise ValueError("All feed filtered out")
+        log.log(
+            log_who,
+            "Discarded: {} ignored | {} closed | {} duplicate",
+            cf(filtered["hidden"]),
+            cf(filtered["closed"]),
+            cf(filtered["duplicate"]),
+        )
+        rec_index = recommender.recommend(user_qa, useful_feed)
+        selection = [useful_feed[i] for i in rec_index[: args.limit]]
+        displayer.disp_feed(selection)
+    except ValueError as err:
+        print(displayer.fg(err, displayer.magenta), file=sys.stderr)
+        log.print_advice()
 
 
 def parse_arguments() -> argparse.Namespace:
