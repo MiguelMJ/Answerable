@@ -32,7 +32,7 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
   - [Contributors](#Contributors60)
   - [Contributing](#Contributing66)
   - [To do](#To-do77)
-  - [License](#License98)
+  - [License](#License99)
 
 <h2 id="Quick-guide30">Quick guide</h2> 
 
@@ -92,6 +92,7 @@ Be the first on this list!
 - [ ] Allow said users to set which answers want to use.
   - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option).
 - [x] Implement statistics for `summary` command.
+- [ ] For new users without answers, we could add the option to just select questions that they would like to have answered.
 
 **Low priority**
 
@@ -102,7 +103,7 @@ Be the first on this list!
 - [ ] Try out more learning models and integrate them.
 - [ ] Adapt behaviour for users with authentication token.
 
-<h2 id="License98">License</h2> 
+<h2 id="License99">License</h2> 
 
 [[TOC](#toc)]
 
