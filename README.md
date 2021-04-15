@@ -79,7 +79,7 @@ _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answ
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://fxgit.work"><img src="https://avatars.githubusercontent.com/u/1080112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dennis Lee</b></sub></a><br /><a href="https://github.com/MiguelMJ/Answerable/issues?q=author%3Adennislwm" title="Bug reports">🐛</a> <a href="#blog-dennislwm" title="Blogposts">📝</a></td>
+    <td align="center"><a href="https://fxgit.work"><img src="https://avatars.githubusercontent.com/u/1080112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dennis Lee</b></sub></a><br /><a href="https://github.com/MiguelMJ/Answerable/issues?q=author%3Adennislwm" title="Bug reports">🐛</a> <a href="https://makerwork.substack.com/p/makerwork001" title="Blogposts">📝</a></td>
   </tr>
 </table>
 
