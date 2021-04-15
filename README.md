@@ -44,6 +44,12 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
     git clone https://github.com/MiguelMJ/Answerable.git
     ```
 
+- Install dependencies
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
 - Save the user (see [how to get your relevant user information](https://github.com/MiguelMJ/Answerable/wiki/Getting_user_info))
 
     ```bash
