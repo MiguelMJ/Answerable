@@ -75,6 +75,16 @@ _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answ
 [[TOC](#toc)]
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://fxgit.work"><img src="https://avatars.githubusercontent.com/u/1080112?v=4" width="100px;" alt=""/><br /><sub><b>Dennis Lee</b></sub></a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
