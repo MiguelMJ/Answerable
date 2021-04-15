@@ -72,22 +72,26 @@ _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answ
 
 <h2 id="Contributors60">Contributors</h2> 
 
-[[TOC](#toc)]
+[[TOC](#toc)] 
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+
+Thanks to the people that has contributed to this project are: ([emoji key](https://allcontributors.org/docs/en/emoji-key))
+
 <table>
   <tr>
     <td align="center"><a href="https://fxgit.work"><img src="https://avatars.githubusercontent.com/u/1080112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dennis Lee</b></sub></a><br /><a href="https://github.com/MiguelMJ/Answerable/issues?q=author%3Adennislwm" title="Bug reports">🐛</a> <a href="#blog-dennislwm" title="Blogposts">📝</a></td>
     <td align="center"><a href="https://github.com/danthe1st"><img src="https://avatars.githubusercontent.com/u/34687786?v=4?s=100" width="100px;" alt=""/><br /><sub><b>dan1st</b></sub></a><br /><a href="https://github.com/MiguelMJ/Answerable/commits?author=danthe1st" title="Documentation">📖</a></td>
   </tr>
 </table>
-
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the All Contributors specification.
 
 <h2 id="Contributing66">Contributing</h2> 
 
