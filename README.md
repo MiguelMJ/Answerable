@@ -29,7 +29,7 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 <span id="toc"></span>
 
   - [Quick guide](#Quick-guide30)
-  - [Contributors](#Contributors60)
+  - [Contributors](#contributors)
   - [Contributing](#Contributing66)
   - [To do](#To-do77)
   - [License](#License99)
@@ -70,16 +70,15 @@ Answerable is a Python program that learns from your answers in Stack Overflow a
 
 _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answerable/wiki)._
 
-<h2 id="Contributors60">Contributors</h2> 
+<h2 id="contributors">Contributors</h2> 
 
-[[TOC](#toc)] 
+[[TOC](#toc)]
+
+Thanks to the people that have contributed to this project: ([emoji key](https://allcontributors.org/docs/en/emoji-key))
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-
-Thanks to the people that have contributed to this project: ([emoji key](https://allcontributors.org/docs/en/emoji-key))
-
 <table>
   <tr>
     <td align="center"><a href="https://fxgit.work"><img src="https://avatars.githubusercontent.com/u/1080112?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dennis Lee</b></sub></a><br /><a href="https://github.com/MiguelMJ/Answerable/issues?q=author%3Adennislwm" title="Bug reports">🐛</a> <a href="#blog-dennislwm" title="Blogposts">📝</a></td>
