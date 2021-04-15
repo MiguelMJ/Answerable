@@ -74,7 +74,9 @@ _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answ
 
 [[TOC](#toc)]
 
-Be the first on this list!
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <h2 id="Contributing66">Contributing</h2> 
 
