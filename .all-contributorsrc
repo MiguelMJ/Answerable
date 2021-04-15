@@ -17,6 +17,15 @@
         "bug",
         "blog"
       ]
+    },
+    {
+      "login": "danthe1st",
+      "name": "dan1st",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34687786?v=4",
+      "profile": "https://github.com/danthe1st",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "projectName": "Answerable",
