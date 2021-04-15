@@ -78,7 +78,7 @@ _To see a more complete guide, visit the [wiki](https://github.com/MiguelMJ/Answ
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 
-Thanks to the people that has contributed to this project are: ([emoji key](https://allcontributors.org/docs/en/emoji-key))
+Thanks to the people that has contributed to this project: ([emoji key](https://allcontributors.org/docs/en/emoji-key))
 
 <table>
   <tr>
