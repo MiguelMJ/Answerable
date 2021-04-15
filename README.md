@@ -91,7 +91,7 @@ Thanks to the people that has contributed to this project are: ([emoji key](http
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the All Contributors specification.
+This project follows the [all-contributors](https://allcontributors.org/) specification.
 
 <h2 id="Contributing66">Contributing</h2> 
 
