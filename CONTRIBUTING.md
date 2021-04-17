@@ -6,7 +6,7 @@ In the [README.md](README.md) you will find the list of tasks I'm currently work
 
 ## Almost directly acceptable contributions
 
-- Making grammar corrections anywhere in the documentation or the comments in the code (don't spam these).
+- Making grammar corrections anywhere in [the documentation](https://github.com/MiguelMJ/Answerable/wiki) or the comments in the code (don't spam these).
 - Fixing a bug. If you don't want or know how to fix it, you can still open an issue.
 - Improving a piece of code without importing a new library. The less dependencies, the better.
 
