@@ -4,7 +4,8 @@
 <h1 align="center">Answerable</h1>
 <h3 align="center">Recommendation system for Stack Overflow unanswered questions</h3>
 <p align="center">
-	<a href="LICENSE">
+    <img alt="version1.0" src="https://img.shields.io/badge/version-v1.0-informational"
+    <a href="LICENSE">
         <img alt="license" src="https://img.shields.io/badge/license-MIT-informational">
     </a>
 	<img alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable">
@@ -16,7 +17,6 @@
         <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
     </a>
 </p>
-
 
 Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend questions that you could answer.
 
@@ -107,14 +107,14 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 
 [[TOC](#toc)]
 
-- [x] Test all documented behaviour (argument usage).
-- [x] Limit the number of answers retrieved from users with too many answers.
-  - Too many answers reduce the recommendation quality.
-  - Too many answers drastically increases the retrieval time.
-- [ ] Allow said users to set which answers want to use.
-  - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option).
-- [x] Implement statistics for `summary` command.
-- [ ] For new users without answers, we could add the option to just select questions that they would like to have answered.
+- [ ] Allow users with too many answers choose which ones to use.
+  - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option, as it could take several minutes to retrieve it all).
+- [ ] Add the option to just select questions that they would like to have answered (useful for users without answer history).
+- [ ] Store the last recommendations and update them instead of ignoring them in future calls.
+  - Upate means:
+    - Remove already answered/closed/marked as duplicate ones.
+    - Add the rest to the recently received, before applying the recommendation algorithm.
+- [ ] Add a command to manage the cache, instead of requiring the users to do it themselves.
 
 **Low priority**
 

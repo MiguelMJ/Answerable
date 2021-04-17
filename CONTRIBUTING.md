@@ -15,7 +15,8 @@ In the [README.md](README.md) you will find the list of tasks I'm currently work
 - Modifying or extending the displayed statistics.
 - Modifying or extending the recommendation algorithm.
 - Extending the documentation.
-- Solving any of the tasks listed in the To Do list in the [README.md](README.md)
+- Solving any of the tasks listed in the To Do list in the [README.md](README.md).
+  - *Notice:* Most of them require a more expert use of the [Stack Exchange API](https://api.stackexchange.com/).
 
 ## Contributions that require a heavy justification
 
