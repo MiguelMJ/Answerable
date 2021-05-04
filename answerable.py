@@ -3,6 +3,7 @@ import json
 import argparse
 import datetime
 import textwrap
+import importlib
 
 from tools import fetcher, displayer, recommender, log
 
@@ -26,18 +27,26 @@ def get_user_tags(args):
 def load_config(args) -> dict:
     """Return the user configuration
 
-    If the _config_file exists, return its contents. Otherwise, extact the
-    the configuration from the options -u and -t
+    If the _config_file exists, return its contents. Otherwise, extract the
+    the configuration from the options -u, -t and -m
     """
 
     try:
         with open(_config_file) as fh:
-            config = json.load(fh)
+            file_config = json.load(fh)
     except IOError:
-        config = {"user": None, "tags": get_user_tags(args)}
+        file_config = {}
     finally:
-        if args.user is not None:
-            config["user"] = args.user
+        default_config = {
+            "model": "content_based_0"
+        }
+        cli_config = {
+            "user": args.user,
+            "tags": args.tags,
+            "model": args.model
+        }
+        cli_config = {k:v for k,v in cli_config.items() if v is not None}
+        config = {**default_config, **file_config, **cli_config}
         if config["user"] is None:
             log.abort(".config not found: provide user id with -u option")
     return config
@@ -52,7 +61,7 @@ def save_config(args):
 
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
-        json.dump({"user": args.user, "tags": tags}, fh, indent=2)
+        json.dump({"user": args.user, "tags": tags, "model": model_name or "content_based_0"}, fh, indent=2)
         log.log("Configuration saved in {}", _config_file)
 
 
@@ -93,8 +102,21 @@ def recommend(args):
             else displayer.fg(x, displayer.magenta)
         )
 
-    # Load configuration, get user info and feed
+    # Load configuration
     config = load_config(args)
+    
+    # Load the model
+    try:
+        model_name = config["model"]
+        log.log("Loading model {}", displayer.fg(model_name, displayer.yellow))
+        model = importlib.import_module(f".{model_name}", "models")
+        log.log(
+            "Model {} succesfully loaded", displayer.fg(model_name, displayer.green)
+        )
+    except ModuleNotFoundError:
+        log.abort("Model {} not present", model_name)
+        
+    # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
     if args.all or config["tags"] is None:
         tags = ""
@@ -122,7 +144,9 @@ def recommend(args):
             cf(filtered["closed"]),
             cf(filtered["duplicate"]),
         )
-        rec_index = recommender.recommend(user_qa, useful_feed)
+        
+        # Make the recommendation
+        rec_index = model.recommend(user_qa, useful_feed)
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
         displayer.disp_feed(selection)
     except ValueError as err:
@@ -187,6 +211,12 @@ def parse_arguments() -> argparse.Namespace:
         "--tags",
         help="file with the source of the page with the user followed and ignored tags",
         metavar="FILE",
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        help="specify the recommendation model you want to use",
+        metavar="MODEL",
     )
     args = parser.parse_args()
     if args.no_ansi:
