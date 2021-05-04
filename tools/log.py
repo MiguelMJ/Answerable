@@ -22,7 +22,7 @@ def _strip_ansi(msg):
 
 def _get_caller():
     frm = inspect.stack()[2]
-    return  inspect.getmodule(frm[0]).__name__
+    return inspect.getmodule(frm[0]).__name__
 
 
 def add_stderr():
@@ -56,7 +56,7 @@ def abort(msg, *argv):
 
     if sys.stderr not in _logs:
         add_stderr()
-    log(fg(msg, red), *argv)
+    log(fg(msg, red), *argv, who=_get_caller())
     print_advice()
     close_logs()
     exit()
@@ -69,10 +69,11 @@ def print_advice():
         print(advice_message(), file=sys.stderr)
 
 
-def log(msg, *argv):
+def log(msg, *argv, **kargs):
     """Print to logs a formatted message"""
 
-    who = f"[{_get_caller()}] "
+    who = kargs["who"] if "who" in kargs else _get_caller()
+    who = f"[{who}] "
     textf = who + _strip_ansi(msg.format(*argv))
     texts = bold(who) + msg.format(*argv)
     for f in _logs:
