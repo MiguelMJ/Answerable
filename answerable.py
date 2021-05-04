@@ -7,7 +7,6 @@ import textwrap
 from tools import fetcher, displayer, recommender, log
 
 _config_file = ".config"
-log_who = "Answerable"
 
 
 def get_user_tags(args):
@@ -20,7 +19,7 @@ def get_user_tags(args):
     if args.tags is not None:
         return fetcher.get_user_tags(args.tags)
     else:
-        log.log(log_who, "No tags file provided.")
+        log.log("No tags file provided.")
         return None
 
 
@@ -40,7 +39,7 @@ def load_config(args) -> dict:
         if args.user is not None:
             config["user"] = args.user
         if config["user"] is None:
-            log.abort(log_who, ".config not found: provide user id with -u option")
+            log.abort(".config not found: provide user id with -u option")
     return config
 
 
@@ -54,7 +53,7 @@ def save_config(args):
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
         json.dump({"user": args.user, "tags": tags}, fh, indent=2)
-        log.log(log_who, "Configuration saved in {}", _config_file)
+        log.log("Configuration saved in {}", _config_file)
 
 
 def summary(args):
@@ -118,7 +117,6 @@ def recommend(args):
         if len(useful_feed) == 0:
             raise ValueError("All feed filtered out")
         log.log(
-            log_who,
             "Discarded: {} ignored | {} closed | {} duplicate",
             cf(filtered["hidden"]),
             cf(filtered["closed"]),
@@ -209,7 +207,7 @@ if __name__ == "__main__":
     if args.verbose:
         log.add_stderr()
 
-    log.log(log_who, displayer.bold("Log of {}"), datetime.datetime.now())
+    log.log(displayer.bold("Log of {}"), datetime.datetime.now())
 
     switch[command](args)
 

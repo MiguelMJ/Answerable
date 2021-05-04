@@ -18,7 +18,6 @@ from tools.displayer import fg, green, magenta
 
 
 __cache_dir = ".cache"
-log_who = "Cache"
 
 
 def check(category: str, _file: str, max_delta: td) -> (bool, pathlib.Path):
@@ -41,20 +40,20 @@ def check(category: str, _file: str, max_delta: td) -> (bool, pathlib.Path):
     path.parent.mkdir(parents=True, exist_ok=True)
 
     if not path.exists():
-        log(log_who, "  Miss {}", fg(subpath, magenta))
+        log("  Miss {}", fg(subpath, magenta))
         return False, path
     else:
         # Check if the file is too old
-        log(log_who, "  Hit {}", fg(subpath, green))
+        log("  Hit {}", fg(subpath, green))
         modified = dt.fromtimestamp(path.stat().st_mtime)
         now = dt.now()
         delta = now - modified
-        log(log_who, "  Time passed since last fetch: {}", delta)
+        log("  Time passed since last fetch: {}", delta)
         valid = delta < max_delta
         if valid:
-            log(log_who, fg("  Recent enough", green))
+            log(fg("  Recent enough", green))
         else:
-            log(log_who, fg("  Too old", magenta))
+            log(fg("  Too old", magenta))
         return valid, path
 
 
@@ -75,4 +74,4 @@ def update(category: str, _file: str, obj, json_format=True):
             json.dump(obj, fh, indent=2)
         else:
             fh.write(obj)
-    log(log_who, "  Cache updated: {}", fg(subpath, green))
+    log("  Cache updated: {}", fg(subpath, green))

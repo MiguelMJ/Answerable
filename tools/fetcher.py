@@ -15,7 +15,6 @@ from tools import spider, cache
 from tools.log import log, abort
 from tools.displayer import fg, magenta, green, bold
 
-log_who = "Fetcher"
 cache_where = "fetcher"
 cache_threshold = td(hours=12)
 
@@ -49,9 +48,9 @@ def get_QA(user_id, force_reload=False, max_page=5):
       body: str (html)
     """
 
-    log(log_who, bold("Fetching user information"))
+    log(bold("Fetching user information"))
     if force_reload:
-        log(log_who, fg("Force reload", magenta))
+        log(fg("Force reload", magenta))
     cache_file = str(user_id) + ".json"
     # Check cache
     if not force_reload:
@@ -70,7 +69,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
             api_request, delay=0.5, max_delta=td() if force_reload else td(hours=12)
         )
         if response.status_code != 200:
-            abort(log_who, response)
+            abort(response)
         result = json.loads(response.content)
         answers += result["items"]
         if not result["has_more"]:
@@ -81,9 +80,9 @@ def get_QA(user_id, force_reload=False, max_page=5):
     questions = []
     max_ids = 100  # no more than 100 ids allowed at once
     k = math.ceil(len(answers) / max_ids)
-    log(log_who, "{} answers, {} batches", len(answers), k)
+    log("{} answers, {} batches", len(answers), k)
     for i in range(0, k):
-        log(log_who, "batch {}", i + 1)
+        log("batch {}", i + 1)
         subset = answers[i * max_ids : (i + 1) * max_ids]
         q_ids = ";".join([str(a["question_id"]) for a in subset])
         page = 1
@@ -93,7 +92,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
                 api_request, delay=0.5, use_cache=False
             )  # urls too long to cache
             if response.status_code != 200:
-                abort(log_who, response)
+                abort(response)
             result = json.loads(response.content)
             questions += result["items"]
             if not result["has_more"]:
@@ -127,14 +126,14 @@ def get_question_feed(url, force_reload=False):
       tags: list of str
     """
 
-    log(log_who, bold("Fetching question feed"))
+    log(bold("Fetching question feed"))
     if force_reload:
-        log(log_who, fg("Force reload", magenta))
+        log(fg("Force reload", magenta))
     feed = spider.get_feed(url, force_reload=force_reload)
     if feed.status == 304:  # Not Modified
-        log(log_who, fg("Feed not modified since last retrieval (status 304)", magenta))
+        log(fg("Feed not modified since last retrieval (status 304)", magenta))
         return []
-    log(log_who, "Number of entries in feed: {}", fg(len(feed.entries), green))
+    log("Number of entries in feed: {}", fg(len(feed.entries), green))
     questions = []
     for entry in feed.entries:
         soup = BeautifulSoup(entry.summary, "html.parser")
@@ -165,4 +164,4 @@ def get_user_tags(filename):
             ],
         }
     except FileNotFoundError:
-        abort(log_who, "File not found: {}", filename)
+        abort("File not found: {}", filename)

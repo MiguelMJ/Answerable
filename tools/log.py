@@ -6,6 +6,7 @@ in a unified format.
 
 import re
 import sys
+import inspect
 
 from tools.displayer import bold, red, fg
 
@@ -17,6 +18,11 @@ def _strip_ansi(msg):
     """Strip ansi escape sequences"""
 
     return re.sub(_ansire, "", msg)
+
+
+def _get_caller():
+    frm = inspect.stack()[2]
+    return  inspect.getmodule(frm[0]).__name__
 
 
 def add_stderr():
@@ -45,16 +51,13 @@ def advice_message():
     return "Full log in " + lognames
 
 
-def abort(who, msg, *argv):
+def abort(msg, *argv):
     """Print an error message and aborts execution"""
 
-    advice = False
     if sys.stderr not in _logs:
         add_stderr()
-        advice = True
-    log(who, fg(msg, red), *argv)
-    if advice:
-        print(advice_message(), file=sys.stderr)
+    log(fg(msg, red), *argv)
+    print_advice()
     close_logs()
     exit()
 
@@ -66,12 +69,12 @@ def print_advice():
         print(advice_message(), file=sys.stderr)
 
 
-def log(who, msg, *argv):
+def log(msg, *argv):
     """Print to logs a formatted message"""
 
-    who2 = "[" + who + "] "
-    textf = who2 + _strip_ansi(msg.format(*argv))
-    texts = bold(who2) + msg.format(*argv)
+    who = f"[{_get_caller()}] "
+    textf = who + _strip_ansi(msg.format(*argv))
+    texts = bold(who) + msg.format(*argv)
     for f in _logs:
         if f is sys.stderr:
             print(texts, file=f)

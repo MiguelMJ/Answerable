@@ -21,7 +21,6 @@ from tools.displayer import fg, bold, green, yellow, red
 from tools.log import log, abort
 
 _rp = {}  # robots.txt memory
-log_who = "Spider"
 
 
 class _FalseResponse:
@@ -57,7 +56,7 @@ def get(url, delay=2, use_cache=True, max_delta=td(hours=12)):
 
     cache_file = url.replace("/", "-")
     if use_cache:
-        log(log_who, "Checking cache before petition {}", fg(url, yellow))
+        log("Checking cache before petition {}", fg(url, yellow))
         hit, path = cache.check("spider", cache_file, max_delta)
         if hit:
             with open(path, "r") as fh:
@@ -66,20 +65,20 @@ def get(url, delay=2, use_cache=True, max_delta=td(hours=12)):
 
     # If the robots.txt doesn't allow the scraping, return forbidden status
     if not ask_robots(url, useragent):
-        log(log_who, fg("robots.txt forbids {}"), fg(url, red))
+        log(fg("robots.txt forbids {}"), fg(url, red))
         return _FalseResponse(403, "robots.txt forbids it")
 
     # Make the request after the specified delay
     # log("[{}] {}".format(fg("{:4.2f}".format(delay), yellow), url))
-    log(log_who, "Waiting to ask for {}", fg(url, yellow))
-    log(log_who, "  in {:4.2f} seconds", delay)
+    log("Waiting to ask for {}", fg(url, yellow))
+    log("  in {:4.2f} seconds", delay)
     sleep(delay)
     headers = {"User-Agent": useragent}
-    log(log_who, "Requesting")
+    log("Requesting")
     res = requests.get(url, timeout=10, headers=headers)
     # Exit the program if the scraping was penalized
     if res.status_code == 429:  # too many requests
-        abort(log_who, "Too many requests")
+        abort("Too many requests")
 
     # Cache the response if allowed by user
     if use_cache:
@@ -94,7 +93,7 @@ def get_feed(url, force_reload=False):
     """Get RSS feed and optionally remember to reduce bandwith"""
 
     useragent = "Answerable RSS v0.1"
-    log(log_who, "Requesting feed {}", fg(url, yellow))
+    log("Requesting feed {}", fg(url, yellow))
     cache_file = url.replace("/", "_")
 
     # Get the conditions for the GET bandwith reduction
@@ -107,8 +106,8 @@ def get_feed(url, force_reload=False):
                 headers = json.load(fh)
                 etag = headers["etag"]
                 modified = headers["modified"]
-        log(log_who, "with {}: {}", bold("etag"), fg(etag, yellow))
-        log(log_who, "with {}: {}", bold("modified"), fg(modified, yellow))
+        log("with {}: {}", bold("etag"), fg(etag, yellow))
+        log("with {}: {}", bold("modified"), fg(modified, yellow))
 
     # Get the feed
     feed = feedparser.parse(url, agent=useragent, etag=etag, modified=modified)
@@ -122,7 +121,7 @@ def get_feed(url, force_reload=False):
             "modified": modified,
         }
         cache.update("spider.rss", cache_file, new_headers)
-        log(log_who, "Stored new {}: {}", bold("etag"), fg(etag, green))
-        log(log_who, "Stored new {}: {}", bold("modified"), fg(modified, green))
+        log("Stored new {}: {}", bold("etag"), fg(etag, green))
+        log("Stored new {}: {}", bold("modified"), fg(modified, green))
 
     return feed
