@@ -5,7 +5,7 @@ import datetime
 import textwrap
 import importlib
 
-from tools import fetcher, displayer, recommender, log
+from tools import fetcher, displayer, log
 
 _config_file = ".config"
 
@@ -56,7 +56,7 @@ def save_config(args):
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
         json.dump(
-            {"user": args.user, "tags": tags, "model": model_name or "content_based_0"},
+            {"user": args.user, "tags": tags, "model": args.model or "content_based_0"},
             fh,
             indent=2,
         )
