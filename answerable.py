@@ -37,15 +37,9 @@ def load_config(args) -> dict:
     except IOError:
         file_config = {}
     finally:
-        default_config = {
-            "model": "content_based_0"
-        }
-        cli_config = {
-            "user": args.user,
-            "tags": args.tags,
-            "model": args.model
-        }
-        cli_config = {k:v for k,v in cli_config.items() if v is not None}
+        default_config = {"model": "content_based_0"}
+        cli_config = {"user": args.user, "tags": args.tags, "model": args.model}
+        cli_config = {k: v for k, v in cli_config.items() if v is not None}
         config = {**default_config, **file_config, **cli_config}
         if config["user"] is None:
             log.abort(".config not found: provide user id with -u option")
@@ -61,7 +55,11 @@ def save_config(args):
 
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
-        json.dump({"user": args.user, "tags": tags, "model": model_name or "content_based_0"}, fh, indent=2)
+        json.dump(
+            {"user": args.user, "tags": tags, "model": model_name or "content_based_0"},
+            fh,
+            indent=2,
+        )
         log.log("Configuration saved in {}", _config_file)
 
 
@@ -104,7 +102,7 @@ def recommend(args):
 
     # Load configuration
     config = load_config(args)
-    
+
     # Load the model
     try:
         model_name = config["model"]
@@ -115,7 +113,7 @@ def recommend(args):
         )
     except ModuleNotFoundError:
         log.abort("Model {} not present", model_name)
-        
+
     # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
     if args.all or config["tags"] is None:
@@ -144,7 +142,7 @@ def recommend(args):
             cf(filtered["closed"]),
             cf(filtered["duplicate"]),
         )
-        
+
         # Make the recommendation
         rec_index = model.recommend(user_qa, useful_feed)
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
