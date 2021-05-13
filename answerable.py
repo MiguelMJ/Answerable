@@ -5,8 +5,9 @@ import datetime
 import textwrap
 import importlib
 
-from tools import fetcher, displayer, log
+from tools import fetcher, displayer, log, updater
 
+_current_version = "v1.1"
 _config_file = ".config"
 
 
@@ -150,15 +151,10 @@ def recommend(args):
         rec_index, info = model.recommend(user_qa, useful_feed)
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
         if args.info and info is None:
-            log.log(
-                displayer.fg(
-                    "Info requested, but model {} returns None", displayer.magenta
-                ),
-                model_name,
-            )
+            log.warn("Info requested, but model {} returns None", model_name)
         displayer.disp_feed(selection, info, args.info)
     except ValueError as err:
-        print(displayer.fg(err, displayer.magenta), file=sys.stderr)
+        log.warn(err)
         log.print_advice()
 
 
@@ -171,7 +167,7 @@ def parse_arguments() -> argparse.Namespace:
 
     parser = argparse.ArgumentParser(
         usage="%(prog)s COMMAND [OPTIONS]",
-        description="Stack Overflow unanswered questions recommendation system",
+        description=f"Answerable {_current_version}\nStack Overflow unanswered questions recommendation system",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=textwrap.dedent(
             """\
@@ -239,6 +235,11 @@ def parse_arguments() -> argparse.Namespace:
 
 
 if __name__ == "__main__":
+    latest_version = updater.latest()
+    if latest_version is not None and latest_version != _current_version:
+        log.warn(
+            f"New version on GitHub: {latest_version} (current is {_current_version})"
+        )
     switch = {
         "save": save_config,
         "summary": summary,
