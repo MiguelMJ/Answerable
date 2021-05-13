@@ -65,7 +65,7 @@ def get(url, delay=2, use_cache=True, max_delta=td(hours=12)):
 
     # If the robots.txt doesn't allow the scraping, return forbidden status
     if not ask_robots(url, useragent):
-        log(fg("robots.txt forbids {}"), fg(url, red))
+        log(fg("robots.txt forbids {}", red), url)
         return _FalseResponse(403, "robots.txt forbids it")
 
     # Make the request after the specified delay

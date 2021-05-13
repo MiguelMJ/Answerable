@@ -8,7 +8,7 @@ import re
 import sys
 import inspect
 
-from tools.displayer import bold, red, fg
+from tools.displayer import bold, red, magenta, fg
 
 _logs = []  # list of file handlers
 _ansire = re.compile("\\033\[[^m]+m")  # ansi escape sequences
@@ -60,6 +60,15 @@ def abort(msg, *argv):
     print_advice()
     close_logs()
     exit()
+
+
+def warn(msg, *argv):
+    """Print an error message and aborts execution"""
+    err_off = sys.stderr not in _logs
+    if err_off:
+        add_stderr()
+    log(fg(msg, magenta), *argv, who=_get_caller())
+    _logs.pop()
 
 
 def print_advice():
