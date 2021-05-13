@@ -4,12 +4,10 @@ This file contains the recommendation algorithm.
 """
 
 from bs4 import BeautifulSoup as bs
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
-import nltk
 import numpy as np
 import re
-from collections import Counter
 
 
 def preprocessed_text_from_html(html):
@@ -20,11 +18,6 @@ def preprocessed_text_from_html(html):
     text = re.sub(r"\d+", "", text)
     text = " ".join(re.findall(r"[\w+_]+", text))
     return text.lower()
-
-
-def counts(text):
-    counter = Counter(text.split())
-    return sorted([(counter[x], x) for x in counter], reverse=True)
 
 
 def recommend(user_qa, feed):
@@ -48,7 +41,6 @@ def recommend(user_qa, feed):
     ]
 
     nans = len(answered)
-    nunans = len(unanswered)
 
     """
     The following code is an adapted version of the Content-Based recommmender
@@ -79,7 +71,6 @@ def recommend(user_qa, feed):
         (i, np.where(np.isclose(unans_similarity[i], v))[0][0]) for i, v in sort_max_sim
     ]
     info = []
-    stw = set(nltk.corpus.stopwords.words("english"))
     for u, a in closest:
         info.append(
             "Closest: {} ({})".format(
