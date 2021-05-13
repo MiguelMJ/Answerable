@@ -111,8 +111,11 @@ def recommend(args):
         log.log(
             "Model {} succesfully loaded", displayer.fg(model_name, displayer.green)
         )
-    except ModuleNotFoundError:
-        log.abort("Model {} not present", model_name)
+    except ModuleNotFoundError as err:
+        if(err.name == f"models.{model_name}"):
+            log.abort("Model {} not present", model_name)
+        else:
+            log.abort("Model {} unsatisfied dependency: {}", model_name, err.name)
 
     # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
