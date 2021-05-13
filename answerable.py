@@ -112,7 +112,7 @@ def recommend(args):
             "Model {} succesfully loaded", displayer.fg(model_name, displayer.green)
         )
     except ModuleNotFoundError as err:
-        if(err.name == f"models.{model_name}"):
+        if err.name == f"models.{model_name}":
             log.abort("Model {} not present", model_name)
         else:
             log.abort("Model {} unsatisfied dependency: {}", model_name, err.name)
@@ -147,9 +147,16 @@ def recommend(args):
         )
 
         # Make the recommendation
-        rec_index = model.recommend(user_qa, useful_feed)
+        rec_index, info = model.recommend(user_qa, useful_feed)
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
-        displayer.disp_feed(selection)
+        if args.info and info is None:
+            log.log(
+                displayer.fg(
+                    "Info requested, but model {} returns None", displayer.magenta
+                ),
+                model_name,
+            )
+        displayer.disp_feed(selection, info, args.info)
     except ValueError as err:
         print(displayer.fg(err, displayer.magenta), file=sys.stderr)
         log.print_advice()
@@ -183,6 +190,12 @@ def parse_arguments() -> argparse.Namespace:
         "-v",
         "--verbose",
         help="show the log content in stderr too",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-i",
+        "--info",
+        help="print extra info on each recomendation",
         action="store_true",
     )
     parser.add_argument("--no-ansi", help="print without colors", action="store_true")

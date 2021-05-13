@@ -71,4 +71,4 @@ def recommend(user_qa, feed):
     # build the final recommended feed order
     by_mean = [x[1] for x in sorted(mean_index)]
 
-    return by_mean
+    return by_mean, None

@@ -16,8 +16,8 @@ cyan = (0, 250, 250)
 magenta = (250, 0, 250)
 yellow = (250, 250, 0)
 
-"""
 white = (250, 250, 250)
+"""
 gray1 = (200, 200, 200)
 gray2 = (150, 150, 150)
 gray3 = (100, 100, 100)
@@ -83,18 +83,20 @@ def color(msg, fgc, bgc):
 #
 # DATA DISPLAY FUNCTIONS
 #
-def disp_feed(feed):
-    for entry in feed:
+def disp_feed(feed, info, print_info=False):
+    def title(x):
+        return fg(bold(x), lighten(blue, 0.3))
 
-        def title(x):
-            return fg(bold(x), lighten(blue, 0.3))
+    def tag(x):
+        return fg(f"[{x}]", darken(cyan, 0.2))
 
-        def tag(x):
-            return fg("[" + x + "]", darken(cyan, 0.2))
-
+    for i in range(len(feed)):
+        entry = feed[i]
         print("o", title(entry["title"]))
         print(" ", " ".join(tag(t) for t in entry["tags"]))
         print(" ", entry["link"])
+        if print_info and info is not None:
+            print(" ", info[i].replace("\n", "\n  "))
 
 
 def table(data, align=""):
