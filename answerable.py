@@ -1,12 +1,30 @@
+import re
 import json
 import argparse
 import datetime
 import textwrap
 import importlib
 
-from tools import fetcher, displayer, log, updater
+from urllib.error import URLError
+
+from tools import fetcher, displayer, log, spider
 
 _current_version = "v1.1"
+
+def latest_version():
+    try:
+        res = spider.get(
+            "https://api.github.com/repos/MiguelMJ/Answerable/releases/latest", 0
+        )
+        if res.status_code != 200:
+            log.warn("Unable to get information from latest version")
+            return None
+        latest = re.search(r"v[\d.]+.?", json.loads(res.content)["name"])[0]
+        return latest
+    except URLError:
+        log.warn("Unable to get information from latest version")
+    return None
+
 _config_file = ".config"
 
 
@@ -234,10 +252,10 @@ def parse_arguments() -> argparse.Namespace:
 
 
 if __name__ == "__main__":
-    latest_version = updater.latest()
-    if latest_version is not None and latest_version != _current_version:
+    _latest_version = latest_version()
+    if _latest_version is not None and _latest_version != _current_version:
         log.warn(
-            f"New version on GitHub: {latest_version} (current is {_current_version})"
+            f"New version on GitHub: {_latest_version} (current is {_current_version})"
         )
     switch = {
         "save": save_config,

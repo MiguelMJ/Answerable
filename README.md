@@ -18,7 +18,7 @@
     </a>
 </p>
 
-Answerable is a Python program that learns from your answers in Stack Overflow and use them to recommend questions that you could answer.
+Answerable is a CLI program that uses your answers on Stack Overflow to recommend you similar questions to answer.
 
 **Preview**
 
@@ -121,7 +121,8 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 - [ ] Include the rest of the Stack Exchange communitites.
 - [ ] Make a GUI.
 - [ ] Add flexible filters (Don't show questions with negative score e.g).
-- [ ] Display statistics about the information taken into account to make the recommendations.
+- [x] ~~Display statistics about the information taken into account to make the recommendations.~~
+- [x] ~~Automatically check for new releases on Github~~
 - [ ] Try out more learning models and integrate them.
 - [ ] Adapt behaviour for users with authentication token.
 
