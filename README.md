@@ -109,7 +109,7 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 
 - [ ] Allow users with too many answers choose which ones to use.
   - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option, as it could take several minutes to retrieve it all).
-- [ ] Add the option to just select questions that they would like to have answered (useful for users without answer history).
+- [x] ~~Add the option to just select questions that they would like to have answered (useful for users without answer history).~~ *(Implemented, improvements required)*
 - [ ] Store the last recommendations and update them instead of ignoring them in future calls.
   - Upate means:
     - Remove already answered/closed/marked as duplicate ones.
