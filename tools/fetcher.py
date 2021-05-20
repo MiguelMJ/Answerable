@@ -19,48 +19,67 @@ cache_where = "fetcher"
 cache_threshold = td(hours=12)
 
 
-def get_QA(user_id, force_reload=False, max_page=5):
-    """Retrieve information about the questions answered by the user
+def get_questions(question_ids):
+    """Retrieve questions from Stack Overflow
 
-    Returns a structure with the following format:
-      [
-        [Question_1, Answer_1],
-        [Question_2, Answer_2],
-        ...
-      ]
+    - question_ids: list of question IDs
 
-    where Question_n has the following keys:
-      view_count: int
-      score: int
-      creation_date: timestamp
-      question_id: int
-      link: str
-      title: str
-      body: str (html)
-      tags: list of str
+    Returns a list of objects with the following attributes:
+      {
+        "tags": [string],
+        "answers": [ {"owner": {"user_id": int}} ],
+        "score": int,
+        "creation_date": timestamp,
+        "question_id": int,
+        "link": string,
+        "title": string,
+        "body": string (html)
+      }
+    """
+    # about this request: https://api.stackexchange.com/docs/questions-by-ids#page=1&pagesize=100&order=desc&sort=creation&ids=67519195&filter=!0*oAS0wak*fZdLjb3_K8T0ZYIACLeNt*tDOd12cQE5EO-2LpGs47y71vSLj0Sf&site=stackoverflow
+    api_request_f = "https://api.stackexchange.com//2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!0*oAS0wak*fZdLjb3_K8T0ZYIACLeNt*tDOd12cQE5EO-2LpGs47y71vSLj0Sf"
+    max_ids = 100  # no more than 100 ids allowed at once
+    k = math.ceil(len(question_ids) / max_ids)
+    log(f"{len(question_ids)} questions, {k} batches")
+    questions = []
+    for i in range(k):
+        log(f"batch {i+1}")
+        batch_begin = i * max_ids
+        batch_end = i * max_ids + max_ids
+        subset = ";".join(question_ids[batch_begin:batch_end])
+        page = 1
+        while True:
+            api_request = api_request_f.format(subset, page)
+            response = spider.get(
+                api_request, delay=0.5, use_cache=False
+            )  # urls too long to cache
+            if response.status_code != 200:
+                abort(response)
+            result = json.loads(response.content)
+            questions += result["items"]
+            if not result["has_more"]:
+                break
+            page += 1
+    return questions
 
-    and Answer_n has the following keys:
-      is_accepted: bool
-      score: int
-      question_id: int
-      link: str
-      title: str
-      body: str (html)
+
+def get_user_answers(user_id, force_reload=False, max_page=math.inf):
+    """Retrieve answers from a Stack Overflow user
+
+    - user_id: user ID
+
+    Returns a list of objects with the following attributes:
+      {
+        "is_accepted": false,
+        "score": int,
+        "questions_id": int,
+        "link": string,
+        "title": string,
+        "body": string (html),
+      }
     """
 
-    log(bold("Fetching user information"))
-    if force_reload:
-        log(fg("Force reload", magenta))
-    cache_file = str(user_id) + ".json"
-    # Check cache
-    if not force_reload:
-        hit, fpath = cache.check(cache_where, cache_file, cache_threshold)
-        if hit:
-            with open(fpath) as fh:
-                stored = json.load(fh)
-            return stored
-    # Get the answers
-    api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!.Fjr43gf6UvsWf.-.z(SMRV3sqodT"
+    api_request_f = "https://api.stackexchange.com/2.2/users/{}/answers?page={}&pagesize=100&order=desc&sort=activity&site=stackoverflow&filter=!37n)Y*a2Ut6eDilfH4XoIior(X(b8nm7Z-g)Tgl*A4Qdfe8Mcn-Luu"
     page = 1
     answers = []
     while page <= max_page:
@@ -75,40 +94,61 @@ def get_QA(user_id, force_reload=False, max_page=5):
         if not result["has_more"]:
             break
         page += 1
+    return answers
+
+
+def get_QA(user_id, force_reload=False, max_page=5):
+    """Retrieve information about the questions answered by the user
+
+    Return
+        [
+            (Question_1, Answer_1),
+            (Question_2, Answer_2),
+            ...
+        ]
+    See
+        get_questions, get_user_answers
+    """
+
+    log(bold("Fetching user information"))
+    if force_reload:
+        log(fg("Force reload", magenta))
+    cache_file = str(user_id) + ".json"
+    # Check cache
+    if not force_reload:
+        hit, fpath = cache.check(cache_where, cache_file, cache_threshold)
+        if hit:
+            with open(fpath) as fh:
+                stored = json.load(fh)
+            return stored
+    # Get the answers
+    answers = get_user_answers(user_id, force_reload, max_page)
+
     # Get the questions
-    api_request_f = "https://api.stackexchange.com/2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!5RCLVFC_3nVp6Kjoti6BKirZj"
-    questions = []
-    max_ids = 100  # no more than 100 ids allowed at once
-    k = math.ceil(len(answers) / max_ids)
-    log("{} answers, {} batches", len(answers), k)
-    for i in range(0, k):
-        log("batch {}", i + 1)
-        subset = answers[i * max_ids : (i + 1) * max_ids]
-        q_ids = ";".join([str(a["question_id"]) for a in subset])
-        page = 1
-        while True:
-            api_request = api_request_f.format(q_ids, page)
-            response = spider.get(
-                api_request, delay=0.5, use_cache=False
-            )  # urls too long to cache
-            if response.status_code != 200:
-                abort(response)
-            result = json.loads(response.content)
-            questions += result["items"]
-            if not result["has_more"]:
-                break
-            page += 1
+    q_ids = [str(a["question_id"]) for a in answers]
+    questions = get_questions(q_ids)
+
     # Join answers and questions
     user_qa = [
-        [q, a]
+        (q, a)
         for q in questions
         for a in answers
         if q["question_id"] == a["question_id"]
     ]
-    for qa in user_qa:
-        qa[0]["tags"] = qa[1].pop("tags")
-
     cache.update(cache_where, cache_file, user_qa)
+    for q, a in user_qa:
+        a["tags"] = q["tags"]
+
+    ## Include questions specified by user
+    try:
+        with open(".additional_training", "r") as f:
+            extra_q_ids = f.read().split()
+        log("Aditional training: " + str(extra_q_ids))
+        extra_questions = get_questions(extra_q_ids)
+    except FileNotFoundError:
+        extra_questions = []
+        log("No additional training specified by user")
+    user_qa += [(q, None) for q in extra_questions]
 
     return user_qa
 

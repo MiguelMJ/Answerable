@@ -16,10 +16,10 @@ def tags_info(qa):
     if _tags_info is not None:
         return _tags_info
     tags_info = {}
-    for x in qa:
-        for t in x[0]["tags"]:
+    for _, a in qa:
+        for t in a["tags"]:
             tc = tags_info.get(t, (0, 0, 0))  # (score, acceptance, count)
-            tc = (tc[0] + x[1]["score"], tc[1] + x[1]["is_accepted"], tc[2] + 1)
+            tc = (tc[0] + a["score"], tc[1] + a["is_accepted"], tc[2] + 1)
             tags_info[t] = tc
     _tags_info = tags_info
     return tags_info
@@ -93,7 +93,9 @@ def top_accepted(answers, top=5):
 # REPUTATION RELATED METRICS
 #
 def reputation(answer):
-    """Reputation associated to an answers"""
+    """Reputation associated to an answers
+    NOT ACCURATE
+    """
 
     return answer["score"] * 10 + answer["is_accepted"] * 15
 
@@ -132,6 +134,8 @@ def average_reputation_weight(answers, w):
     while acc_rep < repw and acc_ans < len(sorted_answers):
         acc_rep += reputation(sorted_answers[acc_ans])
         acc_ans += 1
+    if acc_ans == 0:
+        return (0, 0)
     return (acc_rep / acc_ans, 100 * acc_ans / len(answers))
 
 

@@ -128,13 +128,11 @@ def disp_statistics(user_qa):
         print(mark(txt))
 
     def print_answer_and_value(answer, value):
-        tags = [
-            qa[0] for qa in user_qa if qa[0]["question_id"] == answer["question_id"]
-        ][0]["tags"]
+        tags = answer["tags"]
         print(val_f.format(value), ans_f.format(answer["title"]))
         print(" " * len(str(value)), " ".join([tag_f.format(t) for t in tags]))
 
-    user_answers = [x[1] for x in user_qa]
+    user_answers = [a for q, a in user_qa]
 
     print_section("Answer metrics")
     metrics = [

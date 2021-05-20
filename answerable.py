@@ -11,6 +11,7 @@ from tools import fetcher, displayer, log, spider
 
 _current_version = "v1.1"
 
+
 def latest_version():
     try:
         res = spider.get(
@@ -24,6 +25,7 @@ def latest_version():
     except URLError:
         log.warn("Unable to get information from latest version")
     return None
+
 
 _config_file = ".config"
 
@@ -67,7 +69,7 @@ def load_config(args) -> dict:
 def save_config(args):
     """Store the user configuration
 
-    Create or overwrite the confguration file with the configuration extracted
+    Create or overwrite the configuration file with the configuration extracted
     from the options -u and -t.
     """
 
@@ -86,7 +88,7 @@ def summary(args):
 
     config = load_config(args)
     qa = fetcher.get_QA(config["user"], force_reload=args.f)
-
+    qa = [(q, a) for q, a in qa if a is not None]
     displayer.disp_statistics(qa)
 
 
@@ -165,6 +167,7 @@ def recommend(args):
         )
 
         # Make the recommendation
+        log.log(f"Corpus size: {len(user_qa)} Feed size: {len(useful_feed)}")
         rec_index, info = model.recommend(user_qa, useful_feed)
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
         if args.info and info is None:
