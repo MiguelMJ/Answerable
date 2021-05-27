@@ -4,19 +4,20 @@
 <h1 align="center">Answerable</h1>
 <h3 align="center">Recommendation system for Stack Overflow unanswered questions</h3>
 <p align="center">
-    <img alt="version1.0" src="https://img.shields.io/badge/version-v1.0-informational"
+    <img title="v1.1" alt="v1.1" src="https://img.shields.io/badge/version-v1.1-informational?style=flat-square"
     <a href="LICENSE">
-        <img alt="license" src="https://img.shields.io/badge/license-MIT-informational">
+        <img title="MIT License" alt="license" src="https://img.shields.io/badge/license-MIT-informational?style=flat-square">
     </a>
-	<img alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable">
-	<img alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational">
+	<img title="repo-size" alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable?style=flat-square">
+	<img title="python3.8" alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational?style=flat-square">
 	<a href="https://github.com/MiguelMJ/Answerable/wiki">
-        <img alt="documentation" src="https://img.shields.io/badge/documentation-wiki-success">
+        <img title="documentation" alt="documentation" src="https://img.shields.io/badge/documentation-wiki-success?style=flat-square">
     </a>
 	<a href="https://github.com/psf/black">
-        <img alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg">
+        <img title="code style: black" alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square">
     </a>
 </p>
+
 
 Answerable is a CLI program that uses your answers on Stack Overflow to recommend you similar questions to answer.
 
@@ -110,6 +111,8 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 - [ ] Allow users with too many answers choose which ones to use.
   - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option, as it could take several minutes to retrieve it all).
 - [x] ~~Add the option to just select questions that they would like to have answered (useful for users without answer history).~~ *(Implemented, improvements required)*
+- [x] ~~Allow user defined recommendation models.~~
+- [ ] Make documentation for making recommendation models.
 - [ ] Store the last recommendations and update them instead of ignoring them in future calls.
   - Upate means:
     - Remove already answered/closed/marked as duplicate ones.
@@ -122,8 +125,8 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 - [ ] Make a GUI.
 - [ ] Add flexible filters (Don't show questions with negative score e.g).
 - [x] ~~Display statistics about the information taken into account to make the recommendations.~~
-- [x] ~~Automatically check for new releases on Github~~
-- [ ] Try out more learning models and integrate them.
+- [x] ~~Automatically check for new releases on Github.~~
+- [x] ~~Try out more learning models and integrate them.~~
 - [ ] Adapt behaviour for users with authentication token.
 
 <h2 id="License99">License</h2> 
