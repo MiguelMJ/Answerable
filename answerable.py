@@ -172,6 +172,8 @@ def recommend(args):
         selection = [useful_feed[i] for i in rec_index[: args.limit]]
         if args.info and info is None:
             log.warn("Info requested, but model {} returns None", model_name)
+        elif args.info and info is not None:
+            info = [info[i] for i in rec_index[: args.limit]]
         displayer.disp_feed(selection, info, args.info)
     except ValueError as err:
         log.warn(err)
