@@ -2,6 +2,7 @@
 
 This file contains the recommendation algorithm.
 """
+import tools.displayer
 
 from bs4 import BeautifulSoup as bs
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -53,29 +54,39 @@ def recommend(user_qa, feed):
     # rows: unanswered, cols: answered
     unans_similarity = cosine_sim[nans:, :nans]
 
-    # index: unanswered. values: max similarity and score
+    # index: unanswered. values: max similarity, text size and score
     max_sim = list(enumerate([max(r) for r in unans_similarity]))
-    score = [x * len(unanswered[i].split()) for i,x in max_sim]
-    
+    unans_sizes = [len(u.split()) for u in unanswered]
+    score = [x * x * unans_sizes[i] for i, x in max_sim]
+
     # sort the indices by the value
     by_score = sorted(list(enumerate(score)), key=lambda x: x[1], reverse=True)
-    
+
     # relation between index in feed and index of closest answered
     closest = [
-        (i, np.where(np.isclose(unans_similarity[i], v))[0][0]) 
-        for i, v in max_sim
+        (i, np.where(np.isclose(unans_similarity[i], v))[0][0]) for i, v in max_sim
     ]
+
+    # store displayable information
+    b = tools.displayer.bold
+    info_f = "{}: {{}}\n{}:{{}} {}: {{}} {}: {{}}".format(
+        b("Closest"),
+        b("Text size"),
+        b("Similarity"),
+        b("Score"),
+    )
     info = []
     for unans, ans in closest:
         info.append(
-            "{} of similarity with {}. Score: {}".format(
-                f"{100*max_sim[unans]:.2f}%",
+            info_f.format(
                 user_qa[ans][0]["title"],
-                f"{100*score[unans]:.2f}"
+                unans_sizes[unans],
+                f"{100*max_sim[unans][1]:.2f}%",
+                f"{score[unans]:.2f}",
             )
         )
 
     # get the indexes, now sorted
-    by_max = [x[0] for x in by_score]
+    sorted_index = [x[0] for x in by_score]
 
-    return by_max, info
+    return sorted_index, info
