@@ -57,7 +57,7 @@ def load_config(args) -> dict:
     except IOError:
         file_config = {}
     finally:
-        default_config = {"model": "content_based_0"}
+        default_config = {"model": "content_based_1"}
         cli_config = {"user": args.user, "tags": args.tags, "model": args.model}
         cli_config = {k: v for k, v in cli_config.items() if v is not None}
         config = {**default_config, **file_config, **cli_config}
@@ -76,7 +76,7 @@ def save_config(args):
     with open(_config_file, "w") as fh:
         tags = get_user_tags(args)
         json.dump(
-            {"user": args.user, "tags": tags, "model": args.model or "content_based_0"},
+            {"user": args.user, "tags": tags, "model": args.model or "content_based_1"},
             fh,
             indent=2,
         )
@@ -139,7 +139,7 @@ def recommend(args):
 
     # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
-    if args.all or config["tags"] is None:
+    if args.all or "tags" not in config:
         tags = ""
     else:
         tags = "tag?tagnames="
@@ -153,7 +153,7 @@ def recommend(args):
         # Filter feed from ignored tags
         hide_tags = (
             set()
-            if args.all or config["tags"] is None
+            if args.all or "tags" not in config
             else set(config["tags"]["ignored"])
         )
         useful_feed = [e for e in feed if valid_entry(e)]
