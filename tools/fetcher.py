@@ -70,7 +70,7 @@ def get_user_answers(user_id, force_reload=False, max_page=math.inf):
 
     Returns a list of objects with the following attributes:
       {
-        "is_accepted": false,
+        "is_accepted": bool,
         "score": int,
         "questions_id": int,
         "link": string,
