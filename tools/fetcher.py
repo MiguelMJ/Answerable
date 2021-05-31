@@ -141,7 +141,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
 
     ## Include questions specified by user
     try:
-        with open(".additional_training", "r") as f:
+        with open("include.txt", "r") as f:
             extra_q_ids = f.read().split()
         log("Aditional training: " + str(extra_q_ids))
         extra_questions = get_questions(extra_q_ids)
