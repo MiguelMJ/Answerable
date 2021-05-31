@@ -104,7 +104,6 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 [[TOC](#toc)]
 
 - Find the contributing guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
-
 - You can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
 - Give this project some visibility and feedback:
   - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
