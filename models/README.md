@@ -18,7 +18,7 @@ Display the title of the most similar question and the values of `SizeOfQuestion
 ### Observations
 
 - The code chunks in the questions are ignored (they are considered noise).
-- There are extremely rare cases where the system can crash, if the question contains text that the html parser of BeautifulSoup can't recognize. This has only happened me once with a question about regular expressions.
+- There are extremely rare cases where the system can crash, if the question contains text that the HTML parser of BeautifulSoup can't recognise. This has only happened me once with a question about regular expressions.
 - The Similarity is squared to reduce the preference of wall of text questions. 
 
 ## `content_based_0`

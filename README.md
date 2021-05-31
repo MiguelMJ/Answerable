@@ -8,7 +8,7 @@
     <a href="LICENSE">
         <img title="MIT License" alt="license" src="https://img.shields.io/badge/license-MIT-informational?style=flat-square">
     </a>
-	<img title="repo-size" alt="repo-size" src="https://img.shields.io/github/repo-size/MiguelMJ/Answerable?style=flat-square">
+	<img title="all-contributors" alt="all-contributors" src="https://img.shields.io/github/all-contributors/MiguelMJ/Answerable?color=informational&style=flat-square">
 	<img title="python3.8" alt="python3.8" src="https://img.shields.io/badge/python-3.8-informational?style=flat-square">
 	<a href="https://github.com/MiguelMJ/Answerable/wiki">
         <img title="documentation" alt="documentation" src="https://img.shields.io/badge/documentation-wiki-success?style=flat-square">
@@ -17,6 +17,7 @@
         <img title="code style: black" alt="code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square">
     </a>
 </p>
+
 
 
 Answerable is a CLI program that uses your answers on Stack Overflow to recommend you similar questions to answer.
@@ -92,6 +93,11 @@ Thanks to the people that have contributed to this project: ([emoji key](https:/
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://allcontributors.org/) specification.
+
+#### Posts
+
+- [*I made a recommendation system for Stack Overflow unanswered questions*](https://dev.to/miguelmj/i-made-a-recommendation-system-for-stack-overflow-unanswered-questions-280a) in DEV.to by MiguelMJ.
+- <a id="blog-dennislwm" href="https://makerwork.substack.com/p/makerwork001"><i>Makerwork 001</i></a> in Makerwork by Dennis Lee
 
 <h2 id="Contributing66">Contributing</h2> 
 
