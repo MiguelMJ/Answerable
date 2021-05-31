@@ -156,7 +156,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
 def get_question_feed(url, force_reload=False):
     """Retrieve the last questions of the feed
 
-    Returns a structure with the followint format:
+    Returns a structure with the following format:
       [Question_1, Question_2, ...]
 
     where Question_n has the following keys:
