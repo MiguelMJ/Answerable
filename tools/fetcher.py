@@ -36,8 +36,8 @@ def get_questions(question_ids):
         "body": string (html)
       }
     """
-    # about this request: https://api.stackexchange.com/docs/questions-by-ids#page=1&pagesize=100&order=desc&sort=creation&ids=67519195&filter=!0*oAS0wak*fZdLjb3_K8T0ZYIACLeNt*tDOd12cQE5EO-2LpGs47y71vSLj0Sf&site=stackoverflow
-    api_request_f = "https://api.stackexchange.com//2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!0*oAS0wak*fZdLjb3_K8T0ZYIACLeNt*tDOd12cQE5EO-2LpGs47y71vSLj0Sf"
+    # about this request: https://api.stackexchange.com/docs/questions-by-ids#page=1&pagesize=100&order=desc&sort=creation&ids=67519195&filter=!)So8N7tfWBeyaWUex((*Ndu7tpA&site=stackoverflow
+    api_request_f = "https://api.stackexchange.com//2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!)So8N7tfWBeyaWUex((*Ndu7tpA"
     max_ids = 100  # no more than 100 ids allowed at once
     k = math.ceil(len(question_ids) / max_ids)
     log(f"{len(question_ids)} questions, {k} batches")
