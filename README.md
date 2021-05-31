@@ -114,18 +114,18 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 - [x] ~~Allow user defined recommendation models.~~
 - [ ] Make documentation for making recommendation models.
 - [ ] Store the last recommendations and update them instead of ignoring them in future calls.
-  - Upate means:
+  - Update means:
     - Remove already answered/closed/marked as duplicate ones.
     - Add the rest to the recently received, before applying the recommendation algorithm.
 - [ ] Add a command to manage the cache, instead of requiring the users to do it themselves.
 
 **Low priority**
 
-- [ ] Include the rest of the Stack Exchange communitites.
+- [ ] Include the rest of the Stack Exchange communities.
 - [ ] Make a GUI.
 - [ ] Add flexible filters (Don't show questions with negative score e.g).
 - [x] ~~Display statistics about the information taken into account to make the recommendations.~~
-- [x] ~~Automatically check for new releases on Github.~~
+- [x] ~~Automatically check for new releases on GitHub.~~
 - [x] ~~Try out more learning models and integrate them.~~
 - [ ] Adapt behaviour for users with authentication token.
 
@@ -133,5 +133,5 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 
 [[TOC](#toc)]
 
-Answerable uses the MIT license, a copy of which you can find [here](LICENSE), in the repo.
+Answerable uses the MIT license, a copy of which you can find [here](LICENSE), in the repository.
 
