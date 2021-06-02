@@ -117,7 +117,7 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
   - Use X newest, X most popular or the whole activity history (maybe add a time estimation for this last option, as it could take several minutes to retrieve it all).
 - [x] ~~Add the option to just select questions that they would like to have answered (useful for users without answer history).~~ *(Implemented, improvements required)*
 - [x] ~~Allow user defined recommendation models.~~
-- [ ] Make documentation for making recommendation models.
+- [x] ~~Make documentation for making recommendation models.~~
 - [ ] Store the last recommendations and update them instead of ignoring them in future calls.
   - Update means:
     - Remove already answered/closed/marked as duplicate ones.
