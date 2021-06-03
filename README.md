@@ -20,7 +20,7 @@
 
 
 
-Answerable is a CLI program that uses your answers on Stack Overflow to recommend you similar questions to answer.
+Answerable helps you find questions to answer, based on your Stack Overflow activity.
 
 **Preview**
 
@@ -106,9 +106,11 @@ This project follows the [all-contributors](https://allcontributors.org/) specif
 - Find the contributing guidelines in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 - You can also contribute by testing the program yourself and reporting any issue [![](https://img.shields.io/github/issues/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/issues).
-- Give this project some visibility and feedback:
-  - :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
-  - :arrow_up: Upvote it in [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions) and comment your feedback there.
+- Support this project!
+
+  :star: Star this repository [![](https://img.shields.io/github/stars/MiguelMJ/Answerable?style=social)](https://github.com/MiguelMJ/Answerable/stargazers).
+
+  :arrow_up: Upvote it on [Stack Apps](https://stackapps.com/questions/8805/placeholder-answerable-a-recomendator-of-unanswered-questions) and comment your feedback.
 
 <h2 id="To-do77">To do</h2> 
 
