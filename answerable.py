@@ -95,19 +95,30 @@ def summary(args):
 def recommend(args):
     """Recommend questions from the latest unanswered"""
 
-    filtered = {"hidden": 0, "closed": 0, "duplicate": 0}
-
+    filtered = {"hidden": 0, "closed": 0, "duplicate": 0, "answered": 0}
+    present = set()
     def valid_entry(entry):
         """Check if a entry should be taken into account"""
-
+        
+        title = entry["title"]
+        if title in present:
+            return False
+        present.add(title)
         if len(set(entry["tags"]) & hide_tags) > 0:
             filtered["hidden"] += 1
+            log.log("hidden: {}", title)
             return False
-        if entry["title"][-8:] == "[closed]":
+        if title[-8:] == "[closed]":
             filtered["closed"] += 1
+            log.log("closed: {}", title)
             return False
-        if entry["title"][-11:] == "[duplicate]":
+        if title[-11:] == "[duplicate]":
             filtered["duplicate"] += 1
+            log.log("duplicate: {}", title)
+            return False
+        if entry["accepted_answer_id"] is not None or config["user"] in {x["owner"]["user_id"] for x in entry["answers"]}:
+            filtered["answered"] += 1
+            log.log("answered: {}", title)
             return False
         return True
 
@@ -139,15 +150,13 @@ def recommend(args):
 
     # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
-    if args.all or "tags" not in config:
-        tags = ""
-    else:
-        tags = "tag?tagnames="
-        tags += "%20or%20".join(config["tags"]["followed"]).replace("+", "%2b")
-        tags += "&sort=newest"
-    url = "https://stackoverflow.com/feeds/" + tags
     try:
-        feed = fetcher.get_question_feed(url, force_reload=args.F)
+        
+        if args.all or "tags" not in config:
+            feed = fetcher.get_question_feed([""], force_reload=args.F)
+        else:
+            tags = [x.replace("+", "%2b") for x in config["tags"]["followed"]]
+            feed = fetcher.get_question_feed(tags, force_reload=args.F)
         if len(feed) == 0:
             raise ValueError("No feed returned")
         # Filter feed from ignored tags
@@ -160,10 +169,11 @@ def recommend(args):
         if len(useful_feed) == 0:
             raise ValueError("All feed filtered out")
         log.log(
-            "Discarded: {} ignored | {} closed | {} duplicate",
+            "Discarded: {} ignored | {} closed | {} duplicate | {} answered",
             cf(filtered["hidden"]),
             cf(filtered["closed"]),
             cf(filtered["duplicate"]),
+            cf(filtered["answered"]),
         )
 
         # Make the recommendation

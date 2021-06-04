@@ -3,8 +3,34 @@
 This file contains the high level functions in charge of data retrieval.
 It provides a interface between the spider/crawler and another level of
 cacheable information.
+
+
+Stack Exchange AI filters used:
+
+!)So8N7tfWBeyaWUex((*Ndu7tpA
+    {
+        "tags": [string],
+        "answers": [ {"owner": {"user_id": int}} ],
+        "score": int,
+        "creation_date": timestamp,
+        "question_id": int,
+        "accepted_answer_id": int (nullable),
+        "link": string,
+        "title": string,
+        "body": string (html)
+      }
+
+!27WCmnLax)mnySTwspo7Spdv
+    {
+        "answers": [ {"owner": {"user_id": int}} ],
+        "score": int,
+        "creation_date": timestamp,
+        "question_id": int,
+        "accepted_answer_id": int (nullable),
+      }
 """
 
+import re
 import math
 import json
 from datetime import timedelta as td
@@ -19,25 +45,16 @@ cache_where = "fetcher"
 cache_threshold = td(hours=12)
 
 
-def get_questions(question_ids):
+def get_questions(question_ids, _filter):
     """Retrieve questions from Stack Overflow
 
     - question_ids: list of question IDs
 
     Returns a list of objects with the following attributes:
-      {
-        "tags": [string],
-        "answers": [ {"owner": {"user_id": int}} ],
-        "score": int,
-        "creation_date": timestamp,
-        "question_id": int,
-        "link": string,
-        "title": string,
-        "body": string (html)
-      }
+
     """
-    # about this request: https://api.stackexchange.com/docs/questions-by-ids#page=1&pagesize=100&order=desc&sort=creation&ids=67519195&filter=!)So8N7tfWBeyaWUex((*Ndu7tpA&site=stackoverflow
-    api_request_f = "https://api.stackexchange.com//2.2/questions/{}?page={}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter=!)So8N7tfWBeyaWUex((*Ndu7tpA"
+
+    api_request_f = f"https://api.stackexchange.com//2.2/questions/{{}}?page={{}}&pagesize=100&order=desc&sort=creation&site=stackoverflow&filter={_filter}"
     max_ids = 100  # no more than 100 ids allowed at once
     k = math.ceil(len(question_ids) / max_ids)
     log(f"{len(question_ids)} questions, {k} batches")
@@ -60,6 +77,11 @@ def get_questions(question_ids):
             if not result["has_more"]:
                 break
             page += 1
+    for q in questions:
+        if "accepted_answer_id" not in q:
+            q["accepted_answer_id"] = None
+        if "answers" not in q:
+            q["answers"] = []
     return questions
 
 
@@ -126,7 +148,8 @@ def get_QA(user_id, force_reload=False, max_page=5):
 
     # Get the questions
     q_ids = [str(a["question_id"]) for a in answers]
-    questions = get_questions(q_ids)
+    q_filter = "!)So8N7tfWBeyaWUex((*Ndu7tpA"
+    questions = get_questions(q_ids, q_filter)
 
     # Join answers and questions
     user_qa = [
@@ -144,7 +167,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
         with open("include.txt", "r") as f:
             extra_q_ids = f.read().split()
         log("Aditional training: " + str(extra_q_ids))
-        extra_questions = get_questions(extra_q_ids)
+        extra_questions = get_questions(extra_q_ids, q_filter)
     except FileNotFoundError:
         extra_questions = []
         log("No additional training specified by user")
@@ -153,7 +176,7 @@ def get_QA(user_id, force_reload=False, max_page=5):
     return user_qa
 
 
-def get_question_feed(url, force_reload=False):
+def get_question_feed(tags, force_reload=False):
     """Retrieve the last questions of the feed
 
     Returns a structure with the following format:
@@ -169,21 +192,42 @@ def get_question_feed(url, force_reload=False):
     log(bold("Fetching question feed"))
     if force_reload:
         log(fg("Force reload", magenta))
-    feed = spider.get_feed(url, force_reload=force_reload)
-    if feed.status == 304:  # Not Modified
-        log(fg("Feed not modified since last retrieval (status 304)", magenta))
-        return []
-    log("Number of entries in feed: {}", fg(len(feed.entries), green))
+
+    base_url = "https://stackoverflow.com/feeds/"
     questions = []
-    for entry in feed.entries:
-        soup = BeautifulSoup(entry.summary, "html.parser")
-        q = {
-            "link": entry.link,
-            "title": entry.title,
-            "body": soup.getText(" ", strip=True),
-            "tags": [x["term"] for x in entry.tags],
-        }
-        questions.append(q)
+
+    for t in tags:
+        if t:
+            url = f"{base_url}tag?tagnames={t}&sort=newest"
+        else:
+            url = base_url
+        feed = spider.get_feed(url, force_reload=force_reload)
+        if feed.status == 304:  # Not Modified
+            log(fg("Feed not modified since last retrieval (status 304)", magenta))
+            return []
+        log("Number of entries in  feed: {}", fg(len(feed.entries), green))
+        # Get the questions from the RSS feed
+        for entry in feed.entries:
+            soup = BeautifulSoup(entry.summary, "html.parser")
+            q = {
+                "question_id": re.match(r".*/(\d+)", entry.id).groups()[0],
+                "link": entry.link,
+                "title": entry.title,
+                "body": soup.getText(" ", strip=True),
+                "tags": [x["term"] for x in entry.tags],
+            }
+            questions.append(q)
+
+    # Complete the information with the API
+    q_ids = [x["question_id"] for x in questions]
+    q_filter = "!27WCmnLax)mnySTwspo7Spdv"
+    questions_extra = get_questions(q_ids, q_filter)
+    questions = [
+        {**q, **qe}
+        for q in questions
+        for qe in questions_extra
+        if q["question_id"] == str(qe["question_id"])
+    ]
     return questions
 
 
