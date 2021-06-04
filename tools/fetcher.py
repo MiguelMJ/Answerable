@@ -38,6 +38,7 @@ from datetime import timedelta as td
 from bs4 import BeautifulSoup
 
 from tools import spider, cache
+from tools import database as db
 from tools.log import log, abort
 from tools.displayer import fg, magenta, green, bold
 
@@ -181,12 +182,6 @@ def get_question_feed(tags, force_reload=False):
 
     Returns a structure with the following format:
       [Question_1, Question_2, ...]
-
-    where Question_n has the following keys:
-      link: str
-      title: str
-      body: str (html)
-      tags: list of str
     """
 
     log(bold("Fetching question feed"))
@@ -210,7 +205,7 @@ def get_question_feed(tags, force_reload=False):
         for entry in feed.entries:
             soup = BeautifulSoup(entry.summary, "html.parser")
             q = {
-                "question_id": re.match(r".*/(\d+)", entry.id).groups()[0],
+                "question_id": int(re.match(r".*/(\d+)", entry.id).groups()[0]),
                 "link": entry.link,
                 "title": entry.title,
                 "body": soup.getText(" ", strip=True),
@@ -218,17 +213,29 @@ def get_question_feed(tags, force_reload=False):
             }
             questions.append(q)
 
-    # Complete the information with the API
-    q_ids = [x["question_id"] for x in questions]
+    # Remove repeated questions (happens with multiple tags) and filter out
+    # questions recently updated
+    questions = {q["question_id"]: q for q in questions}
+    log("Total size of raw feed: {}", fg(len(questions), green))
+    q_ids = questions.keys()
+    for_insert = db.filter_qids_for_insert(q_ids)
+    log("Database requires: {} inserts", fg(len(for_insert), green))
+    # oldest: one week, last_updated: 30 min ago
+    for_update = db.filter_qids_for_update(q_ids, 60*60*24*7, 60*30)
+    log("Database requires: {} updates", fg(len(for_update), green))
+    for_api = [str(x) for x in for_update | for_insert]
+    # Complete the question information with the API
     q_filter = "!27WCmnLax)mnySTwspo7Spdv"
-    questions_extra = get_questions(q_ids, q_filter)
-    questions = [
-        {**q, **qe}
-        for q in questions
+    questions_extra = get_questions(for_api, q_filter)
+    questions = {
+        qe["question_id"]: {**questions[qe["question_id"]], **qe}
         for qe in questions_extra
-        if q["question_id"] == str(qe["question_id"])
-    ]
-    return questions
+    }
+    
+    # Update the database
+    db.save_questions([questions[q] for q in for_insert])
+    db.update_questions([questions[q] for q in for_update])
+    return questions.values()
 
 
 def get_user_tags(filename):

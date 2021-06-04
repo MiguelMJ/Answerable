@@ -8,3 +8,4 @@ whitelist.py
 .cache
 include.txt
 *~
+answerable.db

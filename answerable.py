@@ -7,7 +7,7 @@ import importlib
 
 from urllib.error import URLError
 
-from tools import fetcher, displayer, log, spider
+from tools import fetcher, displayer, log, spider, database
 
 _current_version = "v1.1"
 
@@ -96,29 +96,24 @@ def recommend(args):
     """Recommend questions from the latest unanswered"""
 
     filtered = {"hidden": 0, "closed": 0, "duplicate": 0, "answered": 0}
-    present = set()
+
     def valid_entry(entry):
         """Check if a entry should be taken into account"""
-        
+
         title = entry["title"]
-        if title in present:
-            return False
-        present.add(title)
         if len(set(entry["tags"]) & hide_tags) > 0:
             filtered["hidden"] += 1
-            log.log("hidden: {}", title)
             return False
         if title[-8:] == "[closed]":
             filtered["closed"] += 1
-            log.log("closed: {}", title)
             return False
         if title[-11:] == "[duplicate]":
             filtered["duplicate"] += 1
-            log.log("duplicate: {}", title)
             return False
-        if entry["accepted_answer_id"] is not None or config["user"] in {x["owner"]["user_id"] for x in entry["answers"]}:
+        if entry["accepted_answer_id"] is not None or config["user"] in {
+            x["owner"]["user_id"] for x in entry["answers"]
+        }:
             filtered["answered"] += 1
-            log.log("answered: {}", title)
             return False
         return True
 
@@ -151,7 +146,7 @@ def recommend(args):
     # Get user info and feed
     user_qa = fetcher.get_QA(config["user"], force_reload=args.f)
     try:
-        
+
         if args.all or "tags" not in config:
             feed = fetcher.get_question_feed([""], force_reload=args.F)
         else:
@@ -286,6 +281,9 @@ if __name__ == "__main__":
 
     log.log(displayer.bold("Log of {}"), datetime.datetime.now())
 
+    database.setup()
+
     switch[command](args)
 
+    database.close()
     log.close_logs()
