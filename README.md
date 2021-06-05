@@ -19,8 +19,7 @@
 </p>
 
 
-
-Answerable helps you find questions to answer, based on your Stack Overflow activity.
+Answerable helps you find questions to answer on Stack Overflow.
 
 **Preview**
 
