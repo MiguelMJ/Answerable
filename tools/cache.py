@@ -39,22 +39,26 @@ def check(category: str, _file: str, max_delta: td) -> (bool, pathlib.Path):
     path = pathlib.Path.cwd() / __cache_dir / subpath
     path.parent.mkdir(parents=True, exist_ok=True)
 
-    if not path.exists():
-        log("  Miss {}", fg(subpath, magenta))
-        return False, path
-    else:
-        # Check if the file is too old
-        log("  Hit {}", fg(subpath, green))
-        modified = dt.fromtimestamp(path.stat().st_mtime)
-        now = dt.now()
-        delta = now - modified
-        log("  Time passed since last fetch: {}", delta)
-        valid = delta < max_delta
-        if valid:
-            log(fg("  Recent enough", green))
+    try:
+        if not path.exists():
+            log("  Miss {}", fg(subpath, magenta))
+            return False, path
         else:
-            log(fg("  Too old", magenta))
-        return valid, path
+            # Check if the file is too old
+            log("  Hit {}", fg(subpath, green))
+            modified = dt.fromtimestamp(path.stat().st_mtime)
+            now = dt.now()
+            delta = now - modified
+            log("  Time passed since last fetch: {}", delta)
+            valid = delta < max_delta
+            if valid:
+                log(fg("  Recent enough", green))
+            else:
+                log(fg("  Too old", magenta))
+            return valid, path
+    except OSError as err:
+        log("  {}: {}", err, fg(subpath, magenta))
+        return False, path
 
 
 def update(category: str, _file: str, obj, json_format=True):
@@ -69,9 +73,14 @@ def update(category: str, _file: str, obj, json_format=True):
     subpath = pathlib.Path(category) / _file
     path = pathlib.Path.cwd() / __cache_dir / subpath
     path.parent.mkdir(parents=True, exist_ok=True)
-    with open(path, "w") as fh:
-        if json_format:
-            json.dump(obj, fh, indent=2)
-        else:
-            fh.write(obj)
-    log("  Cache updated: {}", fg(subpath, green))
+    try:
+        with open(path, "w") as fh:
+            if json_format:
+                json.dump(obj, fh, indent=2)
+            else:
+                fh.write(obj)
+        log("  Cache updated: {}", fg(subpath, green))
+    except OSError as err:
+        log("  {}: {}", err, fg(subpath, magenta))
+        return False, path
+        
